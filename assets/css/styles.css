@@ -200,12 +200,8 @@ html, body {
 .fomo-clock { font-weight: 800; font-size: 18px; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
 @keyframes fomopulse { 0%{ box-shadow: 0 0 0 0 rgba(231,31,67,0.55) } 100%{ box-shadow: 0 0 0 10px rgba(231,31,67,0) } }
 
-/* ── TRUST strip (payments + signals) above the fold ── */
+/* ── TRUST strip (text signals) above the fold — payment icons live in the footer ── */
 .trust { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 4px; }
-.trust-pays { display: inline-flex; align-items: center; gap: 14px; color: rgba(255,255,255,0.55); }
-.trust-pays .pay-i { height: 18px; }
-.trust-pays .pay-i--sq { height: 22px; }
-.trust-more { font-family: 'Raleway', sans-serif; font-size: 11px; color: rgba(255,255,255,0.4); }
 .trust-tokens { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.62); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 
 /* ── STICKY MOBILE CTA BAR ── */
