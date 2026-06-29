@@ -49,12 +49,12 @@
     const players = document.getElementById('ls-players');
     const paid = document.getElementById('ls-paid');
     if (!players && !paid) return;
-    let p = 12480, m = 1284500;
+    let p = 154280, m = 24680500;
     const fmt = (n) => n.toLocaleString('ru-RU');
     function tick() {
-      p += Math.floor(Math.random() * 9) - 3;            // drifts, net upward
-      if (p < 12480) p = 12480 + Math.floor(Math.random() * 5);
-      m += Math.floor(Math.random() * 900) + 150;         // always ticks up
+      p += Math.floor(Math.random() * 31) - 12;           // drifts, net upward
+      if (p < 154280) p = 154280 + Math.floor(Math.random() * 20);
+      m += Math.floor(Math.random() * 9000) + 1500;       // always ticks up
       if (players) players.textContent = fmt(p);
       if (paid) paid.textContent = '$' + fmt(m);
     }
