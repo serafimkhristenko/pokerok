@@ -140,14 +140,14 @@ html, body {
 .cta--primary svg { width: 18px; height: 18px; }
 
 /* ── INTERACTIVE PILLAR ICONS (deck) — clickable & animated, but lighter than the CTA ── */
-.pillars { display: flex; gap: clamp(16px,4vw,46px); flex-wrap: wrap; justify-content: center; margin-top: 38px; max-width: 840px; pointer-events: auto; }
+.pillars { display: flex; gap: clamp(14px,2vw,24px); flex-wrap: wrap; justify-content: center; margin-top: 28px; max-width: 1000px; pointer-events: auto; }
 .pillar {
-  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 150px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 200px;
   text-decoration: none; cursor: pointer; padding: 6px; border-radius: 14px;
   transition: transform .25s cubic-bezier(.2,.7,.2,1);
 }
 .pillar-ic {
-  width: clamp(64px, 8vw, 88px); height: clamp(64px, 8vw, 88px); object-fit: contain;
+  width: clamp(58px, 6vw, 78px); height: clamp(58px, 6vw, 78px); object-fit: contain;
   filter: drop-shadow(0 10px 20px rgba(0,0,0,0.55)); transition: transform .25s ease;
   animation: bob 3.4s ease-in-out infinite;
 }
@@ -165,8 +165,8 @@ html, body {
 .pillar-val--text { font-size: clamp(14px,1.7vw,18px); text-transform: uppercase; letter-spacing: 0.06em; }
 /* short benefit caption (tier 3) */
 .pillar-cap {
-  font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 11px; line-height: 1.25;
-  color: rgba(255,255,255,0.6); text-align: center; max-width: 14ch; text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+  font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 12px; line-height: 1.3;
+  color: rgba(255,255,255,0.72); text-align: center; max-width: 22ch; text-shadow: 0 1px 6px rgba(0,0,0,0.55);
 }
 .pillar:hover { transform: translateY(-6px); }
 .pillar:hover .pillar-ic { transform: scale(1.09); }
@@ -304,8 +304,8 @@ footer { padding: 48px 24px 34px; }
 .footer-copy { font-family: 'Raleway', sans-serif; font-size: 11px; color: rgba(255,255,255,0.22); letter-spacing: 0.04em; text-align: center; line-height: 1.5; }
 
 @media (max-width: 640px) {
-  .pillars { gap: 16px 22px; margin-top: 26px; max-width: 360px; }
-  .pillar { width: 132px; }
+  .pillars { gap: 16px 14px; margin-top: 22px; max-width: 340px; }
+  .pillar { width: 150px; }
   .cards-row { gap: 12px; }
   .card { width: 100%; max-width: 320px; }
   /* trust row duplicated by sticky CTA + footer on mobile — hide to keep hero compact */
