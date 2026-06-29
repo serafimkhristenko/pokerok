@@ -15,9 +15,10 @@
   --neon: 0 0 6px rgba(231,31,67,0.9), 0 0 18px rgba(231,31,67,0.7), 0 0 44px rgba(231,31,67,0.55), 0 0 80px rgba(231,31,67,0.35);
 }
 
+html { scroll-behavior: auto; }
+body { overflow-x: clip; }   /* clip (not hidden) — keeps position:sticky working */
 html, body {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
   font-family: 'Raleway', sans-serif;
   color: var(--white);
   background: var(--black);
@@ -51,12 +52,8 @@ html, body {
   transform: translateY(0.04em);
 }
 
-/* ══ SCROLLER ══ */
-#scroller {
-  position: fixed; inset: 0;
-  overflow-y: scroll; scroll-behavior: smooth; scrollbar-width: none;
-}
-#scroller::-webkit-scrollbar { display: none; }
+/* ══ SCROLLER ══ (plain wrapper — window scroll, Lenis drives smoothing) ══ */
+#scroller { position: relative; }
 #top { position: absolute; top: 0; }
 
 /* tall stage = scroll distance for the 3-act descent */
@@ -222,6 +219,36 @@ html, body {
 .card-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
 .card-text { font-family: 'Raleway', sans-serif; font-weight: 400; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.78); }
 
+/* ── FLOATING 3D PROPS (deck) — parallax on mouse+scroll ── */
+.deck-props { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+/* keep all real deck content above the props */
+#deck-panel > :not(.deck-props) { position: relative; z-index: 1; }
+.prop {
+  position: absolute; object-fit: contain; opacity: 0.92;
+  filter: drop-shadow(0 16px 30px rgba(0,0,0,0.5));
+  will-change: transform; transform: translate3d(0,0,0);
+}
+.prop--1 { width: clamp(70px,9vw,128px); top: 16%;  left: 8%; }
+.prop--2 { width: clamp(64px,8vw,116px); top: 24%;  right: 9%; }
+.prop--3 { width: clamp(58px,7vw,104px); bottom: 20%; left: 13%; }
+.prop--4 { width: clamp(72px,9vw,124px); bottom: 16%; right: 12%; }
+@media (max-width: 640px){ .prop--3,.prop--4{ display:none; } .prop--1{left:2%} .prop--2{right:2%} }
+
+/* ── REVEAL (GSAP toggles .in on the panels) ── */
+.cards-row .card, .pillars .pillar {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1);
+}
+#deck-panel.in .pillar { opacity: 1; transform: none; }
+#cabin-panel.in .card { opacity: 1; transform: none; }
+#deck-panel.in .pillar:nth-child(2){ transition-delay:.08s }
+#deck-panel.in .pillar:nth-child(3){ transition-delay:.16s }
+#deck-panel.in .pillar:nth-child(4){ transition-delay:.24s }
+.pillars .pillar:nth-child(1){ transition-delay:0s }
+#cabin-panel.in .card:nth-child(2){ transition-delay:.1s }
+#cabin-panel.in .card:nth-child(3){ transition-delay:.2s }
+#cabin-panel.in .card:nth-child(4){ transition-delay:.3s }
+
 /* scroll hint */
 .scroll-hint {
   position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 25;
@@ -283,4 +310,7 @@ footer { padding: 48px 24px 34px; }
   #deck-panel > *, #passage-panel > *, #cabin-panel > * { position: relative; z-index: 1; }
   .pillars, .cards-row { pointer-events: all; }
   .bonus-badge img { animation: none; }
+  /* force reveal targets visible — no scroll-driven animation here */
+  .cards-row .card, .pillars .pillar { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .deck-props { display: none; }
 }
