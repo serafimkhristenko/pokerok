@@ -140,9 +140,9 @@ html, body {
 .cta--primary svg { width: 18px; height: 18px; }
 
 /* ── INTERACTIVE PILLAR ICONS (deck) — clickable & animated, but lighter than the CTA ── */
-.pillars { display: flex; gap: clamp(14px,2vw,24px); flex-wrap: wrap; justify-content: center; margin-top: 28px; max-width: 1000px; pointer-events: auto; }
+.pillars { display: flex; gap: clamp(10px,1.4vw,18px); flex-wrap: wrap; justify-content: center; margin-top: 28px; max-width: 1060px; pointer-events: auto; }
 .pillar {
-  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 200px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 244px;
   text-decoration: none; cursor: pointer; padding: 6px; border-radius: 14px;
   transition: transform .25s cubic-bezier(.2,.7,.2,1);
 }
@@ -166,7 +166,7 @@ html, body {
 /* short benefit caption (tier 3) */
 .pillar-cap {
   font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 12px; line-height: 1.3;
-  color: rgba(255,255,255,0.72); text-align: center; max-width: 22ch; text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+  color: rgba(255,255,255,0.72); text-align: center; max-width: 30ch; text-shadow: 0 1px 6px rgba(0,0,0,0.55);
 }
 .pillar:hover { transform: translateY(-6px); }
 .pillar:hover .pillar-ic { transform: scale(1.09); }
@@ -304,8 +304,8 @@ footer { padding: 48px 24px 34px; }
 .footer-copy { font-family: 'Raleway', sans-serif; font-size: 11px; color: rgba(255,255,255,0.22); letter-spacing: 0.04em; text-align: center; line-height: 1.5; }
 
 @media (max-width: 640px) {
-  .pillars { gap: 16px 14px; margin-top: 22px; max-width: 340px; }
-  .pillar { width: 150px; }
+  .pillars { gap: 16px 12px; margin-top: 22px; max-width: 360px; }
+  .pillar { width: 164px; }
   .cards-row { gap: 12px; }
   .card { width: 100%; max-width: 320px; }
   /* trust row duplicated by sticky CTA + footer on mobile — hide to keep hero compact */
