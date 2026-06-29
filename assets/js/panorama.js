@@ -23,6 +23,20 @@
   }
   const counters = Array.from(document.querySelectorAll('[data-count]'));
 
+  // ── FOMO countdown (resets daily) — runs in every mode ──
+  (function startFomoClock() {
+    const el = document.getElementById('fomo-clock');
+    if (!el) return;
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const now = new Date();
+      const end = new Date(now); end.setHours(23, 59, 59, 999);
+      let s = Math.max(0, Math.floor((end - now) / 1000));
+      el.textContent = pad(Math.floor(s / 3600)) + ':' + pad(Math.floor((s % 3600) / 60)) + ':' + pad(s % 60);
+    }
+    tick(); setInterval(tick, 1000);
+  })();
+
   // ════════ reduced-motion: stacked fallback, no scroll-jack ════════
   if (reduce.matches || !window.gsap || !window.ScrollTrigger) {
     counters.forEach((el) => countUp(el));
@@ -53,17 +67,10 @@
   const deckPanel = document.getElementById('deck-panel');
   const cabinPanel = document.getElementById('cabin-panel');
   const passPanel = document.getElementById('passage-panel');
-  const props    = Array.from(document.querySelectorAll('.prop'));
 
   const clamp  = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
   const smooth = (x) => x * x * (3 - 2 * x);
   const lerp   = (a, b, u) => a + (b - a) * u;
-
-  let mx = 0, my = 0;
-  window.addEventListener('pointermove', (e) => {
-    mx = (e.clientX / window.innerWidth  - 0.5) * 2;
-    my = (e.clientY / window.innerHeight - 0.5) * 2;
-  }, { passive: true });
 
   let progress = 0;
 
@@ -93,21 +100,6 @@
     header.classList.toggle('solid', t > 0.02);
   }
 
-  // floating props every frame: mouse parallax + idle bob + scroll drift (deck only)
-  const depths = props.map((p) => +p.getAttribute('data-depth') || 0.2);
-  function updateProps(time) {
-    const t = progress;
-    const deckVis = clamp(1 - t * 2.2, 0, 1);
-    for (let i = 0; i < props.length; i++) {
-      const d = depths[i];
-      const bob = Math.sin(time / 900 + i) * 10 * deckVis;
-      const px = mx * d * 60 * deckVis;
-      const py = my * d * 60 * deckVis + bob - t * d * 240;
-      props[i].style.transform = 'translate3d(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px,0)';
-    }
-  }
-  gsap.ticker.add(updateProps);
-
   window.ScrollTrigger.create({
     trigger: stage, start: 'top top', end: 'bottom bottom', scrub: true,
     onUpdate: (self) => {
@@ -122,6 +114,9 @@
 
   const neon = document.querySelector('.neon-sign');
   if (neon) gsap.to(neon, { filter: 'brightness(1.18)', duration: 1.4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
+  // primary CTA — gentle pulse so it reads as THE action
+  gsap.to('.cta--primary', { scale: 1.045, duration: 0.95, repeat: -1, yoyo: true, ease: 'sine.inOut' });
 
   gsap.delayedCall(0.5, () => counters.filter((c) => c.closest('#deck-panel')).forEach((c) => countUp(c)));
   gsap.delayedCall(0.3, () => deckPanel.classList.add('in'));
