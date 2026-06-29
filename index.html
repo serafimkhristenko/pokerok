@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПОКЕРОК — Жаркое лето, яркие бонусы</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- preload only the first (deck) background; cabin is loaded lazily via JS -->
+<link rel="preload" as="image" href="https://d8j0ntlcm91z4.cloudfront.net/user_3Aa3WwFrpwaeVE4FOeTMsmacTgK/hf_20260628_180003_c07a82d7-0139-4368-ab82-f4b49e8554bb.png">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --black: #080808;
+  --red:   #E71F43;   /* акцент — яркий красный (логобук, покер) */
+  --red-deep: #C01935;/* тёмный красный — заливки / крупный акцент */
+  --muted: rgba(255,255,255,0.62);
+  --faint: rgba(255,255,255,0.30);
+  --line:  rgba(255,255,255,0.08);
+
+  --deck-url: url('https://d8j0ntlcm91z4.cloudfront.net/user_3Aa3WwFrpwaeVE4FOeTMsmacTgK/hf_20260628_180003_c07a82d7-0139-4368-ab82-f4b49e8554bb.png');
+  --cabin-src: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Aa3WwFrpwaeVE4FOeTMsmacTgK/hf_20260628_180007_ef277111-cdf0-4d58-8774-692d2dc60426.png';
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Raleway', sans-serif;
+  color: var(--white);
+  background: var(--black);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══ SCROLLER ══ */
+#scroller {
+  position: fixed;
+  inset: 0;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+#scroller::-webkit-scrollbar { display: none; }
+
+/* tall stage = scroll distance for the descent pan */
+#stage {
+  height: 250vh;
+  position: relative;
+}
+
+/* ══ STICKY CANVAS ══ */
+#canvas {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ══ PANORAMA — one tall strip (deck on top, cabin below) that pans ══ */
+#pano {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 200vh;
+  will-change: transform;
+}
+
+.screen { position: absolute; left: 0; width: 100%; }
+.screen .bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+}
+.screen .bg::after { content: ''; position: absolute; inset: 0; }
+
+#deck-screen { top: 0; height: 100vh; z-index: 2; }
+#deck-screen .bg {
+  background-image: var(--deck-url);
+  /* feather the bottom edge so the deck melts into the cabin at the seam */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 76%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 76%, transparent 100%);
+}
+#deck-screen .bg::after { background: linear-gradient(180deg, rgba(8,8,8,0.30) 0%, rgba(8,8,8,0.62) 100%); }
+
+#cabin-screen { top: 72vh; height: 128vh; z-index: 1; }          /* overlaps the deck's faded edge */
+#cabin-screen .bg { background-position: center top; }            /* cabin image set lazily via JS */
+#cabin-screen .bg::after { background: linear-gradient(180deg, rgba(8,8,8,0.40) 0%, rgba(8,8,8,0.78) 100%); }
+
+/* ══ CONTENT PANELS — ride along with the panorama ══ */
+.panel {
+  position: absolute; left: 0; width: 100%; height: 100vh; z-index: 5;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 0 24px; pointer-events: none;
+}
+#deck-panel  { top: 0; }
+#cabin-panel { top: 100vh; }
+
+/* ── DECK ── */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.26em;
+  text-transform: uppercase; color: var(--red);
+  margin-bottom: 22px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ''; width: 34px; height: 2px; background: var(--red); opacity: 0.7;
+}
+
+.hero-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(44px, 8.4vw, 104px);
+  line-height: 0.96; letter-spacing: -0.01em;
+  text-transform: uppercase; text-align: center;
+  max-width: 14ch;
+}
+.hero-title .accent { color: var(--red); }
+
+.hero-sub {
+  margin-top: 20px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: clamp(15px, 2vw, 20px);
+  color: var(--muted); text-align: center;
+}
+
+.cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 34px; padding: 16px 44px;
+  background: var(--red); color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase; text-decoration: none;
+  border: none; border-radius: 6px; cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 0 0 rgba(231,31,67,0);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+.cta:hover { transform: translateY(-3px); background: #f23355; box-shadow: 0 12px 40px rgba(231,31,67,0.45); }
+.cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.cta svg { width: 16px; height: 16px; }
+
+/* deck value strip — 4 pillars visible above the fold */
+.pillars {
+  display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;
+  margin-top: 46px; max-width: 760px; pointer-events: none;
+}
+.pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 130px; }
+.pillar .ic { width: 30px; height: 30px; color: var(--white); }
+.pillar .ic .hot { color: var(--red); }
+.pillar span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.10em;
+  text-transform: uppercase; color: rgba(255,255,255,0.78); text-align: center;
+}
+
+/* ── CABIN ── */
+.cabin-eyebrow { color: var(--red); }
+.cabin-title {
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: clamp(30px, 5vw, 60px); line-height: 1.0;
+  letter-spacing: -0.01em; text-transform: uppercase; text-align: center;
+}
+.cabin-sub {
+  margin-top: 14px; margin-bottom: 38px;
+  font-family: 'Raleway', sans-serif; font-weight: 500;
+  font-size: clamp(14px, 1.8vw, 18px);
+  color: var(--muted); text-align: center; max-width: 46ch;
+}
+
+.cards-row {
+  display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+  max-width: 940px; pointer-events: all;
+}
+.card {
+  background: rgba(8,8,8,0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(231,31,67,0.22);
+  border-radius: 12px;
+  padding: 24px 20px 22px; text-align: center; width: 210px;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.card:hover { border-color: rgba(231,31,67,0.6); transform: translateY(-4px); }
+.card .ic { width: 38px; height: 38px; color: var(--white); margin-bottom: 14px; }
+.card .ic .hot { color: var(--red); }
+.card-title {
+  font-family: 'Montserrat', sans-serif; font-weight: 700;
+  font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 10px;
+}
+.card-text {
+  font-family: 'Raleway', sans-serif; font-weight: 400;
+  font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.78);
+}
+
+/* scroll hint */
+.scroll-hint {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  z-index: 25; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--faint); font-family: 'Montserrat', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  pointer-events: none;
+}
+.scroll-hint svg { width: 20px; height: 20px; animation: bounce 2s ease-in-out infinite; }
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+
+/* ══ FOOTER ══ */
+#footer-wrap { position: relative; z-index: 30; background: #050505; border-top: 1px solid var(--line); }
+footer { padding: 48px 24px 34px; }
+.footer-inner { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+.footer-logo { text-align: center; }
+.footer-logo b {
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 26px; letter-spacing: 0.04em; color: var(--white); display: block; line-height: 1;
+}
+.footer-logo span {
+  font-family: 'Raleway', sans-serif; font-weight: 500;
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--faint); display: block; margin-top: 6px;
+}
+
+.age-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border: 2px solid var(--red); border-radius: 50%;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 800; color: var(--red);
+}
+
+.pay-grid { display: flex; flex-wrap: wrap; gap: 28px 40px; justify-content: center; width: 100%; }
+.pay-group { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.pay-label {
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint);
+}
+.pay-icons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 420px; }
+
+.pay-chip {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--line);
+  border-radius: 9px; padding: 8px 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  transition: border-color .2s ease;
+}
+.pay-chip:hover { border-color: rgba(231,31,67,0.4); }
+.pay-chip svg { display: block; }
+.pay-net {
+  font-family: 'Raleway', sans-serif; font-size: 9px; font-weight: 600;
+  letter-spacing: 0.04em; color: var(--faint); text-align: center; line-height: 1.3;
+  max-width: 92px;
+}
+
+.footer-divider { width: 100%; height: 1px; background: var(--line); }
+.footer-copy {
+  font-family: 'Raleway', sans-serif; font-size: 11px; color: rgba(255,255,255,0.22);
+  letter-spacing: 0.04em; text-align: center; line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .pillars { gap: 18px 24px; margin-top: 34px; }
+  .pillar { width: 130px; }
+  .cards-row { gap: 12px; }
+  .card { width: 100%; max-width: 320px; }
+}
+
+/* ══════════════════════════════════════════
+   REDUCED MOTION — no scroll-jack, everything stacked & visible
+   ══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html, body { overflow: auto; }
+  #scroller { position: static; overflow: visible; }
+  #stage { height: auto; }
+  #canvas { position: static; height: auto; overflow: visible; }
+  #pano { position: static; height: auto; transform: none !important; }
+
+  .screen, .scroll-hint { display: none; }
+
+  .panel {
+    position: relative; left: auto; top: auto; width: auto; height: auto;
+    opacity: 1 !important; transform: none !important;
+    min-height: 92vh; padding: 80px 24px;
+  }
+  #deck-panel  { background: var(--deck-url) center/cover no-repeat, var(--black); }
+  #cabin-panel { background-position: center; background-size: cover; background-repeat: no-repeat; background-color: var(--black); }
+  #deck-panel::before, #cabin-panel::before {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(180deg, rgba(8,8,8,0.40), rgba(8,8,8,0.74));
+  }
+  #deck-panel > *, #cabin-panel > * { position: relative; z-index: 1; }
+  .pillars { pointer-events: all; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── ICON SPRITE ── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- bonus chip -->
+    <symbol id="ic-bonus" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="16" cy="16" r="13"/>
+      <circle cx="16" cy="16" r="8.5" opacity="0.45"/>
+      <path d="M16 3v3M16 26v3M3 16h3M26 16h3"/>
+      <path class="hot" d="M16 11.5v9M18.4 13.1c-.5-.8-1.5-1.2-2.5-1.2-1.4 0-2.3.8-2.3 1.9 0 1 .7 1.5 2.3 1.9 1.6.4 2.5.9 2.5 2 0 1.2-1 2-2.5 2-1.1 0-2-.5-2.6-1.3" stroke-width="1.7"/>
+    </symbol>
+    <!-- trophy -->
+    <symbol id="ic-prize" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 6h10v5a5 5 0 0 1-10 0V6Z"/>
+      <path d="M11 7.5H8.2A2.8 2.8 0 0 0 11 11M21 7.5h2.8A2.8 2.8 0 0 1 21 11"/>
+      <path d="M16 16v3.5M12.5 26h7M13.5 22.5h5l1 3.5h-7Z"/>
+      <path class="hot" d="m16 8.4.9 1.8 2 .3-1.45 1.4.35 2L16 13l-1.8.9.35-2L13.1 10.5l2-.3Z" stroke-width="1.2"/>
+    </symbol>
+    <!-- WSOP ring + gem -->
+    <symbol id="ic-glory" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="16" cy="19" r="7"/>
+      <path class="hot" d="m16 4 3 3-3 3.4L13 7Z" stroke-width="1.5"/>
+      <path d="m13 7 3-3 3 3M14.4 8.7 16 10.4l1.6-1.7"/>
+    </symbol>
+    <!-- cards -->
+    <symbol id="ic-formats" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <rect x="6.5" y="10" width="12.5" height="17" rx="2.4" transform="rotate(-9 6.5 10)"/>
+      <rect x="13" y="6.5" width="12.5" height="17" rx="2.4" fill="#080808"/>
+      <path class="hot" d="M19.2 11.2c1.6 1.4 2.7 2.5 2.7 3.8 0 1-.8 1.7-1.7 1.7-.5 0-.8-.2-1-.4.1.9.3 1.4.9 1.9h-2.4c.6-.5.8-1 .9-1.9-.2.2-.5.4-1 .4-.9 0-1.7-.7-1.7-1.7 0-1.3 1.1-2.4 2.7-3.8Z" stroke-width="1.1"/>
+    </symbol>
+    <!-- arrow -->
+    <symbol id="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </symbol>
+    <symbol id="ic-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="scroller">
+  <div id="stage">
+    <div id="canvas">
+
+      <!-- PANORAMA: deck (top) → cabin (bottom), pans as one strip -->
+      <div id="pano">
+        <div class="screen" id="deck-screen"><div class="bg"></div></div>
+        <div class="screen" id="cabin-screen"><div class="bg"></div></div>
+
+      <!-- DECK -->
+      <div class="panel" id="deck-panel">
+        <div class="eyebrow">ПОКЕРОК · ЛЕТО 2025</div>
+        <h1 class="hero-title">Жаркое лето — <span class="accent">яркие бонусы</span></h1>
+        <p class="hero-sub">Сезон крупных выигрышей уже открыт.</p>
+        <a href="#footer-wrap" class="cta">Регистрируйся <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+
+        <div class="pillars">
+          <div class="pillar"><svg class="ic" aria-hidden="true"><use href="#ic-bonus"/></svg><span>Бонус $600</span></div>
+          <div class="pillar"><svg class="ic" aria-hidden="true"><use href="#ic-prize"/></svg><span>Розыгрыши $10M</span></div>
+          <div class="pillar"><svg class="ic" aria-hidden="true"><use href="#ic-glory"/></svg><span>Слава WSOP</span></div>
+          <div class="pillar"><svg class="ic" aria-hidden="true"><use href="#ic-formats"/></svg><span>Все форматы</span></div>
+        </div>
+      </div>
+
+      <!-- CABIN -->
+      <div class="panel" id="cabin-panel">
+        <div class="eyebrow cabin-eyebrow">Нижняя палуба</div>
+        <h2 class="cabin-title">Четыре причины сесть за стол</h2>
+        <p class="cabin-sub">Бонусы, призовые фонды, мировая слава и форматы на любой вкус — всё за одним столом.</p>
+        <div class="cards-row">
+          <div class="card">
+            <svg class="ic" aria-hidden="true"><use href="#ic-bonus"/></svg>
+            <div class="card-title">Бонус $600</div>
+            <p class="card-text">Бонус 600 долларов для всех новых игроков и выгодные миссии</p>
+          </div>
+          <div class="card">
+            <svg class="ic" aria-hidden="true"><use href="#ic-prize"/></svg>
+            <div class="card-title">От $10 000 000</div>
+            <p class="card-text">Каждый месяц разыгрываем от 10 миллионов</p>
+          </div>
+          <div class="card">
+            <svg class="ic" aria-hidden="true"><use href="#ic-glory"/></svg>
+            <div class="card-title">Слава WSOP</div>
+            <p class="card-text">Всемирная слава в сериях WSOP — кольца, браслеты, рекордные выигрыши</p>
+          </div>
+          <div class="card">
+            <svg class="ic" aria-hidden="true"><use href="#ic-formats"/></svg>
+            <div class="card-title">Все форматы</div>
+            <p class="card-text">Игра на всех лимитах, классический Холдем, Омаха и уникальные форматы</p>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /pano -->
+
+      <!-- scroll hint -->
+      <div class="scroll-hint" id="scroll-hint">
+        <span>Спускайся ниже</span>
+        <svg aria-hidden="true"><use href="#ic-down"/></svg>
+      </div>
+
+    </div><!-- /canvas -->
+  </div><!-- /stage -->
+
+  <!-- FOOTER -->
+  <div id="footer-wrap">
+    <footer>
+      <div class="footer-inner">
+
+        <div class="footer-logo">
+          <b>ПОКЕРОК</b>
+          <span>Лидер мирового онлайн покера</span>
+        </div>
+
+        <div class="age-badge" title="Только 18+">18+</div>
+
+        <div class="pay-grid">
+          <!-- Crypto -->
+          <div class="pay-group">
+            <div class="pay-label">Криптовалюты</div>
+            <div class="pay-icons">
+              <span class="pay-chip">
+                <svg width="34" height="34" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#F7931A"/><path d="M25.3 15.6c.3-2.2-1.3-3.3-3.6-4.1l.7-2.9-1.8-.4-.7 2.8-1.4-.3.7-2.9-1.8-.4-.7 2.9-1.1-.3-2.5-.6-.5 1.9s1.3.3 1.3.3c.7.2.9.6.8 1l-.8 3.2v.1l-1.1 4.5c-.1.3-.4.6-.9.5 0 0-1.3-.3-1.3-.3l-.9 2 2.3.6 1.3.3-.7 3 1.8.4.7-3 1.4.4-.7 2.9 1.8.5.7-3c3 .6 5.2.3 6.1-2.3.8-2.1 0-3.3-1.5-4.1 1.1-.3 1.9-1 2.1-2.5zm-3.8 5.3c-.6 2.3-4.4 1.1-5.6.8l1-4c1.2.3 5.1.9 4.6 3.2zm.6-5.3c-.5 2.1-3.7 1-4.7.8l.9-3.7c1 .2 4.4.7 3.8 2.9z" fill="#fff"/></svg>
+                <span class="pay-net">Bitcoin</span>
+              </span>
+              <span class="pay-chip">
+                <svg width="34" height="34" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#627EEA"/><path d="M18 6v8.7l7.4 3.3L18 6z" fill="#fff" opacity="0.6"/><path d="M18 6 10.6 18l7.4-3.3V6z" fill="#fff"/><path d="M18 24.7v5.3l7.4-10.2L18 24.7z" fill="#fff" opacity="0.6"/><path d="M18 30v-5.3l-7.4-4.9L18 30z" fill="#fff"/><path d="m18 23.4 7.4-4.4-7.4-3.3v7.7z" fill="#fff" opacity="0.2"/><path d="M10.6 19l7.4 4.4v-7.7L10.6 19z" fill="#fff" opacity="0.6"/></svg>
+                <span class="pay-net">Ethereum</span>
+              </span>
+              <span class="pay-chip">
+                <svg width="34" height="34" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#26A17B"/><path d="M20.2 17.6v-.1c3.4-.2 6-.9 6-1.8s-2.6-1.6-6-1.8v-2.4h4.8V9H11v2.5h4.8v2.4c-3.4.2-6 .9-6 1.8s2.6 1.6 6 1.8v6.5h4.4v-6.4zm-2.2.7c-3.7 0-6.7-.6-6.7-1.4s3-1.4 6.7-1.4 6.7.6 6.7 1.4-3 1.4-6.7 1.4z" fill="#fff"/></svg>
+                <span class="pay-net">USDT · ERC20 / TRC20 / Polygon</span>
+              </span>
+              <span class="pay-chip">
+                <svg width="34" height="34" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#2775CA"/><path d="M22.5 20.8c0-2.2-1.3-3-4-3.3-1.9-.3-2.3-.8-2.3-1.7s.6-1.5 1.9-1.5c1.1 0 1.8.4 2.1 1.3.1.2.3.3.5.3h1.1c.3 0 .5-.2.5-.5v-.1c-.3-1.5-1.5-2.6-3-2.8v-1.6c0-.3-.2-.5-.5-.6h-1c-.3 0-.5.2-.6.5v1.6c-1.9.3-3.1 1.5-3.1 3.1 0 2.1 1.3 3 4 3.3 1.8.3 2.4.7 2.4 1.8s-.7 1.7-2.1 1.7c-1.6 0-2.2-.7-2.4-1.6-.1-.3-.3-.4-.5-.4h-1.2c-.3 0-.5.2-.5.5v.1c.3 1.6 1.4 2.8 3.2 3.1v1.6c0 .3.2.5.5.6h1c.3 0 .5-.2.6-.5v-1.6c1.9-.4 3.2-1.7 3.2-3.3z" fill="#fff"/></svg>
+                <span class="pay-net">USDC · ERC20 / Polygon / BEP20</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- E-wallets -->
+          <div class="pay-group">
+            <div class="pay-label">Электронные кошельки</div>
+            <div class="pay-icons">
+              <span class="pay-chip">
+                <svg width="64" height="30" viewBox="0 0 120 40" fill="none"><rect width="120" height="40" rx="6" fill="#862165"/><path d="M22 26c0 2.2 1.8 4 4.5 4 2.6 0 4.5-1.5 4.5-3.8 0-2-1.2-3-3.3-3.7l-1.2-.4c-.9-.3-1.3-.7-1.3-1.3 0-.7.6-1.2 1.5-1.2.9 0 1.5.5 1.6 1.3h2.8c-.1-2.2-1.7-3.6-4.4-3.6-2.5 0-4.3 1.4-4.3 3.7 0 1.9 1.1 3 3.1 3.6l1.2.4c1 .3 1.5.7 1.5 1.4 0 .7-.6 1.2-1.6 1.2-1.1 0-1.8-.6-1.8-1.6H22z" fill="#fff"/><text x="38" y="27" font-size="16" font-weight="bold" fill="#fff" font-family="Arial">Skrill</text></svg>
+                <span class="pay-net">Skrill</span>
+              </span>
+              <span class="pay-chip">
+                <svg width="80" height="30" viewBox="0 0 152 40" fill="none"><rect width="152" height="40" rx="6" fill="#009CDE"/><text x="10" y="27" font-size="17" font-weight="900" fill="#fff" font-family="Arial">NETELLER</text></svg>
+                <span class="pay-net">Neteller</span>
+              </span>
+              <span class="pay-chip">
+                <svg width="76" height="30" viewBox="0 0 144 40" fill="none"><rect width="144" height="40" rx="6" fill="#0F2044"/><path d="M12 8l-5 12h5l-4 12 12-15h-7l6-9H12z" fill="#4FC3F7"/><text x="32" y="27" font-size="15" font-weight="bold" fill="#fff" font-family="Arial">LUXON PAY</text></svg>
+                <span class="pay-net">Luxon</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Cards -->
+          <div class="pay-group">
+            <div class="pay-label">Банковские карты</div>
+            <div class="pay-icons">
+              <span class="pay-chip">
+                <svg width="60" height="30" viewBox="0 0 120 40" fill="none"><rect width="120" height="40" rx="6" fill="#1A1F71"/><text x="15" y="29" font-size="24" font-weight="bold" fill="#fff" font-family="Arial" font-style="italic">VISA</text><rect x="15" y="34" width="90" height="3" rx="1" fill="#F7A600" opacity="0.6"/></svg>
+                <span class="pay-net">Visa</span>
+              </span>
+              <span class="pay-chip">
+                <svg width="60" height="30" viewBox="0 0 120 40" fill="none"><rect width="120" height="40" rx="6" fill="#252525"/><circle cx="44" cy="20" r="14" fill="#EB001B"/><circle cx="76" cy="20" r="14" fill="#F79E1B"/><path d="M60 9.2A14 14 0 0 1 70.8 20 14 14 0 0 1 60 30.8 14 14 0 0 1 49.2 20 14 14 0 0 1 60 9.2z" fill="#FF5F00"/></svg>
+                <span class="pay-net">Mastercard</span>
+              </span>
+              <span class="pay-chip">
+                <svg width="60" height="30" viewBox="0 0 120 40" fill="none"><rect width="120" height="40" rx="6" fill="#1A1A1A"/><circle cx="44" cy="20" r="14" fill="#0099DF"/><circle cx="76" cy="20" r="14" fill="#EB001B" opacity="0.95"/><path d="M60 9.2A14 14 0 0 1 70.8 20 14 14 0 0 1 60 30.8 14 14 0 0 1 49.2 20 14 14 0 0 1 60 9.2z" fill="#6C3C95" opacity="0.8"/></svg>
+                <span class="pay-net">Maestro</span>
+              </span>
+              <span class="pay-chip">
+                <svg width="60" height="30" viewBox="0 0 120 40" fill="none"><rect width="120" height="40" rx="6" fill="#0E7A3B"/><path d="M20 24v-8h4l3 5 3-5h4v8h-3v-4.5l-2.5 4.5h-3L23 19.5V24h-3z" fill="#fff"/><path d="M39 24v-3h6c.6 0 1-.3 1-.8 0-.4-.4-.7-1-.7H39v-3.5h7c2.3 0 3.8 1.3 3.8 3.1 0 .9-.4 1.8-1.1 2.3.9.4 1.4 1.2 1.4 2.2V24h-3v-.7c0-.7-.4-1-.9-1H42V24h-3z" fill="#fff"/><text x="57" y="27" font-size="15" font-weight="bold" fill="#fff" font-family="Arial">МИР</text></svg>
+                <span class="pay-net">Мир</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-divider"></div>
+        <div class="footer-copy">© 2025 ПОКЕРОК. Все права защищены. Игра доступна только для лиц старше 18 лет. Играй ответственно.</div>
+      </div>
+    </footer>
+  </div>
+
+</div><!-- /scroller -->
+
+<script>
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // ── defer the cabin background until idle ──
+  const cabinBg    = document.querySelector('#cabin-screen .bg');
+  const cabinPanel = document.getElementById('cabin-panel');
+  const cabinSrc = getComputedStyle(document.documentElement)
+    .getPropertyValue('--cabin-src').trim().replace(/^['"]|['"]$/g, '');
+  function loadCabin() {
+    const img = new Image();
+    img.onload = () => {
+      const url = "url('" + cabinSrc + "')";
+      cabinBg.style.backgroundImage = url;
+      if (reduce.matches) cabinPanel.style.backgroundImage = url; // fallback section bg
+    };
+    img.src = cabinSrc;
+  }
+  if ('requestIdleCallback' in window) requestIdleCallback(loadCabin, { timeout: 1500 });
+  else setTimeout(loadCabin, 600);
+
+  if (reduce.matches) return; // stacked fallback — native scroll, no pan
+
+  const scroller = document.getElementById('scroller');
+  const pano     = document.getElementById('pano');
+  const hint     = document.getElementById('scroll-hint');
+
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  let ticking = false;
+
+  function render() {
+    ticking = false;
+    const y  = scroller.scrollTop;
+    const vh = window.innerHeight;
+
+    // pan progress: 0 (deck) → 1 (cabin) over ~1.2 screens of scroll
+    const t = clamp(y / (vh * 1.2), 0, 1);
+
+    // slide the whole strip up by exactly one screen:
+    // deck glides out the top, cabin glides in from below — one continuous move
+    pano.style.transform = 'translate3d(0,' + (-t * vh) + 'px,0)';
+
+    hint.style.opacity = clamp(1 - t * 4, 0, 1);
+  }
+
+  function onScroll() {
+    if (!ticking) { ticking = true; requestAnimationFrame(render); }
+  }
+
+  scroller.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  render();
+})();
+</script>
+
+</body>
+</html>
