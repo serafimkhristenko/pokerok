@@ -25,7 +25,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- preload only the first (deck) background; cabin is loaded lazily via JS -->
-<link rel="preload" as="image" href="https://d8j0ntlcm91z4.cloudfront.net/user_3Aa3WwFrpwaeVE4FOeTMsmacTgK/hf_20260628_180003_c07a82d7-0139-4368-ab82-f4b49e8554bb.png">
+<link rel="preload" as="image" href="assets/scenes/panorama.webp">
 
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -56,19 +56,11 @@
   <div id="stage">
     <div id="canvas">
 
-      <!-- ── BACKGROUND PANORAMA: deck → passage → cabin (one tall strip) ── -->
+      <!-- ── BACKGROUND PANORAMA: one seamless strip, deck → metal passage → cabin ── -->
       <div id="pano">
-        <div class="screen" id="deck-screen"><div class="bg"></div></div>
-        <div class="screen" id="passage-screen"><div class="bg"></div></div>
-        <div class="screen" id="cabin-screen"><div class="bg"></div></div>
+        <img id="pano-img" src="assets/scenes/panorama.webp" alt="Яхта ПОКЕРОК — палуба, машинное отделение, каюта" decoding="async">
       </div>
-
-      <!-- ── FOREGROUND PARALLAX: metal beams / planks for the narrow passage ── -->
-      <div id="beams" aria-hidden="true">
-        <div class="beam-strut beam-strut--l"></div>
-        <div class="beam-strut beam-strut--r"></div>
-        <div class="beam-planks"></div>
-      </div>
+      <div id="pano-tint" aria-hidden="true"></div>
 
       <!-- ── NARROWING LETTERBOX (closes in on the passage) ── -->
       <div class="letterbox lb-top" aria-hidden="true"></div>

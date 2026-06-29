@@ -9,8 +9,7 @@
   --faint: rgba(255,255,255,0.30);
   --line:  rgba(255,255,255,0.08);
 
-  --deck-url: url('https://d8j0ntlcm91z4.cloudfront.net/user_3Aa3WwFrpwaeVE4FOeTMsmacTgK/hf_20260628_180003_c07a82d7-0139-4368-ab82-f4b49e8554bb.png');
-  --cabin-src: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Aa3WwFrpwaeVE4FOeTMsmacTgK/hf_20260628_180007_ef277111-cdf0-4d58-8774-692d2dc60426.png';
+  --pano-url: url('../scenes/panorama.webp');
 
   --neon: 0 0 6px rgba(231,31,67,0.9), 0 0 18px rgba(231,31,67,0.7), 0 0 44px rgba(231,31,67,0.55), 0 0 80px rgba(231,31,67,0.35);
 }
@@ -62,55 +61,13 @@ html, body {
 /* ══ STICKY CANVAS ══ */
 #canvas { position: sticky; top: 0; width: 100vw; height: 100vh; overflow: hidden; }
 
-/* ── BACKGROUND PANORAMA — 3 stacked screens that pan as one strip ── */
-#pano { position: absolute; top: 0; left: 0; width: 100%; height: 300vh; will-change: transform; }
-.screen { position: absolute; left: 0; width: 100%; }
-.screen .bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
-.screen .bg::after { content: ''; position: absolute; inset: 0; }
-
-#deck-screen { top: 0; height: 100vh; z-index: 3; }
-#deck-screen .bg {
-  background-image: var(--deck-url);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
-          mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
-}
-#deck-screen .bg::after { background: linear-gradient(180deg, rgba(8,8,8,0.30) 0%, rgba(8,8,8,0.60) 100%); }
-
-/* ACT 2 — passage: dark metal hull, built in CSS (no extra image) */
-#passage-screen { top: 92vh; height: 116vh; z-index: 2; }
-#passage-screen .bg {
-  background:
-    radial-gradient(120% 60% at 50% 50%, rgba(40,16,22,0.5) 0%, rgba(8,8,8,0.96) 70%),
-    linear-gradient(90deg, #0b0b0d 0%, #1a1c1f 18%, #0d0e10 50%, #1a1c1f 82%, #0b0b0d 100%);
-}
-#passage-screen .bg::after {
-  /* faint horizontal plank seams across the hull */
-  background: repeating-linear-gradient(180deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 38px);
-}
-
-#cabin-screen { top: 196vh; height: 104vh; z-index: 1; }
-#cabin-screen .bg { background-position: center top; }
-#cabin-screen .bg::after { background: linear-gradient(180deg, rgba(8,8,8,0.42) 0%, rgba(8,8,8,0.80) 100%); }
-
-/* ── FOREGROUND PARALLAX — beams/struts that sweep past near the camera ── */
-#beams { position: absolute; inset: 0; z-index: 4; pointer-events: none; will-change: transform, opacity; opacity: 0; }
-.beam-strut {
-  position: absolute; top: -20vh; height: 140vh; width: clamp(46px, 9vw, 120px);
-  background: linear-gradient(90deg, #050506 0%, #2a2d31 45%, #3a3e44 50%, #2a2d31 55%, #050506 100%);
-  box-shadow: 0 0 40px rgba(0,0,0,0.8);
-}
-.beam-strut--l { left: 4vw; }
-.beam-strut--r { right: 4vw; }
-/* rivets along the struts */
-.beam-strut::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 0, rgba(255,255,255,0.25) 0 2px, transparent 3px) 0 0 / 100% 56px;
-  opacity: 0.5;
-}
-.beam-planks {
-  position: absolute; left: 0; right: 0; top: 30vh; height: 40vh;
-  background: repeating-linear-gradient(180deg, #17191c 0 14px, #0c0d0f 14px 30px);
-  box-shadow: 0 -30px 60px rgba(0,0,0,0.7), 0 30px 60px rgba(0,0,0,0.7);
+/* ── BACKGROUND PANORAMA — one seamless image strip that pans ── */
+#pano { position: absolute; top: 0; left: 0; width: 100%; will-change: transform; z-index: 1; }
+#pano-img { display: block; width: 100%; height: auto; }
+/* readability tint over the photo (kept light so the art stays vivid) */
+#pano-tint {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(180deg, rgba(8,8,8,0.45) 0%, rgba(8,8,8,0.18) 30%, rgba(8,8,8,0.30) 60%, rgba(8,8,8,0.55) 100%);
 }
 
 /* ── NARROWING LETTERBOX ── */
@@ -293,21 +250,23 @@ footer { padding: 48px 24px 34px; }
   #scroller { position: static; overflow: visible; }
   #stage { height: auto; }
   #canvas { position: static; height: auto; overflow: visible; }
-  #pano, #beams, .letterbox, .scroll-hint { display: none; }
+  #pano, #pano-tint, .letterbox, .scroll-hint { display: none; }
   #content { position: static; height: auto; transform: none !important; }
 
   .panel {
     position: relative; left: auto; top: auto; width: auto; height: auto;
     min-height: 90vh; padding: 80px 24px;
+    background-image: var(--pano-url); background-repeat: no-repeat; background-size: cover; background-color: var(--black);
   }
-  #deck-panel    { background: var(--deck-url) center/cover no-repeat, var(--black); }
-  #passage-panel { background: #0c0d0f; }
-  #cabin-panel   { background-position: center; background-size: cover; background-repeat: no-repeat; background-color: var(--black); }
-  #deck-panel::before, #cabin-panel::before {
+  /* each act shows its own slice of the single panorama image */
+  #deck-panel    { background-position: center 12%; }
+  #passage-panel { background-position: center 58%; }
+  #cabin-panel   { background-position: center 86%; }
+  .panel::before {
     content: ''; position: absolute; inset: 0; z-index: 0;
-    background: linear-gradient(180deg, rgba(8,8,8,0.40), rgba(8,8,8,0.74));
+    background: linear-gradient(180deg, rgba(8,8,8,0.55), rgba(8,8,8,0.78));
   }
-  #deck-panel > *, #passage-panel > *, #cabin-panel > * { position: relative; z-index: 1; }
+  .panel > * { position: relative; z-index: 1; }
   .pillars, .cards-row { pointer-events: all; }
   .bonus-badge img { animation: none; }
   /* force reveal targets visible — no scroll-driven animation here */
