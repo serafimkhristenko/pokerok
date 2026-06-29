@@ -86,7 +86,7 @@
   <a class="brand" href="#top" aria-label="ПОКЕРОК — на главную">
     <span class="brand-mark">ПОКЕР<img class="brand-o" src="assets/mascots/mascot-hush.webp" alt="" aria-hidden="true">К</span>
   </a>
-  <a href="#footer-wrap" class="cta cta--sm">Регистрируйся <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+  <a href="./" class="cta cta--sm">Забрать $600 <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
 </header>
 
 <div id="scroller">
@@ -110,40 +110,62 @@
         <!-- ACT 1 — UPPER DECK -->
         <section class="panel" id="deck-panel">
           <div class="hero-scrim" aria-hidden="true"></div>
-          <div class="eyebrow">ПОКЕРОК · ЛЕТО 2025</div>
           <h1 class="hero-title">ЖАРКОЕ ЛЕТО — <span class="accent">ЯРКИЕ БОНУСЫ</span></h1>
           <p class="hero-sub">Сезон крупных выигрышей уже открыт.</p>
 
-          <!-- крупные ИНТЕРАКТИВНЫЕ иконки-преимущества: анимированные, клик ведёт на лендинг/регистрацию.
-               У денежных — полная сумма с прокручивающимся счётчиком.
+          <!-- крупные ИНТЕРАКТИВНЫЕ иконки: клик ведёт на лендинг/регистрацию; у денежных —
+               полная сумма со счётчиком; короткая выгода для холодного трафика.
                (TODO: замените href="./" на реальную ссылку регистрации/оффера) -->
           <nav class="pillars">
             <a class="pillar" href="./">
               <img class="pillar-ic" src="assets/mascots/sticker-money-eyes.webp" alt="">
               <span class="pillar-val" data-count="600" data-prefix="$">$600</span>
+              <span class="pillar-cap">бонус новичку</span>
             </a>
             <a class="pillar" href="./">
               <img class="pillar-ic" src="assets/mascots/sticker-chips.webp" alt="">
               <span class="pillar-val" data-count="10000000" data-prefix="$" data-group="1">$10 000 000</span>
+              <span class="pillar-cap">розыгрыши каждый месяц</span>
             </a>
             <a class="pillar" href="./">
               <img class="pillar-ic" src="assets/mascots/sticker-fire.webp" alt="">
               <span class="pillar-val pillar-val--text">WSOP</span>
+              <span class="pillar-cap">браслеты и кольца</span>
             </a>
             <a class="pillar" href="./">
               <img class="pillar-ic" src="assets/mascots/mascot-ok-thumb.webp" alt="">
               <span class="pillar-val pillar-val--text">Все форматы</span>
+              <span class="pillar-cap">Холдем, Омаха и др.</span>
             </a>
           </nav>
 
-          <!-- FOMO-таймер призывает к регистрации (не дублирует сумму $600) + ГЛАВНЫЙ CTA после иконок -->
+          <!-- живые счётчики — постепенно растут (соц-доказательство / «движение денег») -->
+          <div class="livestats" aria-hidden="true">
+            <span class="livestat"><span class="livestat-dot"></span>Сейчас играют: <b id="ls-players">12 480</b></span>
+            <span class="livestat-sep"></span>
+            <span class="livestat">Выплачено сегодня: <b id="ls-paid">$1 284 500</b></span>
+          </div>
+
+          <!-- FOMO-плашка (персональный отсчёт) + ГЛАВНЫЙ CTA с оффером, после иконок -->
           <div class="hero-cta">
             <div class="fomo">
               <span class="fomo-dot"></span>
-              <span class="fomo-label">Бонусы новичка сгорают через</span>
-              <span class="fomo-clock" id="fomo-clock" aria-live="off">00:00:00</span>
+              <span class="fomo-label">Бонус новичка сгорает через</span>
+              <span class="fomo-clock" id="fomo-clock" aria-live="off">60:00</span>
             </div>
-            <a href="./" class="cta cta--primary">Регистрируйся <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+            <a href="./" class="cta cta--primary">Забери свои $600 <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+            <!-- trust-строка: платёжки + сигналы доверия выше сгиба -->
+            <div class="trust">
+              <span class="trust-pays">
+                <svg class="pay-i pay-i--sq" viewBox="0 0 24 24" aria-label="Bitcoin"><use href="#pay-btc"/></svg>
+                <svg class="pay-i pay-i--sq" viewBox="0 0 24 24" aria-label="USDT"><use href="#pay-usdt"/></svg>
+                <svg class="pay-i" viewBox="0 0 58 24" aria-label="Visa"><use href="#pay-visa"/></svg>
+                <svg class="pay-i pay-i--sq" viewBox="0 0 40 24" aria-label="Mastercard"><use href="#pay-mc"/></svg>
+                <svg class="pay-i" viewBox="0 0 60 24" aria-label="Мир"><use href="#pay-mir"/></svg>
+                <span class="trust-more">и др.</span>
+              </span>
+              <span class="trust-tokens">🔒 Лицензия · ⚡ Моментальные выплаты · 18+</span>
+            </div>
           </div>
         </section>
 
@@ -179,6 +201,7 @@
               <p class="card-text">Игра на всех лимитах, классический Холдем, Омаха и уникальные форматы</p>
             </div>
           </div>
+          <a href="./" class="cta cta--primary cabin-cta">Забери свои $600 <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
         </section>
 
       </div><!-- /content -->
@@ -231,6 +254,12 @@
   </div>
 
 </div><!-- /scroller -->
+
+<!-- липкая мобильная CTA-плашка (видна только на узких экранах) -->
+<a href="./" class="mobile-cta" aria-label="Забери свои $600">
+  <span class="mobile-cta-main">Забери свои $600</span>
+  <span class="mobile-cta-sub">бонус новичку · жми</span>
+</a>
 
 <script src="assets/js/vendor/lenis.umd.js"></script>
 <script src="assets/js/vendor/gsap.min.js"></script>

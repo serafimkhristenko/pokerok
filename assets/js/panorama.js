@@ -23,18 +23,42 @@
   }
   const counters = Array.from(document.querySelectorAll('[data-count]'));
 
-  // ── FOMO countdown (resets daily) — runs in every mode ──
+  const pad = (n) => String(n).padStart(2, '0');
+
+  // ── FOMO countdown — personal 60-min deadline persisted in localStorage ──
   (function startFomoClock() {
     const el = document.getElementById('fomo-clock');
     if (!el) return;
-    const pad = (n) => String(n).padStart(2, '0');
+    const KEY = 'pokerok_fomo_deadline';
+    const WINDOW = 60 * 60 * 1000; // 60 minutes
+    function deadline() {
+      let d = parseInt(localStorage.getItem(KEY) || '', 10);
+      if (!d || isNaN(d) || d - Date.now() > WINDOW) { d = Date.now() + WINDOW; localStorage.setItem(KEY, d); }
+      return d;
+    }
     function tick() {
-      const now = new Date();
-      const end = new Date(now); end.setHours(23, 59, 59, 999);
-      let s = Math.max(0, Math.floor((end - now) / 1000));
-      el.textContent = pad(Math.floor(s / 3600)) + ':' + pad(Math.floor((s % 3600) / 60)) + ':' + pad(s % 60);
+      let left = Math.floor((deadline() - Date.now()) / 1000);
+      if (left <= 0) { localStorage.setItem(KEY, Date.now() + WINDOW); left = WINDOW / 1000; } // soft restart
+      el.textContent = pad(Math.floor(left / 60)) + ':' + pad(left % 60);
     }
     tick(); setInterval(tick, 1000);
+  })();
+
+  // ── live counters — start fixed, then grow over time (social proof) ──
+  (function startLiveStats() {
+    const players = document.getElementById('ls-players');
+    const paid = document.getElementById('ls-paid');
+    if (!players && !paid) return;
+    let p = 12480, m = 1284500;
+    const fmt = (n) => n.toLocaleString('ru-RU');
+    function tick() {
+      p += Math.floor(Math.random() * 9) - 3;            // drifts, net upward
+      if (p < 12480) p = 12480 + Math.floor(Math.random() * 5);
+      m += Math.floor(Math.random() * 900) + 150;         // always ticks up
+      if (players) players.textContent = fmt(p);
+      if (paid) paid.textContent = '$' + fmt(m);
+    }
+    tick(); setInterval(tick, 2600);
   })();
 
   // ════════ reduced-motion: stacked fallback, no scroll-jack ════════

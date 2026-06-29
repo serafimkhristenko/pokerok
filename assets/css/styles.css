@@ -63,7 +63,9 @@ html, body {
 
 /* ── BACKGROUND PANORAMA — one seamless image strip that pans ── */
 #pano { position: absolute; top: 0; left: 0; width: 100%; will-change: transform; z-index: 1; }
-#pano-img { display: block; width: 100%; height: auto; }
+/* min-height keeps the strip tall on narrow screens so the 3 acts stay distinct
+   (without it, width-driven height collapses on mobile and acts overlap) */
+#pano-img { display: block; width: 100%; height: auto; min-height: 300vh; object-fit: cover; object-position: center top; }
 /* readability tint over the photo (kept light so the art stays vivid) */
 #pano-tint {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
@@ -161,21 +163,65 @@ html, body {
   color: #FFD24A; text-shadow: 0 0 18px rgba(255,200,60,0.45), 0 1px 8px rgba(0,0,0,0.6);
 }
 .pillar-val--text { font-size: clamp(14px,1.7vw,18px); text-transform: uppercase; letter-spacing: 0.06em; }
+/* short benefit caption (tier 3) */
+.pillar-cap {
+  font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 11px; line-height: 1.25;
+  color: rgba(255,255,255,0.6); text-align: center; max-width: 14ch; text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+}
 .pillar:hover { transform: translateY(-6px); }
 .pillar:hover .pillar-ic { transform: scale(1.09); }
 .pillar:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 @keyframes bob { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-9px) } }
 
-/* ── HERO CTA group (FOMO timer + primary button) — after the icons ── */
-.hero-cta { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 36px; pointer-events: auto; }
-.fomo {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
-  letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.88);
+/* ── LIVE STATS (social proof, grows over time) ── */
+.livestats {
+  display: inline-flex; align-items: center; gap: 14px; margin-top: 18px;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.04em; color: rgba(255,255,255,0.82); text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  flex-wrap: wrap; justify-content: center;
 }
-.fomo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: fomopulse 1.4s ease-out infinite; }
-.fomo-clock { font-weight: 800; color: var(--red); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+.livestat { display: inline-flex; align-items: center; gap: 7px; }
+.livestat b { color: #fff; font-weight: 800; font-variant-numeric: tabular-nums; }
+.livestat:last-child b { color: #FFD24A; }
+.livestat-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d36b; box-shadow: 0 0 8px rgba(52,211,107,0.8); animation: fomopulse 1.6s ease-out infinite; }
+.livestat-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+
+/* ── HERO CTA group (FOMO plaque + primary button + trust) — after the icons ── */
+.hero-cta { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 22px; pointer-events: auto; }
+/* FOMO — bold, contrasting plaque so it can't be missed */
+.fomo {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 9px 18px; border-radius: 100px;
+  background: rgba(231,31,67,0.14); border: 1px solid rgba(231,31,67,0.55);
+  font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase; color: #fff;
+}
+.fomo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); animation: fomopulse 1.4s ease-out infinite; }
+.fomo-clock { font-weight: 800; font-size: 18px; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
 @keyframes fomopulse { 0%{ box-shadow: 0 0 0 0 rgba(231,31,67,0.55) } 100%{ box-shadow: 0 0 0 10px rgba(231,31,67,0) } }
+
+/* ── TRUST strip (payments + signals) above the fold ── */
+.trust { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 4px; }
+.trust-pays { display: inline-flex; align-items: center; gap: 14px; color: rgba(255,255,255,0.55); }
+.trust-pays .pay-i { height: 18px; }
+.trust-pays .pay-i--sq { height: 22px; }
+.trust-more { font-family: 'Raleway', sans-serif; font-size: 11px; color: rgba(255,255,255,0.4); }
+.trust-tokens { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.62); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+
+/* ── STICKY MOBILE CTA BAR ── */
+.mobile-cta { display: none; }
+@media (max-width: 640px) {
+  .mobile-cta {
+    display: flex; flex-direction: column; align-items: center; gap: 1px;
+    position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 70;
+    padding: 12px 20px; border-radius: 12px; text-decoration: none;
+    background: var(--red); color: #fff; box-shadow: 0 10px 30px rgba(231,31,67,0.5);
+    animation: mcta 2s ease-in-out infinite;
+  }
+  .mobile-cta-main { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .mobile-cta-sub { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+  @keyframes mcta { 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.02) } }
+}
 
 /* ── ACT 2 — PASSAGE / NEON TEASER ── */
 .neon-sign {
@@ -212,6 +258,7 @@ html, body {
 .card-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; margin-bottom: 9px; }
 /* description = lowest tier */
 .card-text { font-family: 'Raleway', sans-serif; font-weight: 400; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.58); }
+.cabin-cta { margin-top: 34px; }
 
 /* ── REVEAL (GSAP toggles .in on the panels) ── */
 .cards-row .card, .pillars .pillar {
@@ -235,6 +282,8 @@ html, body {
 }
 .scroll-hint svg { width: 20px; height: 20px; animation: bounce 2s ease-in-out infinite; }
 @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+/* hide the hint when the hero is dense / short viewports so it can't collide with the trust row */
+@media (max-height: 880px) { .scroll-hint { display: none; } }
 
 /* ══ FOOTER ══ */
 #footer-wrap { position: relative; z-index: 30; background: #050505; border-top: 1px solid var(--line); }
@@ -259,10 +308,16 @@ footer { padding: 48px 24px 34px; }
 .footer-copy { font-family: 'Raleway', sans-serif; font-size: 11px; color: rgba(255,255,255,0.22); letter-spacing: 0.04em; text-align: center; line-height: 1.5; }
 
 @media (max-width: 640px) {
-  .pillars { gap: 16px 22px; margin-top: 30px; max-width: 360px; }
+  .pillars { gap: 16px 22px; margin-top: 26px; max-width: 360px; }
   .pillar { width: 132px; }
   .cards-row { gap: 12px; }
   .card { width: 100%; max-width: 320px; }
+  /* trust row duplicated by sticky CTA + footer on mobile — hide to keep hero compact */
+  .trust { display: none; }
+  .livestats { margin-top: 14px; font-size: 11px; }
+  .hero-cta { margin-top: 16px; }
+  /* leave room so the sticky CTA never covers the footer copy */
+  #footer-wrap { padding-bottom: 84px; }
 }
 
 /* ══════════════════════════════════════════
@@ -293,7 +348,7 @@ footer { padding: 48px 24px 34px; }
   .hero-scrim { display: none; }
   .pillars, .cards-row { pointer-events: all; }
   /* no looping animations in reduced-motion */
-  .pillar-ic, .fomo-dot { animation: none !important; }
+  .pillar-ic, .fomo-dot, .livestat-dot, .mobile-cta { animation: none !important; }
   /* force reveal targets visible — no scroll-driven animation here */
   .cards-row .card, .pillars .pillar { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
