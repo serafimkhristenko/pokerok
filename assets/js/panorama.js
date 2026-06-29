@@ -4,7 +4,7 @@
   const header = document.getElementById('site-header');
 
   // image-relative focal points of each act (fractions of the panorama height)
-  const DECK_F = 0.18;   // deck: girls + sea + wood
+  const DECK_F = 0.10;   // deck: start at the very top so faces/sky stay in frame
   const METAL_F = 0.583; // narrow metal passage (pipes)
   const CABIN_F = 0.80;  // cabin: poker table
 
