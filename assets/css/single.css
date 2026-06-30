@@ -4,7 +4,7 @@
   --white: #FFFFFF; --black: #080808;
   --red: #E71F43; --red-deep: #C01935;
   --muted: rgba(255,255,255,0.62); --faint: rgba(255,255,255,0.30); --line: rgba(255,255,255,0.08);
-  --pano-url: url('../scenes/panorama.webp');
+  --pano-url: url('../scenes/single-hero.webp');
 }
 
 html { scroll-behavior: smooth; }
@@ -43,7 +43,7 @@ img { max-width: 100%; }
 section { position: relative; isolation: isolate; }
 .s-hero__bg {
   position: absolute; inset: 0; z-index: -1; background-image: var(--pano-url);
-  background-size: cover; background-repeat: no-repeat; background-position: center 6%;
+  background-size: cover; background-repeat: no-repeat; background-position: center 30%;
 }
 .s-hero::after {
   content: ''; position: absolute; inset: 0; z-index: -1;
