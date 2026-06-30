@@ -100,11 +100,10 @@ section { position: relative; isolation: isolate; }
 }
 .footer-vline { width: 2px; align-self: stretch; min-height: 56px; background: var(--red); flex: none; }
 /* compact wrapping grid — icons sit in tidy rows like the reference footer */
-.pay-row { list-style: none; flex: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px clamp(20px,3vw,40px); color: rgba(255,255,255,0.55); }
+.pay-row { list-style: none; flex: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px clamp(20px,3vw,40px); }
 .pay-row li { display: inline-flex; align-items: center; }
-.pay-i { height: 14px; width: auto; display: block; color: inherit; transition: color .2s ease; }
-.pay-i--sq { height: 17px; }
-.pay-row li:hover { color: rgba(255,255,255,0.95); }
+.pay-i { height: 15px; width: auto; display: block; opacity: 0.78; transition: opacity .2s ease; }
+.pay-row li:hover .pay-i { opacity: 1; }
 
 /* ══ STICKY MOBILE CTA ══ */
 .mobile-cta { display: none; }
