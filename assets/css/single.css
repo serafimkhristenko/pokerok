@@ -47,7 +47,9 @@ section { position: relative; isolation: isolate; }
 }
 .s-hero::after {
   content: ''; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.30) 42%, rgba(8,8,8,0.64) 100%);
+  /* darken only behind the text column so the women stay clearly visible at the edges */
+  background: radial-gradient(ellipse 58% 95% at 50% 42%, rgba(8,8,8,0.6) 0%, rgba(8,8,8,0.32) 48%, rgba(8,8,8,0) 78%),
+              linear-gradient(180deg, rgba(8,8,8,0.15) 0%, rgba(8,8,8,0) 18%, rgba(8,8,8,0) 70%, rgba(8,8,8,0.4) 100%);
 }
 .s-hero { flex: 1; min-height: 0; display: flex; align-items: center; padding: 40px 0 24px; }
 .hero-inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -103,6 +105,7 @@ section { position: relative; isolation: isolate; }
 .pay-row { list-style: none; flex: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px clamp(20px,3vw,40px); }
 .pay-row li { display: inline-flex; align-items: center; }
 .pay-i { height: 15px; width: auto; display: block; opacity: 0.78; transition: opacity .2s ease; }
+.pay-i--crypto { height: 20px; }
 .pay-row li:hover .pay-i { opacity: 1; }
 
 /* ══ STICKY MOBILE CTA ══ */
