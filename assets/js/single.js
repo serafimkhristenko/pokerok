@@ -3,11 +3,6 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const pad = (n) => String(n).padStart(2, '0');
 
-  // header solid on scroll
-  const header = document.getElementById('site-header');
-  const onScroll = () => header.classList.toggle('solid', window.scrollY > 40);
-  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-
   // ── count-up when a number scrolls into view ──
   function countUp(el) {
     if (el._done) return; el._done = true;
