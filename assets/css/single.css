@@ -121,6 +121,7 @@ section { position: relative; isolation: isolate; }
   opacity: 0.9;
 }
 .pay-row li { display: inline-flex; align-items: center; }
+.pay-cell--c3 { grid-column: 3; }
 .pay-cell--c4 { grid-column: 4; }
 .pay-cell--c5 { grid-column: 5; }
 .pay-i { height: 18px; width: auto; display: block; opacity: 0.8; transition: opacity .2s ease; }
@@ -152,7 +153,7 @@ section { position: relative; isolation: isolate; }
   .pay-row--crypto, .pay-row--cards {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 18px;
   }
-  .pay-cell--c4, .pay-cell--c5 { grid-column: auto; }
+  .pay-cell--c3, .pay-cell--c4, .pay-cell--c5 { grid-column: auto; }
   .pay-i--crypto { height: 26px; }
 }
 @media (max-width: 640px) {
