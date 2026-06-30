@@ -83,9 +83,16 @@
 
 <!-- ══ STICKY HEADER ══ -->
 <header id="site-header">
-  <a class="brand" href="#top" aria-label="ПОКЕРОК — на главную">
-    <span class="brand-mark">ПОКЕР<img class="brand-o" src="assets/mascots/mascot-hush.webp" alt="" aria-hidden="true">К</span>
-  </a>
+  <div class="header-left">
+    <a class="brand" href="#top" aria-label="ПОКЕРОК — на главную">
+      <span class="brand-mark">ПОКЕР<img class="brand-o" src="assets/mascots/mascot-hush.webp" alt="" aria-hidden="true">К</span>
+    </a>
+    <!-- живые счётчики под лого — растут со временем -->
+    <div class="livestats" aria-hidden="true">
+      <span class="livestat"><span class="livestat-dot"></span>Сейчас играют: <b id="ls-players">154 280</b></span>
+      <span class="livestat">Выплачено сегодня: <b id="ls-paid">$24 680 500</b></span>
+    </div>
+  </div>
   <a href="./" class="cta cta--sm">Забрать $600 <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
 </header>
 
@@ -139,13 +146,6 @@
             </a>
           </nav>
 
-          <!-- живые счётчики — постепенно растут (соц-доказательство / «движение денег») -->
-          <div class="livestats" aria-hidden="true">
-            <span class="livestat"><span class="livestat-dot"></span>Сейчас играют: <b id="ls-players">154 280</b></span>
-            <span class="livestat-sep"></span>
-            <span class="livestat">Выплачено сегодня: <b id="ls-paid">$24 680 500</b></span>
-          </div>
-
           <!-- FOMO-плашка (персональный отсчёт) + ГЛАВНЫЙ CTA с оффером, после иконок -->
           <div class="hero-cta">
             <div class="fomo">
@@ -154,16 +154,8 @@
               <span class="fomo-clock" id="fomo-clock" aria-live="off">60:00</span>
             </div>
             <a href="./" class="cta cta--primary">Забери свои $600 <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
-            <!-- trust-строка: платёжки + сигналы доверия выше сгиба -->
+            <!-- сигналы доверия выше сгиба (платёжки убраны — они в футере) -->
             <div class="trust">
-              <span class="trust-pays">
-                <svg class="pay-i pay-i--sq" viewBox="0 0 24 24" aria-label="Bitcoin"><use href="#pay-btc"/></svg>
-                <svg class="pay-i pay-i--sq" viewBox="0 0 24 24" aria-label="USDT"><use href="#pay-usdt"/></svg>
-                <svg class="pay-i" viewBox="0 0 58 24" aria-label="Visa"><use href="#pay-visa"/></svg>
-                <svg class="pay-i pay-i--sq" viewBox="0 0 40 24" aria-label="Mastercard"><use href="#pay-mc"/></svg>
-                <svg class="pay-i" viewBox="0 0 60 24" aria-label="Мир"><use href="#pay-mir"/></svg>
-                <span class="trust-more">и др.</span>
-              </span>
               <span class="trust-tokens">🔒 Лицензия · ⚡ Моментальные выплаты · 18+</span>
             </div>
           </div>
