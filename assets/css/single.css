@@ -113,7 +113,7 @@ section { position: relative; isolation: isolate; }
 .pay-row--cards {
   grid-area: cards;
   display: grid;
-  grid-template-columns: repeat(5, auto);
+  grid-template-columns: repeat(3, auto);
   justify-self: end;
   justify-items: center;
   align-items: center;
