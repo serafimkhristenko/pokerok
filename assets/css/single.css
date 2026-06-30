@@ -126,7 +126,7 @@ section { position: relative; isolation: isolate; }
 .pay-cell--c4 { grid-column: 4; }
 .pay-cell--c5 { grid-column: 5; }
 .pay-i { height: 16px; width: auto; display: block; opacity: 0.8; transition: opacity .2s ease; }
-.pay-i--crypto { height: 22px; }
+.pay-i--crypto { height: 33px; }
 .pay-row li:hover .pay-i { opacity: 1; }
 
 /* brand centered below both groups — no separator line */
