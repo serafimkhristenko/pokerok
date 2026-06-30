@@ -141,14 +141,14 @@ html, body {
 .cta--primary svg { width: 18px; height: 18px; }
 
 /* ── INTERACTIVE PILLAR ICONS (deck) — clickable & animated, but lighter than the CTA ── */
-.pillars { display: flex; gap: clamp(16px,4vw,46px); flex-wrap: wrap; justify-content: center; margin-top: 38px; max-width: 840px; pointer-events: auto; }
+.pillars { display: flex; gap: clamp(6px,0.9vw,12px); flex-wrap: wrap; justify-content: center; margin-top: 28px; max-width: 900px; pointer-events: auto; }
 .pillar {
-  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 150px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px; width: 208px;
   text-decoration: none; cursor: pointer; padding: 6px; border-radius: 14px;
   transition: transform .25s cubic-bezier(.2,.7,.2,1);
 }
 .pillar-ic {
-  width: clamp(64px, 8vw, 88px); height: clamp(64px, 8vw, 88px); object-fit: contain;
+  width: clamp(58px, 6vw, 78px); height: clamp(58px, 6vw, 78px); object-fit: contain;
   filter: drop-shadow(0 10px 20px rgba(0,0,0,0.55)); transition: transform .25s ease;
   animation: bob 3.4s ease-in-out infinite;
 }
@@ -166,8 +166,8 @@ html, body {
 .pillar-val--text { font-size: clamp(14px,1.7vw,18px); text-transform: uppercase; letter-spacing: 0.06em; }
 /* short benefit caption (tier 3) */
 .pillar-cap {
-  font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 11px; line-height: 1.25;
-  color: rgba(255,255,255,0.6); text-align: center; max-width: 14ch; text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+  font-family: 'Raleway', sans-serif; font-weight: 500; font-size: 12px; line-height: 1.3;
+  color: rgba(255,255,255,0.72); text-align: center; max-width: 30ch; text-shadow: 0 1px 6px rgba(0,0,0,0.55);
 }
 .pillar:hover { transform: translateY(-6px); }
 .pillar:hover .pillar-ic { transform: scale(1.09); }
@@ -200,12 +200,8 @@ html, body {
 .fomo-clock { font-weight: 800; font-size: 18px; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
 @keyframes fomopulse { 0%{ box-shadow: 0 0 0 0 rgba(231,31,67,0.55) } 100%{ box-shadow: 0 0 0 10px rgba(231,31,67,0) } }
 
-/* ── TRUST strip (payments + signals) above the fold ── */
+/* ── TRUST strip (text signals) above the fold — payment icons live in the footer ── */
 .trust { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 4px; }
-.trust-pays { display: inline-flex; align-items: center; gap: 14px; color: rgba(255,255,255,0.55); }
-.trust-pays .pay-i { height: 18px; }
-.trust-pays .pay-i--sq { height: 22px; }
-.trust-more { font-family: 'Raleway', sans-serif; font-size: 11px; color: rgba(255,255,255,0.4); }
 .trust-tokens { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.62); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 
 /* ── STICKY MOBILE CTA BAR ── */
@@ -308,8 +304,8 @@ footer { padding: 48px 24px 34px; }
 .footer-copy { font-family: 'Raleway', sans-serif; font-size: 11px; color: rgba(255,255,255,0.22); letter-spacing: 0.04em; text-align: center; line-height: 1.5; }
 
 @media (max-width: 640px) {
-  .pillars { gap: 16px 22px; margin-top: 26px; max-width: 360px; }
-  .pillar { width: 132px; }
+  .pillars { gap: 14px 10px; margin-top: 22px; max-width: 350px; }
+  .pillar { width: 162px; }
   .cards-row { gap: 12px; }
   .card { width: 100%; max-width: 320px; }
   .hero-cta { margin-top: 16px; }
