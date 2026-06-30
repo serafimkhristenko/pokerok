@@ -119,8 +119,10 @@ section { position: relative; isolation: isolate; }
   justify-self: end;
   justify-items: center;
   align-items: center;
-  column-gap: clamp(14px,1.8vw,22px);
-  row-gap: 5px;
+  /* card icons are ~half the height of crypto ones, so an equal gap reads as cramped;
+     match the crypto group's airy rhythm with a larger row pitch + same column gap */
+  column-gap: clamp(16px,2.2vw,28px);
+  row-gap: 14px;
   opacity: 0.9;
 }
 /* mirror the crypto group's tidy block: its orphan (7th) sits under the LEFT edge;
