@@ -83,16 +83,9 @@
 
 <!-- ══ STICKY HEADER ══ -->
 <header id="site-header">
-  <div class="header-left">
-    <a class="brand" href="#top" aria-label="ПОКЕРОК — на главную">
-      <span class="brand-mark">ПОКЕР<img class="brand-o" src="assets/mascots/mascot-hush.webp" alt="" aria-hidden="true">К</span>
-    </a>
-    <!-- живые счётчики под лого — растут со временем -->
-    <div class="livestats" aria-hidden="true">
-      <span class="livestat"><span class="livestat-dot"></span>Сейчас играют: <b id="ls-players">154 280</b></span>
-      <span class="livestat">Выплачено сегодня: <b id="ls-paid">$24 680 500</b></span>
-    </div>
-  </div>
+  <a class="brand" href="#top" aria-label="ПОКЕРОК — на главную">
+    <span class="brand-mark">ПОКЕР<img class="brand-o" src="assets/mascots/mascot-hush.webp" alt="" aria-hidden="true">К</span>
+  </a>
   <a href="./" class="cta cta--sm">Забрать $600 <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
 </header>
 
@@ -145,6 +138,13 @@
               <span class="pillar-cap">Игра на&nbsp;всех лимитах, классический Холдем, Омаха и&nbsp;уникальные форматы</span>
             </a>
           </nav>
+
+          <!-- живые счётчики — постепенно растут (соц-доказательство / «движение денег») -->
+          <div class="livestats" aria-hidden="true">
+            <span class="livestat"><span class="livestat-dot"></span>Сейчас играют: <b id="ls-players">154 280</b></span>
+            <span class="livestat-sep"></span>
+            <span class="livestat">Выплачено сегодня: <b id="ls-paid">$24 680 500</b></span>
+          </div>
 
           <!-- FOMO-плашка (персональный отсчёт) + ГЛАВНЫЙ CTA с оффером, после иконок -->
           <div class="hero-cta">
