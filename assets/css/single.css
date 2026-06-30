@@ -86,18 +86,25 @@ section { position: relative; isolation: isolate; }
 .fomo-clock { font-weight: 800; font-size: 18px; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
 .trust-tokens { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.62); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 
-/* ══ FOOTER BAR — logo left │ payments in one row ══ */
-.site-footer { background: linear-gradient(0deg, rgba(8,8,8,0.94) 0%, rgba(8,8,8,0.45) 100%); padding: 12px clamp(16px,4vw,40px); }
-.footer-bar { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: clamp(14px,3vw,30px); }
-.footer-logo { text-decoration: none; flex: none; }
-.footer-mark { font-size: 22px; }
-.footer-vline { width: 1px; height: 26px; background: rgba(255,255,255,0.16); flex: none; }
-.pay-row { list-style: none; flex: 1; display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: 14px; color: rgba(255,255,255,0.5); }
+/* ══ FOOTER BAR — brand + 18+ │ red divider │ compact payments grid ══ */
+.site-footer { background: linear-gradient(0deg, rgba(8,8,8,0.94) 0%, rgba(8,8,8,0.45) 100%); padding: 16px clamp(16px,4vw,40px); }
+.footer-bar { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: clamp(18px,3vw,36px); }
+.footer-brand { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: none; }
+.footer-logo { text-decoration: none; }
+.footer-mark { font-size: 26px; }
+.age-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.55);
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.85);
+}
+.footer-vline { width: 2px; align-self: stretch; min-height: 56px; background: var(--red); flex: none; }
+/* compact wrapping grid — icons sit in tidy rows like the reference footer */
+.pay-row { list-style: none; flex: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px clamp(20px,3vw,40px); color: rgba(255,255,255,0.55); }
 .pay-row li { display: inline-flex; align-items: center; }
-.pay-i { height: 16px; width: auto; display: block; color: inherit; transition: color .2s ease; }
-.pay-i--sq { height: 20px; }
-.pay-row li:hover { color: rgba(255,255,255,0.9); }
-.pay-sep { width: 1px; height: 18px; background: rgba(255,255,255,0.14); }
+.pay-i { height: 14px; width: auto; display: block; color: inherit; transition: color .2s ease; }
+.pay-i--sq { height: 17px; }
+.pay-row li:hover { color: rgba(255,255,255,0.95); }
 
 /* ══ STICKY MOBILE CTA ══ */
 .mobile-cta { display: none; }
@@ -118,7 +125,6 @@ section { position: relative; isolation: isolate; }
   .pillars { gap: 16px 22px; }
   .pillar { width: 150px; }
   .site-footer { padding-bottom: 92px; }   /* room for the sticky mobile CTA */
-  .pay-sep { display: none; }
   .mobile-cta {
     display: flex; flex-direction: column; align-items: center; gap: 1px;
     position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 70;
