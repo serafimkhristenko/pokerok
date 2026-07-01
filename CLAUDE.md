@@ -113,6 +113,23 @@ gh api repos/serafimkhristenko/pokerok/pages/builds/latest --jq '.status+" "+.co
 If the live CSS lacks your rule and the build is `building`/on the old SHA, the code is fine —
 tell the user to hard-refresh (Ctrl+F5) once it's `built`.
 
+### ALWAYS cache-bust the asset links after editing CSS/JS (esp. for mobile)
+
+Mobile browsers cache `single.css`/`single.js` aggressively and a normal refresh (pull-to-
+refresh) keeps serving the **stale** file — the user sees "nothing changed" even though the
+fix is live. This bit us repeatedly. **Rule: whenever you change `single.css` or `single.js`
+(or the index equivalents), bump the `?v=` query on their `<link>`/`<script>` in the HTML in
+the same commit.** The version is a date stamp, e.g.:
+
+```html
+<link rel="stylesheet" href="assets/css/single.css?v=20260702">
+<script src="assets/js/single.js?v=20260702"></script>
+```
+
+Bump `?v=` to the current date (or increment) on every asset edit. Changing the URL forces
+every client — especially phones — to fetch the new file instead of the cached one. Do this
+by default; don't wait for the user to report a stale view.
+
 ## Local preview & headless screenshots (this Windows machine)
 
 Repo is checked out at `D:\pokerok`. Preview + verify visually without asking:
