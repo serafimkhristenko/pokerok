@@ -95,49 +95,28 @@ section { position: relative; isolation: isolate; }
 .site-footer { background: transparent; padding: 0 clamp(10px,2.2vw,26px) 16px; position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
 .footer-bar {
   max-width: 1320px; margin: 0 auto;
-  display: grid; grid-template-columns: auto auto auto;
-  grid-template-areas: "brand crypto cards";
-  align-items: center; justify-content: space-between; row-gap: 10px; column-gap: clamp(20px,4vw,64px);
+  display: flex; align-items: center; flex-wrap: nowrap;
+  gap: clamp(18px,3vw,52px);
 }
 
-/* two icon groups split to the sides; grid layout for precise column alignment */
-.pay-row { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 12px clamp(18px,2.4vw,30px); }
-.pay-row--crypto {
-  grid-area: crypto;
-  display: grid;
-  grid-template-columns: repeat(4, auto);   /* 7 icons -> 2 rows (4 + 3) */
-  justify-items: center;
-  align-items: center;
-  justify-content: center;
-  column-gap: clamp(16px,2.2vw,28px);
-  row-gap: 8px;
+/* logo pinned left; both icon groups flow together, centered in the remaining space.
+   ideal = one row; when it can't fit it wraps but stays centered (no side-anchoring) */
+.footer-pays {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 12px clamp(18px,2.6vw,34px);
 }
-.pay-row--cards {
-  grid-area: cards;
-  display: grid;
-  grid-template-columns: repeat(4, auto);   /* 7 icons -> 2 rows (4 + 3) */
-  justify-self: end;
-  justify-items: center;
-  align-items: center;
-  /* card icons are ~half the height of crypto ones, so an equal gap reads as cramped;
-     match the crypto group's airy rhythm with a larger row pitch + same column gap */
-  column-gap: clamp(16px,2.2vw,28px);
-  row-gap: 14px;
-  opacity: 0.9;
-}
-/* right-pack the 3-item second row (cols 2-4) so it mirrors the crypto block's
-   left-packed second row instead of dangling under the left edge */
-.pay-row--cards li:nth-child(5) { grid-column: 2; }
+.pay-row { list-style: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px clamp(16px,2.2vw,28px); }
+/* card icons are ~half the height of crypto ones; nudge them up in size so a single
+   centered row reads as one balanced group rather than two mismatched strips */
+.pay-row--cards { opacity: 0.9; }
 .pay-row li { display: inline-flex; align-items: center; }
-.pay-cell--c3 { grid-column: 3; }
-.pay-cell--c4 { grid-column: 4; }
-.pay-cell--c5 { grid-column: 5; }
-.pay-i { height: 16px; width: auto; display: block; opacity: 0.8; transition: opacity .2s ease; }
-.pay-i--crypto { height: 33px; }
+.pay-i { height: 18px; width: auto; display: block; opacity: 0.8; transition: opacity .2s ease; }
+.pay-i--crypto { height: 30px; }
 .pay-row li:hover .pay-i { opacity: 1; }
 
 /* brand anchored to the LEFT of the footer row */
-.footer-brand { grid-area: brand; justify-self: start; align-self: center; display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+.footer-brand { flex: 0 0 auto; align-self: center; display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
 .footer-logo { text-decoration: none; }
 .footer-mark { font-size: 24px; }
 .age-badge {
@@ -156,17 +135,10 @@ section { position: relative; isolation: isolate; }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
-  /* collapse the side-by-side grid into a centered single-column stack */
-  .footer-bar { grid-template-columns: 1fr; grid-template-areas: "brand" "crypto" "cards"; justify-content: stretch; justify-items: center; row-gap: 12px; }
-  .footer-brand { justify-self: center; align-items: center; }
-  .pay-row--crypto, .pay-row--cards {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 18px;
-  }
-  /* stretch to the full cell (not shrink-to-content) so flex-wrap can actually wrap;
-     desktop's justify-self:end would size to max-content and overflow the viewport */
-  .pay-row--cards { justify-self: stretch; }
-  .pay-row--cards li:nth-child(5) { grid-column: auto; }
-  .pay-cell--c3, .pay-cell--c4, .pay-cell--c5 { grid-column: auto; }
+  /* stack the logo above the centered icon groups */
+  .footer-bar { flex-direction: column; align-items: center; gap: 14px; }
+  .footer-brand { align-items: center; }
+  .footer-pays { width: 100%; }
   .pay-i--crypto { height: 26px; }
 }
 @media (max-width: 640px) {
