@@ -7,7 +7,7 @@
   --pano-url: url('../scenes/single-hero.webp');
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; color-scheme: dark; }
 /* one-screen poster shell: hero fills the full viewport, footer overlays its bottom edge */
 body {
   font-family: 'Raleway', sans-serif; color: var(--white); background: var(--black);
@@ -30,6 +30,7 @@ img { max-width: 100%; }
   background: var(--red); color: var(--white); font-family: 'Montserrat', sans-serif;
   font-size: 15px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
   text-decoration: none; border: none; border-radius: 6px; cursor: pointer;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
 }
 .cta:hover { transform: translateY(-3px); background: #f23355; box-shadow: 0 12px 40px rgba(231,31,67,0.45); }
@@ -58,6 +59,7 @@ section { position: relative; isolation: isolate; }
 .hero-title {
   font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(40px, 8vw, 100px);
   line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase; max-width: 16ch;
+  text-wrap: balance;
   text-shadow: 0 2px 30px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.5);
 }
 .hero-title .accent { color: var(--red); text-shadow: 0 0 26px rgba(231,31,67,0.55), 0 2px 16px rgba(0,0,0,0.6); }
@@ -65,7 +67,8 @@ section { position: relative; isolation: isolate; }
 
 /* pillars — emoji icons reduced ~1.5×, full captions */
 .pillars { display: flex; gap: clamp(13px,1.7vw,24px); flex-wrap: wrap; justify-content: center; margin-top: 26px; max-width: 900px; }
-.pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 200px; text-decoration: none; cursor: pointer; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 200px; text-decoration: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border-radius: 8px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.pillar:focus-visible, .footer-logo:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 6px; }
 .pillar-ic { width: clamp(42px, 5.3vw, 58px); height: clamp(42px, 5.3vw, 58px); object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.55)); transition: transform .25s ease; animation: bob 3.4s ease-in-out infinite; }
 .pillar:nth-child(2) .pillar-ic { animation-delay: .45s } .pillar:nth-child(3) .pillar-ic { animation-delay: .9s } .pillar:nth-child(4) .pillar-ic { animation-delay: 1.35s }
 .pillar-val { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(17px,2.1vw,24px); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.85), 0 2px 14px rgba(0,0,0,0.65); white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
@@ -92,7 +95,7 @@ section { position: relative; isolation: isolate; }
 
 /* ══ FOOTER — transparent, overlaid on the photo; one row, left→right:
       ПОКЕРОК+18 brand │ crypto │ cards (2 rows each) ══ */
-.site-footer { background: linear-gradient(to top, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.3) 45%, rgba(8,8,8,0) 100%); padding: clamp(22px,5vh,50px) clamp(10px,2.2vw,26px) 16px; position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
+.site-footer { background: linear-gradient(to top, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.3) 45%, rgba(8,8,8,0) 100%); padding: clamp(22px,5vh,50px) clamp(10px,2.2vw,26px) max(16px, env(safe-area-inset-bottom)); position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
 .footer-bar {
   max-width: 1320px; margin: 0 auto;
   display: flex; align-items: center; justify-content: center;
@@ -129,9 +132,6 @@ section { position: relative; isolation: isolate; }
   color: var(--red);
 }
 
-/* ══ STICKY MOBILE CTA ══ */
-.mobile-cta { display: none; }
-
 /* ══ REVEAL ══ */
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
@@ -154,8 +154,8 @@ section { position: relative; isolation: isolate; }
       rgba(8,8,8,0.30) 46%, rgba(8,8,8,0.62) 74%, rgba(8,8,8,0.92) 100%);
   }
   .wrap { padding: 0 18px; }
-  /* title: shrink the floor so the long lines stop bleeding past the right edge */
-  .hero-title { font-size: clamp(21px, 6.2vw, 38px); line-height: 0.94; letter-spacing: -0.02em; max-width: 100%; }
+  /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
+  .hero-title { font-size: clamp(27px, 8vw, 44px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 100%; text-wrap: balance; overflow-wrap: break-word; }
   .hero-title .accent { display: block; }   /* keep "ЯРКИЕ БОНУСЫ" on its own line */
   .hero-sub { font-size: 13px; margin-top: 6px; }
   /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge */
@@ -174,19 +174,11 @@ section { position: relative; isolation: isolate; }
   .cta--primary { width: 100%; justify-content: center; padding: 16px 24px; }
   .fomo { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 10px; width: fit-content; max-width: 100%; }
   .fomo-label { flex: 1 0 100%; text-align: center; }   /* label full-width line, clock drops below */
-  .site-footer { position: relative; padding-bottom: 92px; }   /* room for the sticky mobile CTA */
-  .mobile-cta {
-    display: flex; flex-direction: column; align-items: center; gap: 1px;
-    position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 70;
-    padding: 12px 20px; border-radius: 12px; text-decoration: none; background: var(--red); color: #fff;
-    box-shadow: 0 10px 30px rgba(231,31,67,0.5); animation: ctapulse 2s ease-in-out infinite;
-  }
-  .mobile-cta-main { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px; text-transform: uppercase; letter-spacing: 0.03em; }
-  .mobile-cta-sub { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+  .site-footer { position: relative; padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .cta--primary, .pillar-ic, .livestat-dot, .fomo-dot, .mobile-cta { animation: none !important; }
+  .cta--primary, .pillar-ic, .livestat-dot, .fomo-dot { animation: none !important; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
