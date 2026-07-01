@@ -82,7 +82,73 @@ Non-negotiable:
   enough to reference an image in HTML/CSS. Use `file` / `identify` (imagemagick) for
   dimensions/format. Don't re-open an image already viewed this session.
 - **Git / GitHub:** `main` is sometimes updated in parallel from other sessions or directly
-  via the GitHub API, so it can diverge without warning. Before any reconciliation, **report
-  status first and let the user decide** how to resolve divergences — never auto-rebase,
-  reset, or force-push. When updating via the GitHub API, fetch the current file SHA (GET)
-  before PUT-ing base64 content, and update files one at a time, checking each step.
+  via the GitHub API, so it can diverge without warning. When updating via the GitHub API,
+  fetch the current file SHA (GET) before PUT-ing base64 content, and update files one at a
+  time, checking each step.
+- **Auto-push (user-requested for this repo — "пуш автоматически"):** after making the
+  requested change, commit **and** push to `main` automatically — but always `git fetch`
+  and check divergence **first**. Only push when `IN SYNC` or `AHEAD` (fast-forward). If
+  `BEHIND` or `DIVERGED`, **stop and report** — never auto-rebase, reset, or force-push.
+  Divergence check:
+  ```bash
+  git fetch origin main -q
+  L=$(git rev-parse @); R=$(git rev-parse origin/main); B=$(git merge-base @ origin/main)
+  [ "$L" = "$R" ] && echo SYNC || { [ "$R" = "$B" ] && echo AHEAD || { [ "$L" = "$B" ] && echo BEHIND || echo DIVERGED; }; }
+  ```
+- Sign commits with `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`.
+
+## Deploy — GitHub Pages lag (important when "verifying" a fix)
+
+Pages deploys from `main` but **the live site lags a push by ~1–2 min** (build + CDN cache):
+right after pushing, `single.css`/HTML on `serafimkhristenko.github.io/pokerok` still serve
+the **previous** commit. So when a user reports "the change isn't there," **do not assume a
+code bug** — first confirm what's actually live:
+
+```bash
+# cache-busted fetch of the live CSS
+curl -s "https://serafimkhristenko.github.io/pokerok/assets/css/single.css?v=$(date +%s)" | grep -o '<some-rule-you-just-added>'
+# build status + which commit is built
+gh api repos/serafimkhristenko/pokerok/pages/builds/latest --jq '.status+" "+.commit[0:7]'
+```
+If the live CSS lacks your rule and the build is `building`/on the old SHA, the code is fine —
+tell the user to hard-refresh (Ctrl+F5) once it's `built`.
+
+## Local preview & headless screenshots (this Windows machine)
+
+Repo is checked out at `D:\pokerok`. Preview + verify visually without asking:
+
+```bash
+(cd /d/pokerok && python -m http.server 8099 >/dev/null 2>&1 &); sleep 1
+"/c/Program Files/Google/Chrome/Application/chrome.exe" --headless --disable-gpu \
+  --hide-scrollbars --window-size=1920,960 \
+  --screenshot="<scratchpad>/shot.png" "http://localhost:8099/single.html"
+```
+Notes learned the hard way: `--force-device-scale-factor=2` can render **blank** (use dsf=1);
+`<img src=file://…>` fails (`ERR_FILE_NOT_FOUND`) — serve over http instead; a mobile
+`--window-size=390,…` gets clamped to ~482 CSS px, so "cut-off" edges in a mobile shot are
+often a screenshot artifact, not a real overflow — sanity-check at width ≥500.
+
+## `single.html` footer (current layout, after 2026-07 rework)
+
+Structure: `.site-footer > .footer-bar > { .footer-brand , .footer-pays }`, where
+`.footer-pays` wraps `.pay-row--crypto` (7 wordmark crypto icons, `.pay-i--crypto` 30px) and
+`.pay-row--cards` (7 card/wallet icons, `.pay-i` 18px). Icons live in `assets/pay/*.svg`
+(monochrome, `currentColor`-ish). Layout rules:
+- `.footer-bar` is `display:flex; justify-content:center` inside `max-width:1320px; margin:0
+  auto`, so **both icon groups center on the page axis**.
+- `.footer-brand` is **taken out of flow** (`position:absolute; left:clamp(14px,2.5vw,34px);
+  bottom:16px`, anchored to the full-width `.site-footer`) so it doesn't push the icons
+  off-center. It's a row `[18+] ПОКЕРОК`: the wordmark sits on the bottom strip and the red
+  `.age-badge` is moved left of it via `order:-1`.
+- A true single 14-icon row doesn't fit even at 1920px (crypto logos carry wordmarks), so it
+  intentionally wraps to two centered rows — this is the agreed fallback, not a bug.
+- Mobile (`@media max-width:640px`): `.footer-bar` becomes a centered column and
+  `.footer-brand` returns to `position:static`.
+
+## Figma UI kit (design system mirror of this site)
+
+A component library built from this site lives in Figma file `inEgIu1dorY0ScPJM9bdPA`
+("POKEROK — UI Kit", Anna Alemasova / My Team, Pro). It has foundations (color/type/effect
+variables), payment icons, mascot **Sticker** components, and a **Pillar Card** set with 4
+variants on a `Pillar` axis (Bonus/Prize/WSOP/Formats). Use the Figma MCP (`use_figma`,
+`get_screenshot`, etc.) and the `/figma-*` skills when extending it.
