@@ -147,11 +147,14 @@ section { position: relative; isolation: isolate; }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; }   /* natural vertical scroll, clip stray horizontal overflow */
   .s-hero { position: relative; min-height: 100vh; padding: 52px 0 40px; }
-  /* strong top+bottom scrim so the text stays legible over the busy photo */
+  /* portrait crop of the scene so the models fill the mobile frame */
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp'); background-position: center 32%; }
+  /* lighter scrim — darken only the top (title) and bottom (footer/CTA);
+     keep the middle band light so the models stay clearly visible */
   .s-hero::after {
     background: linear-gradient(180deg,
-      rgba(8,8,8,0.80) 0%, rgba(8,8,8,0.34) 24%,
-      rgba(8,8,8,0.30) 46%, rgba(8,8,8,0.62) 74%, rgba(8,8,8,0.92) 100%);
+      rgba(8,8,8,0.66) 0%, rgba(8,8,8,0.16) 20%,
+      rgba(8,8,8,0.12) 48%, rgba(8,8,8,0.46) 74%, rgba(8,8,8,0.90) 100%);
   }
   .wrap { padding: 0 18px; }
   /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
