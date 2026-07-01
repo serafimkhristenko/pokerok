@@ -90,14 +90,14 @@ section { position: relative; isolation: isolate; }
 .fomo-clock { font-weight: 800; font-size: 18px; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
 .trust-tokens { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.62); text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 
-/* ══ FOOTER — transparent, overlaid on the photo; crypto left │ cards right,
-      ПОКЕРОК + 18 centered below as the grounding band ══ */
+/* ══ FOOTER — transparent, overlaid on the photo; one row, left→right:
+      ПОКЕРОК+18 brand │ crypto │ cards (2 rows each) ══ */
 .site-footer { background: transparent; padding: 0 clamp(10px,2.2vw,26px) 16px; position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
 .footer-bar {
   max-width: 1320px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
-  grid-template-areas: "crypto cards" "brand brand";
-  align-items: start; row-gap: 10px; column-gap: clamp(20px,4vw,64px);
+  display: grid; grid-template-columns: auto auto auto;
+  grid-template-areas: "brand crypto cards";
+  align-items: center; justify-content: space-between; row-gap: 10px; column-gap: clamp(20px,4vw,64px);
 }
 
 /* two icon groups split to the sides; grid layout for precise column alignment */
@@ -105,17 +105,17 @@ section { position: relative; isolation: isolate; }
 .pay-row--crypto {
   grid-area: crypto;
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(4, auto);   /* 7 icons -> 2 rows (4 + 3) */
   justify-items: center;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   column-gap: clamp(16px,2.2vw,28px);
-  row-gap: 5px;
+  row-gap: 8px;
 }
 .pay-row--cards {
   grid-area: cards;
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(4, auto);   /* 7 icons -> 2 rows (4 + 3) */
   justify-self: end;
   justify-items: center;
   align-items: center;
@@ -125,9 +125,9 @@ section { position: relative; isolation: isolate; }
   row-gap: 14px;
   opacity: 0.9;
 }
-/* mirror the crypto group's tidy block: its orphan (7th) sits under the LEFT edge;
-   for the right-anchored cards group the orphan must sit under the RIGHT column */
-.pay-row--cards li:last-child { grid-column: 3; }
+/* right-pack the 3-item second row (cols 2-4) so it mirrors the crypto block's
+   left-packed second row instead of dangling under the left edge */
+.pay-row--cards li:nth-child(5) { grid-column: 2; }
 .pay-row li { display: inline-flex; align-items: center; }
 .pay-cell--c3 { grid-column: 3; }
 .pay-cell--c4 { grid-column: 4; }
@@ -136,15 +136,15 @@ section { position: relative; isolation: isolate; }
 .pay-i--crypto { height: 33px; }
 .pay-row li:hover .pay-i { opacity: 1; }
 
-/* brand centered below both groups — no separator line */
-.footer-brand { grid-area: brand; justify-self: center; display: flex; flex-direction: column; align-items: center; gap: 7px; }
+/* brand anchored to the LEFT of the footer row */
+.footer-brand { grid-area: brand; justify-self: start; align-self: center; display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
 .footer-logo { text-decoration: none; }
 .footer-mark { font-size: 24px; }
 .age-badge {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5);
+  width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--red);
   font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.02em;
-  color: rgba(255,255,255,0.82);
+  color: var(--red);
 }
 
 /* ══ STICKY MOBILE CTA ══ */
@@ -157,10 +157,15 @@ section { position: relative; isolation: isolate; }
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
   /* collapse the side-by-side grid into a centered single-column stack */
-  .footer-bar { grid-template-columns: 1fr; grid-template-areas: "crypto" "cards" "brand"; justify-items: center; row-gap: 12px; }
+  .footer-bar { grid-template-columns: 1fr; grid-template-areas: "brand" "crypto" "cards"; justify-content: stretch; justify-items: center; row-gap: 12px; }
+  .footer-brand { justify-self: center; align-items: center; }
   .pay-row--crypto, .pay-row--cards {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 18px;
   }
+  /* stretch to the full cell (not shrink-to-content) so flex-wrap can actually wrap;
+     desktop's justify-self:end would size to max-content and overflow the viewport */
+  .pay-row--cards { justify-self: stretch; }
+  .pay-row--cards li:nth-child(5) { grid-column: auto; }
   .pay-cell--c3, .pay-cell--c4, .pay-cell--c5 { grid-column: auto; }
   .pay-i--crypto { height: 26px; }
 }
