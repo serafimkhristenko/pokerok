@@ -95,14 +95,12 @@ section { position: relative; isolation: isolate; }
 .site-footer { background: transparent; padding: 0 clamp(10px,2.2vw,26px) 16px; position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
 .footer-bar {
   max-width: 1320px; margin: 0 auto;
-  display: flex; align-items: center; flex-wrap: nowrap;
-  gap: clamp(18px,3vw,52px);
+  display: flex; align-items: center; justify-content: center;
 }
 
-/* logo pinned left; both icon groups flow together, centered in the remaining space.
-   ideal = one row; when it can't fit it wraps but stays centered (no side-anchoring) */
+/* icon groups centered on the page axis; the brand is taken out of flow (absolute,
+   anchored to the full-width footer) so it doesn't push the icons off-center */
 .footer-pays {
-  flex: 1 1 auto; min-width: 0;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
   gap: 12px clamp(18px,2.6vw,34px);
 }
@@ -115,11 +113,16 @@ section { position: relative; isolation: isolate; }
 .pay-i--crypto { height: 30px; }
 .pay-row li:hover .pay-i { opacity: 1; }
 
-/* brand anchored to the LEFT of the footer row */
-.footer-brand { flex: 0 0 auto; align-self: center; display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+/* brand pinned to the bottom-left of the full-width footer: [18+] ПОКЕРОК on the
+   lowest strip, a small margin off the screen's left edge */
+.footer-brand {
+  position: absolute; left: clamp(14px,2.5vw,34px); bottom: 16px;
+  display: flex; flex-direction: row; align-items: center; gap: 11px;
+}
 .footer-logo { text-decoration: none; }
 .footer-mark { font-size: 24px; }
 .age-badge {
+  order: -1;   /* sit to the LEFT of the wordmark */
   display: inline-flex; align-items: center; justify-content: center;
   width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--red);
   font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.02em;
@@ -137,7 +140,7 @@ section { position: relative; isolation: isolate; }
 @media (max-width: 640px) {
   /* stack the logo above the centered icon groups */
   .footer-bar { flex-direction: column; align-items: center; gap: 14px; }
-  .footer-brand { align-items: center; }
+  .footer-brand { position: static; align-items: center; }
   .footer-pays { width: 100%; }
   .pay-i--crypto { height: 26px; }
 }
