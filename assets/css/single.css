@@ -167,13 +167,15 @@ section { position: relative; isolation: isolate; }
 }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* allow vertical scroll to reach the payment strip below the fold */
-  /* content shifted up; brand sits inline after livestats, payments scroll in below */
-  .s-hero { position: relative; min-height: 100svh; padding: 24px 0 20px; }
-  /* anchor the image from the top so the models' heads are never clipped; only a slight
-     zoom from the top edge (crops a little sky/feet, never the faces) */
-  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center top; transform: none; }
-  /* no overall darkening — legibility from local plates only */
-  .s-hero::after { background: none; }
+  /* photo header: the top ~165px is pure photo (faces live at y≈20–150), all text
+     starts below the chins */
+  .s-hero { position: relative; min-height: 100svh; padding: 168px 0 20px; }
+  /* width-locked sizing: the image always renders 390×693-ish regardless of the
+     device's svh or content growth, so the faces sit at the SAME css-y on every
+     phone (cover made them drift between devices and slip under the title) */
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-size: 100% auto; background-position: center top; transform: none; }
+  /* soft seam at the photo's bottom edge — content below flows onto black */
+  .s-hero::after { background: linear-gradient(to bottom, rgba(8,8,8,0) 563px, var(--black) 693px); }
   .s-hero__blur { display: none; }
   .wrap { padding: 0 18px; }
   /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
@@ -182,9 +184,8 @@ section { position: relative; isolation: isolate; }
   .hero-title br { display: inline; }
   .hero-title .accent { display: block; }
   .hero-sub { font-size: 14px; margin-top: 7px; }
-  /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge;
-     pushed down so the stickers clear the models' faces (face zone ends ~y200) */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 62px; padding: 0; max-width: 100%; }
+  /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge */
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 12px; padding: 0; max-width: 100%; }
   .pillar { width: auto; min-width: 0; gap: 6px; }
   .pillar-ic { width: 42px; height: 42px; }
   .pillar-val { font-size: 19px; }
