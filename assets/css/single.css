@@ -17,14 +17,11 @@ body {
 .wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 img { max-width: 100%; }
 
-/* logo lockup — wordmark stays MONO (brand rule); mascot replaces the «О» */
+/* logo lockup — classic wordmark (plain «О»), lives in the footer on all viewports */
 .brand-mark, .footer-mark {
   font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--white);
   display: inline-flex; align-items: center; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1; white-space: nowrap;
 }
-.brand-o { height: 1.05em; width: auto; display: inline-block; margin: 0 -0.04em; vertical-align: middle; transform: translateY(0.04em); }
-/* inline hero brand is mobile-only (desktop keeps the brand in the footer) */
-.hero-brand { display: none; }
 
 /* ══ BUTTONS ══ */
 .cta {
@@ -55,12 +52,13 @@ section { position: relative; isolation: isolate; }
 }
 /* full-frame blur removed — targeted frosting now lives in the per-text plates */
 .s-hero__blur { display: none; }
-/* anchor the text column from the TOP (not viewport-centered) so it sits ABOVE the
-   photo's focal subject (money case) instead of fighting it for the center */
-.s-hero { position: absolute; inset: 0; display: flex; align-items: flex-start; padding: clamp(30px,5.5vh,56px) 0 168px; }
-.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+/* content column stretches the full hero height; auto-margins on .pillars/.livestats
+   split the spare space into two even breathing bands (title top, pillars middle,
+   CTA group in the lower third) — no dense top / empty bottom */
+.s-hero { position: absolute; inset: 0; display: flex; align-items: stretch; padding: clamp(30px,5.5vh,56px) 0 140px; }
+.hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 960px; }
 .hero-title {
-  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(40px, 8vw, 100px);
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(40px, 6.2vw, 80px);
   line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase; max-width: 16ch;
   text-wrap: balance;
   text-shadow: 0 2px 30px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.5);
@@ -70,8 +68,8 @@ section { position: relative; isolation: isolate; }
 .hero-sub .hl { color: #FFD24A; text-shadow: 0 0 12px rgba(255,200,60,0.55), 0 1px 2px rgba(0,0,0,0.9); }
 
 /* pillars — emoji icons reduced ~1.5×, full captions */
-.pillars { display: flex; gap: clamp(13px,1.7vw,24px); flex-wrap: wrap; justify-content: center; margin-top: 26px; max-width: 900px; }
-.pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 200px; text-decoration: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border-radius: 8px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.pillars { display: flex; gap: clamp(13px,1.7vw,24px); flex-wrap: wrap; justify-content: center; margin-top: auto; padding: 22px 0 20px; max-width: 840px; }
+.pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 186px; text-decoration: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border-radius: 8px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
 .pillar:focus-visible, .footer-logo:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 6px; }
 .pillar-ic { width: clamp(42px, 5.3vw, 58px); height: clamp(42px, 5.3vw, 58px); object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.55)); transition: transform .25s ease; animation: bob 3.4s ease-in-out infinite; }
 .pillar:nth-child(2) .pillar-ic { animation-delay: .45s } .pillar:nth-child(3) .pillar-ic { animation-delay: .9s } .pillar:nth-child(4) .pillar-ic { animation-delay: 1.35s }
@@ -86,7 +84,7 @@ section { position: relative; isolation: isolate; }
 @keyframes bob { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-9px) } }
 
 /* livestats */
-.livestats { display: inline-flex; align-items: center; gap: 14px; margin-top: 22px; flex-wrap: wrap; justify-content: center; background: rgba(8,8,8,0.34); border-radius: 10px; padding: 7px 16px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
+.livestats { display: inline-flex; align-items: center; gap: 14px; margin-top: auto; flex-wrap: wrap; justify-content: center; background: rgba(8,8,8,0.34); border-radius: 10px; padding: 7px 16px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
 .livestat { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 .livestat b { color: #fff; font-weight: 800; font-variant-numeric: tabular-nums; } .livestat:last-child b { color: #FFD24A; }
 .livestat-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d36b; box-shadow: 0 0 8px rgba(52,211,107,0.8); animation: ping 1.6s ease-out infinite; }
@@ -104,18 +102,16 @@ section { position: relative; isolation: isolate; }
 .age-badge--solid { background: var(--red); color: #fff; border-color: var(--red); }
 .trust .age-badge { width: 22px; height: 22px; font-size: 9px; order: 0; }
 
-/* ══ FOOTER — transparent, overlaid on the photo; one row, left→right:
-      ПОКЕРОК+18 brand │ crypto │ cards (2 rows each) ══ */
-.site-footer { background: linear-gradient(to top, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.3) 45%, rgba(8,8,8,0) 100%); padding: clamp(22px,5vh,50px) clamp(10px,2.2vw,26px) max(16px, env(safe-area-inset-bottom)); position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
+/* ══ FOOTER — dark strip overlaid on the photo's bottom; one row, left→right:
+      [ПОКЕРОК 18+ / tagline] │ crypto + cards icons ══ */
+.site-footer { background: linear-gradient(to top, rgba(8,8,8,0.68) 0%, rgba(8,8,8,0.4) 45%, rgba(8,8,8,0) 100%); padding: clamp(22px,5vh,50px) clamp(10px,2.2vw,26px) max(16px, env(safe-area-inset-bottom)); position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
 .footer-bar {
   max-width: 1320px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center; justify-content: space-between; gap: clamp(18px,3vw,40px);
 }
 
-/* icon groups centered on the page axis; the brand is taken out of flow (absolute,
-   anchored to the full-width footer) so it doesn't push the icons off-center */
 .footer-pays {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  flex: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
   gap: 5px clamp(18px,2.6vw,34px);
 }
 .pay-row { list-style: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px clamp(16px,2.2vw,28px); }
@@ -127,19 +123,16 @@ section { position: relative; isolation: isolate; }
 .pay-i--crypto { height: 30px; }
 .pay-row li:hover .pay-i { opacity: 1; }
 
-/* brand pinned to the bottom-left of the full-width footer: [18+] ПОКЕРОК on the
-   lowest strip, a small margin off the screen's left edge */
-.footer-brand {
-  position: absolute; left: clamp(14px,2.5vw,34px); bottom: 16px;
-  display: flex; flex-direction: row; align-items: center; gap: 11px;
-}
+/* brand lockup in the footer flow: classic wordmark + 18+ on the right, tagline below */
+.footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; flex-shrink: 0; }
+.footer-brand-row { display: flex; align-items: center; gap: 10px; }
 .footer-logo { text-decoration: none; }
 .footer-mark { font-size: 24px; }
+.footer-tagline { font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; }
 .age-badge {
-  order: -1;   /* sit to the LEFT of the wordmark */
   display: inline-flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--red);
-  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.02em;
+  width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--red);
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 9.5px; letter-spacing: 0.02em;
   color: var(--red);
 }
 
@@ -147,21 +140,26 @@ section { position: relative; isolation: isolate; }
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
 
-/* desktop: tighten the gap right after the CTA button (before the trust line) */
+/* desktop: tighten the gap right after the CTA button (before the trust line);
+   the single 18+ badge lives in the footer lockup, the licence line stays text-only;
+   thin divider between the brand and the icon block (per brand reference) */
 @media (min-width: 641px) {
   .hero-cta .trust { margin-top: -6px; }
+  .trust .age-badge { display: none; }
+  .footer-pays { border-left: 1px solid rgba(255,255,255,0.16); padding-left: clamp(18px,2.6vw,34px); }
 }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
-  /* footer holds only the payment icons; the brand moves inline after livestats */
-  .footer-bar { flex-direction: column; align-items: center; gap: 9px; }
-  .footer-brand { display: none; }
-  .hero-brand { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 9px; margin-top: 16px; }
-  .footer-mark { font-size: 18px; text-shadow: 0 1px 10px rgba(0,0,0,0.75), 0 0 3px rgba(0,0,0,0.6); }
-  .age-badge { width: 24px; height: 24px; font-size: 9px; }
-  .footer-pays { width: 100%; gap: 4px 12px; }
-  .pay-row { gap: 5px 10px; }
+  /* footer: brand lockup centered above the icon rows; the 18+ badge stays in the
+     licence line inside the hero, so the footer lockup hides its copy */
+  .footer-bar { flex-direction: column; align-items: center; gap: 12px; }
+  .footer-brand { align-items: center; gap: 3px; }
+  .footer-brand .age-badge { display: none; }
+  .footer-mark { font-size: 18px; }
+  .footer-tagline { font-size: 10px; }
+  .footer-pays { width: 100%; gap: 4px 12px; border-left: 0; padding-left: 0; }
+  .pay-row { gap: 5px 8px; }   /* 8px keeps all 7 card marks on one line at 390px */
   .pay-i--crypto { height: 15px; }
   .pay-i { height: 10px; }
 }
@@ -181,7 +179,7 @@ section { position: relative; isolation: isolate; }
   .hero-title .accent { display: block; }   /* keep "ЯРКИЕ БОНУСЫ" on its own line */
   .hero-sub { font-size: 14px; margin-top: 7px; }
   /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 12px; max-width: 100%; }
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 12px; padding: 0; max-width: 100%; }
   .pillar { width: auto; min-width: 0; gap: 6px; }
   .pillar-ic { width: 42px; height: 42px; }
   .pillar-val { font-size: 19px; }
