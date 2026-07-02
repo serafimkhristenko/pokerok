@@ -52,6 +52,8 @@ section { position: relative; isolation: isolate; }
 }
 /* full-frame blur removed — targeted frosting now lives in the per-text plates */
 .s-hero__blur { display: none; }
+/* retouch scribble over the bg photo — mobile crop only, hidden on desktop */
+.s-hero__patch { display: none; }
 /* content column stretches the full hero height; auto-margins on .pillars/.livestats
    split the spare space into two even breathing bands (title top, pillars middle,
    CTA group in the lower third) — no dense top / empty bottom */
@@ -181,6 +183,10 @@ section { position: relative; isolation: isolate; }
   /* width-proportional sizing (vw): the composition scales with screen width only,
      never with svh — faces stay at the same spot on every phone */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-size: 129.5vw auto; background-position: -21.2vw -6.7vw; transform: none; }
+  /* sky-coloured scribble from Figma 2118:54 (Vector 1): hides the beige pier arc at the
+     photo's top-right. The bg crop and these offsets are both in vw (frame px / 390·100),
+     so the patch stays glued to the photo at any width; box includes the 6px stroke bleed */
+  .s-hero__patch { display: block; position: absolute; left: 89.03vw; top: -0.86vw; width: 12.78vw; height: 5.49vw; z-index: -1; pointer-events: none; }
   /* translucent scrim instead of the old solid-black seam: the photo reads through the
      darkening everywhere; the faces band up top stays clear, depth grows toward the footer */
   .s-hero::after { background: linear-gradient(to bottom, rgba(8,8,8,0) 30vw, rgba(8,8,8,0.28) 90vw, rgba(8,8,8,0.36) 155vw, rgba(8,8,8,0.42) 223.4vw); }
