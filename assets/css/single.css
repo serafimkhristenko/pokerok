@@ -143,6 +143,11 @@ section { position: relative; isolation: isolate; }
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
 
+/* desktop: tighten the gap right after the CTA button (before the trust line) */
+@media (min-width: 641px) {
+  .hero-cta .trust { margin-top: -6px; }
+}
+
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
   /* footer holds only the payment icons; the brand moves inline after livestats */
@@ -159,7 +164,7 @@ section { position: relative; isolation: isolate; }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* allow vertical scroll to reach the payment strip below the fold */
   /* content shifted up; brand sits inline after livestats, payments scroll in below */
-  .s-hero { position: relative; min-height: 100svh; padding: 24px 0 24px; }
+  .s-hero { position: relative; min-height: 100svh; padding: 10px 0 20px; }
   /* anchor the image from the top so the models' heads are never clipped; only a slight
      zoom from the top edge (crops a little sky/feet, never the faces) */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center top; transform: none; }
@@ -172,7 +177,7 @@ section { position: relative; isolation: isolate; }
   .hero-title .accent { display: block; }   /* keep "ЯРКИЕ БОНУСЫ" on its own line */
   .hero-sub { font-size: 14px; margin-top: 7px; }
   /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 150px)); justify-content: center; gap: 16px 14px; margin-top: 18px; max-width: 100%; }
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 12px; max-width: 100%; }
   .pillar { width: auto; min-width: 0; gap: 6px; }
   .pillar-ic { width: 42px; height: 42px; }
   .pillar-val { font-size: 19px; }
@@ -183,7 +188,7 @@ section { position: relative; isolation: isolate; }
   /* mobile order under the pillars: CTA → licence → FOMO → livestats */
   .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 16px; max-width: 100%; order: 2; }
   .livestat-sep { display: none; }
-  .hero-cta { width: 100%; gap: 10px; margin-top: 18px; order: 1; }
+  .hero-cta { width: 100%; gap: 10px; margin-top: 10px; order: 1; }
   .hero-cta .trust { order: 1; }
   .hero-cta .cta--primary { order: 2; }
   .hero-cta .fomo { order: 3; }
