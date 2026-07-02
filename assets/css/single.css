@@ -81,7 +81,9 @@ section { position: relative; isolation: isolate; }
 .pillar:nth-child(1) .pillar-val, .pillar:nth-child(2) .pillar-val, .pillar:nth-child(3) .pillar-val { color: #FFD24A; text-shadow: 0 0 18px rgba(255,200,60,0.5), 0 1px 3px rgba(0,0,0,0.85); }
 .pillar:nth-child(4) .pillar-val { color: #FF4A6A; text-shadow: 0 0 16px rgba(231,31,67,0.65), 0 1px 3px rgba(0,0,0,0.95); }
 .pillar-val--text { font-size: clamp(14px,1.7vw,18px); text-transform: uppercase; letter-spacing: 0.06em; }
-.pillar-cap { font-weight: 600; font-size: 12px; line-height: 1.35; color: #fff; text-align: center; max-width: 24ch; background: rgba(8,8,8,0.42); border-radius: 10px; padding: 7px 11px; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); text-shadow: 0 1px 2px rgba(0,0,0,0.9); }
+/* caption plates fill the card and stretch to the tallest one in the row (flex:1 in a
+   stretched flex/grid line) — all four pillars read as equal-size cards */
+.pillar-cap { font-weight: 600; font-size: 12px; line-height: 1.35; color: #fff; text-align: center; width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; background: rgba(8,8,8,0.42); border-radius: 10px; padding: 7px 11px; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); text-shadow: 0 1px 2px rgba(0,0,0,0.9); }
 .pillar:hover { transform: translateY(-6px); } .pillar:hover .pillar-ic { transform: scale(1.09); }
 @keyframes bob { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-9px) } }
 
@@ -101,7 +103,6 @@ section { position: relative; isolation: isolate; }
 .trust-tokens { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85); background: rgba(8,8,8,0.34); border-radius: 10px; padding: 4px 12px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
 /* licence line carries the single 18+ badge (filled) right next to the label */
 .trust { display: flex; align-items: center; justify-content: center; gap: 8px; }
-.age-badge--solid { background: var(--red); color: #fff; border-color: var(--red); }
 .trust .age-badge { width: 22px; height: 22px; font-size: 9px; order: 0; }
 
 /* ══ FOOTER — dark strip overlaid on the photo's bottom; one row, left→right:
@@ -137,6 +138,9 @@ section { position: relative; isolation: isolate; }
   font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 9.5px; letter-spacing: 0.02em;
   color: var(--red);
 }
+/* filled variant (licence line) — must come after the base rule, otherwise the base
+   red text colour wins the cascade and «18+» vanishes red-on-red */
+.age-badge--solid { background: var(--red); color: #fff; border-color: var(--red); }
 
 /* ══ REVEAL ══ */
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
@@ -166,46 +170,51 @@ section { position: relative; isolation: isolate; }
   .pay-i { height: 10px; }
 }
 @media (max-width: 640px) {
-  body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* allow vertical scroll to reach the payment strip below the fold */
+  body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* small scroll from the first screen down to the footer on the photo's bottom */
   /* poster layout per Figma frame 2118:54: the photo is zoomed ~130% and raised so
-     the models flank the edges; the 4-line title mast sits between their faces */
-  .s-hero { position: relative; min-height: 100svh; padding: 59px 0 100px; }
+     the models flank the edges; the 4-line title mast sits between their faces.
+     Hero height = rendered photo height (129.5vw · 2048/1152 − 6.7vw raise ≈ 223.4vw):
+     the page ends exactly at the photo's bottom edge, so the absolutely-positioned
+     footer (base rule) lands on the models' feet; padding-bottom keeps the content
+     column clear of that overlay */
+  .s-hero { position: relative; min-height: 223.4vw; padding: 55px 0 130px; }
   /* width-proportional sizing (vw): the composition scales with screen width only,
      never with svh — faces stay at the same spot on every phone */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-size: 129.5vw auto; background-position: -21.2vw -6.7vw; transform: none; }
-  /* soft seam at the photo's bottom edge (photo ends ~223vw) — content flows onto black */
-  .s-hero::after { background: linear-gradient(to bottom, rgba(8,8,8,0) 213vw, var(--black) 223vw); }
+  /* translucent scrim instead of the old solid-black seam: the photo reads through the
+     darkening everywhere; the faces band up top stays clear, depth grows toward the footer */
+  .s-hero::after { background: linear-gradient(to bottom, rgba(8,8,8,0) 30vw, rgba(8,8,8,0.28) 90vw, rgba(8,8,8,0.36) 155vw, rgba(8,8,8,0.42) 223.4vw); }
   .s-hero__blur { display: none; }
   .wrap { padding: 0 18px; }
-  /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
   /* poster mast: four stacked lines (ЖАРКОЕ / ЛЕТО — / ЯРКИЕ / БОНУСЫ) — the narrow
      63vw column makes «ЯРКИЕ БОНУСЫ» wrap onto two lines between the faces */
-  .hero-title { font-size: clamp(27px, 8vw, 44px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; }
+  .hero-title { font-size: clamp(26px, 7.7vw, 42px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; }
   .hero-title br { display: inline; }
   .hero-title .accent { display: block; }
-  .hero-sub { font-size: 14px; margin-top: 17px; }
-  /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 17px; padding: 0; max-width: 100%; }
-  .pillar { width: auto; min-width: 0; gap: 6px; }
-  .pillar-ic { width: 46px; height: 46px; }
-  .pillar-val { font-size: 15px; }
-  .pillar-val--text { font-size: 15px; }
-  /* caption plates fill the pillar cell on mobile */
-  .pillar-cap { font-size: 12px; line-height: 1.35; color: #fff; max-width: 100%; padding: 6px 9px; }
-  .trust-tokens { font-size: 12.5px; color: rgba(255,255,255,0.9); }
-  /* per frame 2118:54 the livestats plate closes the column BELOW the licence line */
-  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 17px; max-width: 100%; order: 1; }
+  .hero-sub { font-size: 14px; margin-top: 10px; }
+  /* pillars: 2 capped columns, centered; two explicit 1fr rows + full-height cells keep
+     all four cards the same size (plates equalize via flex:1 in the base rule) */
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); grid-template-rows: repeat(2, 1fr); justify-content: center; gap: 8px; margin-top: 10px; padding: 0; max-width: 100%; }
+  .pillar { width: auto; min-width: 0; gap: 5px; height: 100%; }
+  .pillar-ic { width: 40px; height: 40px; }
+  .pillar-val { font-size: 14px; }
+  .pillar-val--text { font-size: 14px; }
+  .pillar-cap { font-size: 11px; padding: 4px 8px; }
+  .trust-tokens { font-size: 11.5px; color: rgba(255,255,255,0.9); }
+  /* livestats back between the pillars and the CTA group — inside the first screen */
+  .livestats { display: flex; flex-direction: column; gap: 3px; margin-top: 10px; max-width: 100%; font-size: 11px; padding: 5px 14px; }
   .livestat-sep { display: none; }
-  .hero-cta { width: 100%; gap: 11px; margin-top: 17px; }
-  .cta--primary { width: min(298px, 100%); justify-content: center; padding: 15px 24px; }
+  .hero-cta { width: 100%; gap: 8px; margin-top: 10px; }
+  .cta--primary { width: min(298px, 100%); justify-content: center; padding: 13px 24px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
-  .fomo { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; padding: 6px 13px; font-size: 11px; letter-spacing: 0.03em; max-width: 100%; }
+  .fomo { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; padding: 4px 12px; font-size: 11px; letter-spacing: 0.03em; max-width: 100%; }
   .fomo-label { text-align: center; }
   .fomo-dot { width: 7px; height: 7px; }
   .fomo-clock { font-size: 14px; padding: 1px 7px; border-radius: 5px; }
-  /* payment strip flows in normal document order at the bottom — reachable by a small
-     scroll so the mobile browser toolbar can't hide it */
-  .site-footer { position: static; padding: 18px 14px max(28px, env(safe-area-inset-bottom)); }
+  /* footer keeps the base absolute position — a translucent strip overlaid on the
+     photo's bottom edge, right on the models' feet; lighter gradient than desktop
+     so the deck and feet stay readable through it */
+  .site-footer { padding: 14px 14px max(20px, env(safe-area-inset-bottom)); background: linear-gradient(to top, rgba(8,8,8,0.5) 0%, rgba(8,8,8,0.25) 55%, rgba(8,8,8,0) 100%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
