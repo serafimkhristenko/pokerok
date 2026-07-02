@@ -63,6 +63,8 @@ section { position: relative; isolation: isolate; }
   text-wrap: balance;
   text-shadow: 0 2px 30px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.5);
 }
+/* the ЖАРКОЕ|ЛЕТО break is mobile-only (desktop keeps the two-line banner) */
+.hero-title br { display: none; }
 .hero-title .accent { color: var(--red); text-shadow: 0 0 26px rgba(231,31,67,0.55), 0 2px 16px rgba(0,0,0,0.6); }
 .hero-sub { margin-top: 8px; font-weight: 600; font-size: clamp(13px, 1.6vw, 17px); color: #fff; text-shadow: 0 0 4px rgba(0,0,0,0.92), 0 1px 2px rgba(0,0,0,0.95); }
 .hero-sub .hl { color: #FFD24A; text-shadow: 0 0 12px rgba(255,200,60,0.55), 0 1px 2px rgba(0,0,0,0.9); }
@@ -175,11 +177,14 @@ section { position: relative; isolation: isolate; }
   .s-hero__blur { display: none; }
   .wrap { padding: 0 18px; }
   /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
+  /* poster mast: three stacked lines (ЖАРКОЕ / ЛЕТО — / ЯРКИЕ БОНУСЫ) */
   .hero-title { font-size: clamp(27px, 8vw, 44px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 100%; text-wrap: balance; overflow-wrap: break-word; }
-  .hero-title .accent { display: block; }   /* keep "ЯРКИЕ БОНУСЫ" on its own line */
+  .hero-title br { display: inline; }
+  .hero-title .accent { display: block; }
   .hero-sub { font-size: 14px; margin-top: 7px; }
-  /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 12px; padding: 0; max-width: 100%; }
+  /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge;
+     pushed down so the stickers clear the models' faces (face zone ends ~y200) */
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 62px; padding: 0; max-width: 100%; }
   .pillar { width: auto; min-width: 0; gap: 6px; }
   .pillar-ic { width: 42px; height: 42px; }
   .pillar-val { font-size: 19px; }
