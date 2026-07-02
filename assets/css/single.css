@@ -139,17 +139,21 @@ section { position: relative; isolation: isolate; }
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
   /* stack the logo above the centered icon groups */
-  .footer-bar { flex-direction: column; align-items: center; gap: 14px; }
-  .footer-brand { position: static; align-items: center; }
-  .footer-pays { width: 100%; }
-  .pay-i--crypto { height: 26px; }
+  .footer-bar { flex-direction: column; align-items: center; gap: 9px; }
+  .footer-brand { position: static; align-items: center; gap: 8px; }
+  .footer-mark { font-size: 18px; }
+  .age-badge { width: 24px; height: 24px; font-size: 9px; }
+  .footer-pays { width: 100%; gap: 5px 14px; }
+  .pay-row { gap: 6px 12px; }
+  .pay-i--crypto { height: 18px; }
+  .pay-i { height: 12px; }
 }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; }   /* natural vertical scroll, clip stray horizontal overflow */
-  .s-hero { position: relative; min-height: 100vh; padding: 52px 0 40px; }
-  /* portrait crop of the scene so the models fill the mobile frame;
-     zoom a touch to create vertical headroom, then lift the scene up ~28px */
-  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center 30%; transform: scale(1.05) translateY(-10px); transform-origin: center top; }
+  .s-hero { position: relative; min-height: 100vh; padding: 74px 0 108px; }
+  /* portrait crop of the scene; zoom for headroom then drop the frame down a touch
+     so the models' heads aren't clipped at the top */
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); transform: scale(1.12) translateY(30px); transform-origin: center center; }
   /* lighter scrim — darken only the top (title) and bottom (footer/CTA);
      keep the middle band light so the models stay clearly visible */
   .s-hero::after {
@@ -178,7 +182,8 @@ section { position: relative; isolation: isolate; }
   .cta--primary { width: 100%; justify-content: center; padding: 16px 24px; }
   .fomo { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 10px; width: fit-content; max-width: 100%; }
   .fomo-label { flex: 1 0 100%; text-align: center; }   /* label full-width line, clock drops below */
-  .site-footer { position: relative; padding-bottom: max(28px, env(safe-area-inset-bottom)); }
+  /* pin the small logo strip to the bottom of the first screen, over the photo */
+  .site-footer { position: absolute; left: 0; right: 0; bottom: 0; padding: 16px 14px max(12px, env(safe-area-inset-bottom)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
