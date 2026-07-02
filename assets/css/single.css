@@ -155,12 +155,12 @@ section { position: relative; isolation: isolate; }
   /* anchor the image from the top so the models' heads are never clipped; only a slight
      zoom from the top edge (crops a little sky/feet, never the faces) */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center top; transform: none; }
-  /* lighter scrim — darken only the top (title) and bottom (footer/CTA);
-     keep the middle band light so the models stay clearly visible */
+  /* even semi-transparent scrim across the whole text column so white copy
+     stays readable over the bright photo (darker top/bottom, ~0.44 middle) */
   .s-hero::after {
     background: linear-gradient(180deg,
-      rgba(8,8,8,0.66) 0%, rgba(8,8,8,0.16) 20%,
-      rgba(8,8,8,0.12) 48%, rgba(8,8,8,0.46) 74%, rgba(8,8,8,0.90) 100%);
+      rgba(8,8,8,0.74) 0%, rgba(8,8,8,0.46) 20%,
+      rgba(8,8,8,0.44) 58%, rgba(8,8,8,0.60) 80%, rgba(8,8,8,0.92) 100%);
   }
   .wrap { padding: 0 18px; }
   /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
