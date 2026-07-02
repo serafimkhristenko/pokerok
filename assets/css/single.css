@@ -151,7 +151,7 @@ section { position: relative; isolation: isolate; }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; }   /* natural vertical scroll, clip stray horizontal overflow */
   /* 100svh (not 100vh) so the bottom logo strip isn't hidden behind the mobile browser bar */
-  .s-hero { position: relative; min-height: 100svh; padding: 50px 0 92px; }
+  .s-hero { position: relative; min-height: 100svh; padding: 40px 0 92px; }
   /* anchor the image from the top so the models' heads are never clipped; only a slight
      zoom from the top edge (crops a little sky/feet, never the faces) */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center top; transform: none; }
