@@ -87,7 +87,7 @@ section { position: relative; isolation: isolate; }
 @keyframes bob { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-9px) } }
 
 /* livestats */
-.livestats { display: inline-flex; align-items: center; gap: 14px; margin-top: 22px; flex-wrap: wrap; justify-content: center; background: rgba(8,8,8,0.34); border-radius: 10px; padding: 7px 16px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
+.livestats { display: inline-flex; align-items: center; gap: 14px; margin-top: 22px; flex-wrap: wrap; justify-content: center; background: rgba(8,8,8,0.34); border-radius: 10px; padding: 7px 16px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
 .livestat { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 .livestat b { color: #fff; font-weight: 800; font-variant-numeric: tabular-nums; } .livestat:last-child b { color: #FFD24A; }
 .livestat-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d36b; box-shadow: 0 0 8px rgba(52,211,107,0.8); animation: ping 1.6s ease-out infinite; }
@@ -99,7 +99,7 @@ section { position: relative; isolation: isolate; }
 .fomo { display: inline-flex; align-items: center; gap: 10px; padding: 9px 18px; border-radius: 100px; background: rgba(231,31,67,0.14); border: 1px solid rgba(231,31,67,0.55); font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; }
 .fomo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); animation: ping 1.4s ease-out infinite; }
 .fomo-clock { font-weight: 800; font-size: 18px; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
-.trust-tokens { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85); background: rgba(8,8,8,0.34); border-radius: 10px; padding: 4px 12px; text-shadow: 0 0 3px rgba(0,0,0,0.7); }
+.trust-tokens { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85); background: rgba(8,8,8,0.34); border-radius: 10px; padding: 4px 12px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
 
 /* ══ FOOTER — transparent, overlaid on the photo; one row, left→right:
       ПОКЕРОК+18 brand │ crypto │ cards (2 rows each) ══ */
@@ -168,12 +168,9 @@ section { position: relative; isolation: isolate; }
   .s-hero::after {
     background: radial-gradient(ellipse 92% 60% at 50% 45%, rgba(8,8,8,0.70) 0%, rgba(8,8,8,0.34) 56%, rgba(8,8,8,0) 88%);
   }
-  /* softer, tighter frosted mask hugging the mobile text column */
-  .s-hero__blur {
-    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
-    -webkit-mask-image: radial-gradient(ellipse 84% 62% at 50% 45%, #000 0, #000 44%, transparent 82%);
-            mask-image: radial-gradient(ellipse 84% 62% at 50% 45%, #000 0, #000 44%, transparent 82%);
-  }
+  /* no full-frame blur on mobile — the models fill the frame; targeted frosting
+     lives only in the small livestats/trust plates so the girls stay crisp */
+  .s-hero__blur { display: none; }
   .wrap { padding: 0 18px; }
   /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
   .hero-title { font-size: clamp(27px, 8vw, 44px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 100%; text-wrap: balance; overflow-wrap: break-word; }
