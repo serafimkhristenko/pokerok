@@ -143,10 +143,10 @@ section { position: relative; isolation: isolate; }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
-  /* stack the logo above the centered icon groups */
+  /* only the payment icons stay in the footer; the brand is lifted to the top */
   .footer-bar { flex-direction: column; align-items: center; gap: 9px; }
-  .footer-brand { position: static; align-items: center; gap: 8px; }
-  .footer-mark { font-size: 18px; }
+  .footer-brand { position: absolute; top: 12px; bottom: auto; left: 0; right: 0; justify-content: center; align-items: center; gap: 8px; z-index: 5; }
+  .footer-mark { font-size: 18px; text-shadow: 0 1px 10px rgba(0,0,0,0.75), 0 0 3px rgba(0,0,0,0.6); }
   .age-badge { width: 24px; height: 24px; font-size: 9px; }
   .footer-pays { width: 100%; gap: 4px 12px; }
   .pay-row { gap: 5px 10px; }
@@ -154,9 +154,9 @@ section { position: relative; isolation: isolate; }
   .pay-i { height: 10px; }
 }
 @media (max-width: 640px) {
-  body { display: block; height: auto; overflow-x: hidden; }   /* natural vertical scroll, clip stray horizontal overflow */
-  /* 100svh (not 100vh) so the bottom logo strip isn't hidden behind the mobile browser bar */
-  .s-hero { position: relative; min-height: 100svh; padding: 40px 0 92px; }
+  body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* allow vertical scroll to reach the payment strip below the fold */
+  /* hero fills the first screen; brand sits at the very top, payments scroll in below */
+  .s-hero { position: relative; min-height: 100svh; padding: 52px 0 24px; }
   /* anchor the image from the top so the models' heads are never clipped; only a slight
      zoom from the top edge (crops a little sky/feet, never the faces) */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center top; transform: none; }
@@ -177,18 +177,22 @@ section { position: relative; isolation: isolate; }
   /* caption plates fill the pillar cell on mobile */
   .pillar-cap { font-size: 12px; line-height: 1.35; color: #fff; max-width: 100%; padding: 6px 9px; }
   .trust-tokens { font-size: 12px; color: rgba(255,255,255,0.9); }
-  /* livestats: inline-flex grew to max-content and overflowed — stack them centered */
-  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 16px; max-width: 100%; }
+  /* mobile order under the pillars: CTA → licence → FOMO → livestats */
+  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 16px; max-width: 100%; order: 2; }
   .livestat-sep { display: none; }
-  .hero-cta { width: 100%; gap: 10px; margin-top: 18px; }
+  .hero-cta { width: 100%; gap: 10px; margin-top: 18px; order: 1; }
+  .hero-cta .cta--primary { order: 1; }
+  .hero-cta .trust { order: 2; }
+  .hero-cta .fomo { order: 3; }
   .cta--primary { width: 100%; justify-content: center; padding: 15px 24px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
   .fomo { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; padding: 6px 13px; font-size: 11px; letter-spacing: 0.03em; max-width: 100%; }
   .fomo-label { text-align: center; }
   .fomo-dot { width: 7px; height: 7px; }
   .fomo-clock { font-size: 14px; padding: 1px 7px; border-radius: 5px; }
-  /* small logo strip lifted a bit off the very bottom of the screen */
-  .site-footer { position: absolute; left: 0; right: 0; bottom: max(24px, env(safe-area-inset-bottom)); padding: 14px 14px 0; }
+  /* payment strip flows in normal document order at the bottom — reachable by a small
+     scroll so the mobile browser toolbar can't hide it */
+  .site-footer { position: static; padding: 18px 14px max(28px, env(safe-area-inset-bottom)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
