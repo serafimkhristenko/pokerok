@@ -48,9 +48,9 @@ section { position: relative; isolation: isolate; }
 }
 .s-hero::after {
   content: ''; position: absolute; inset: 0; z-index: -1;
-  /* darken only behind the text column so the women stay clearly visible at the edges */
-  background: radial-gradient(ellipse 48% 86% at 50% 44%, rgba(8,8,8,0.58) 0%, rgba(8,8,8,0.30) 50%, rgba(8,8,8,0) 80%),
-              linear-gradient(180deg, rgba(8,8,8,0.15) 0%, rgba(8,8,8,0) 18%, rgba(8,8,8,0) 70%, rgba(8,8,8,0.4) 100%);
+  /* center-weighted scrim: strong behind the text column, fading to nothing at the
+     edges so the women stay crisp at the sides (no top/bottom edge darkening) */
+  background: radial-gradient(ellipse 52% 90% at 50% 44%, rgba(8,8,8,0.68) 0%, rgba(8,8,8,0.34) 52%, rgba(8,8,8,0) 84%);
 }
 /* anchor the text column from the TOP (not viewport-centered) so it sits ABOVE the
    photo's focal subject (money case) instead of fighting it for the center */
@@ -155,12 +155,10 @@ section { position: relative; isolation: isolate; }
   /* anchor the image from the top so the models' heads are never clipped; only a slight
      zoom from the top edge (crops a little sky/feet, never the faces) */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center top; transform: none; }
-  /* even semi-transparent scrim across the whole text column so white copy
-     stays readable over the bright photo (darker top/bottom, ~0.44 middle) */
+  /* center-weighted scrim (matches desktop): dark centre behind the text,
+     transparent at the edges — no top/bottom bands */
   .s-hero::after {
-    background: linear-gradient(180deg,
-      rgba(8,8,8,0.74) 0%, rgba(8,8,8,0.46) 20%,
-      rgba(8,8,8,0.44) 58%, rgba(8,8,8,0.60) 80%, rgba(8,8,8,0.92) 100%);
+    background: radial-gradient(ellipse 92% 60% at 50% 45%, rgba(8,8,8,0.70) 0%, rgba(8,8,8,0.34) 56%, rgba(8,8,8,0) 88%);
   }
   .wrap { padding: 0 18px; }
   /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
