@@ -143,17 +143,18 @@ section { position: relative; isolation: isolate; }
   .footer-brand { position: static; align-items: center; gap: 8px; }
   .footer-mark { font-size: 18px; }
   .age-badge { width: 24px; height: 24px; font-size: 9px; }
-  .footer-pays { width: 100%; gap: 5px 14px; }
-  .pay-row { gap: 6px 12px; }
-  .pay-i--crypto { height: 18px; }
-  .pay-i { height: 12px; }
+  .footer-pays { width: 100%; gap: 4px 12px; }
+  .pay-row { gap: 5px 10px; }
+  .pay-i--crypto { height: 15px; }
+  .pay-i { height: 10px; }
 }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; }   /* natural vertical scroll, clip stray horizontal overflow */
-  .s-hero { position: relative; min-height: 100vh; padding: 74px 0 108px; }
-  /* portrait crop of the scene; zoom for headroom then drop the frame down a touch
-     so the models' heads aren't clipped at the top */
-  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); transform: scale(1.12) translateY(30px); transform-origin: center center; }
+  /* 100svh (not 100vh) so the bottom logo strip isn't hidden behind the mobile browser bar */
+  .s-hero { position: relative; min-height: 100svh; padding: 64px 0 92px; }
+  /* anchor the image from the top so the models' heads are never clipped; only a slight
+     zoom from the top edge (crops a little sky/feet, never the faces) */
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center top; transform: none; }
   /* lighter scrim — darken only the top (title) and bottom (footer/CTA);
      keep the middle band light so the models stay clearly visible */
   .s-hero::after {
@@ -167,21 +168,22 @@ section { position: relative; isolation: isolate; }
   .hero-title .accent { display: block; }   /* keep "ЯРКИЕ БОНУСЫ" on its own line */
   .hero-sub { font-size: 13px; margin-top: 6px; }
   /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 150px)); justify-content: center; gap: 22px 14px; margin-top: 22px; max-width: 100%; }
-  .pillar { width: auto; min-width: 0; gap: 7px; }
-  .pillar-ic { width: 46px; height: 46px; }
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 150px)); justify-content: center; gap: 16px 14px; margin-top: 18px; max-width: 100%; }
+  .pillar { width: auto; min-width: 0; gap: 6px; }
+  .pillar-ic { width: 42px; height: 42px; }
   .pillar-val { font-size: 19px; }
   .pillar-val--text { font-size: 15px; }
   .pillar-cap { font-size: 11px; max-width: 100%; }
   /* livestats: inline-flex grew to max-content and overflowed — stack them centered */
-  .livestats { display: flex; flex-direction: column; gap: 6px; margin-top: 20px; max-width: 100%; }
+  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 16px; max-width: 100%; }
   .livestat-sep { display: none; }
-  /* fomo pill was inline-flex (sized to max-content) — give the CTA column real width
-     so max-width:100% bites and the long label can wrap above the clock */
-  .hero-cta { width: 100%; gap: 12px; }
-  .cta--primary { width: 100%; justify-content: center; padding: 16px 24px; }
-  .fomo { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 10px; width: fit-content; max-width: 100%; }
-  .fomo-label { flex: 1 0 100%; text-align: center; }   /* label full-width line, clock drops below */
+  .hero-cta { width: 100%; gap: 10px; margin-top: 18px; }
+  .cta--primary { width: 100%; justify-content: center; padding: 15px 24px; }
+  /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
+  .fomo { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; padding: 6px 13px; font-size: 11px; letter-spacing: 0.03em; max-width: 100%; }
+  .fomo-label { text-align: center; }
+  .fomo-dot { width: 7px; height: 7px; }
+  .fomo-clock { font-size: 14px; padding: 1px 7px; border-radius: 5px; }
   /* pin the small logo strip to the bottom of the first screen, over the photo */
   .site-footer { position: absolute; left: 0; right: 0; bottom: 0; padding: 16px 14px max(12px, env(safe-area-inset-bottom)); }
 }
