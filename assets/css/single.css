@@ -23,6 +23,8 @@ img { max-width: 100%; }
   display: inline-flex; align-items: center; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1; white-space: nowrap;
 }
 .brand-o { height: 1.05em; width: auto; display: inline-block; margin: 0 -0.04em; vertical-align: middle; transform: translateY(0.04em); }
+/* inline hero brand is mobile-only (desktop keeps the brand in the footer) */
+.hero-brand { display: none; }
 
 /* ══ BUTTONS ══ */
 .cta {
@@ -143,9 +145,10 @@ section { position: relative; isolation: isolate; }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
-  /* only the payment icons stay in the footer; the brand is lifted to the top */
+  /* footer holds only the payment icons; the brand moves inline after livestats */
   .footer-bar { flex-direction: column; align-items: center; gap: 9px; }
-  .footer-brand { position: absolute; top: 12px; bottom: auto; left: 0; right: 0; justify-content: center; align-items: center; gap: 8px; z-index: 5; }
+  .footer-brand { display: none; }
+  .hero-brand { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 9px; order: 3; margin-top: 16px; }
   .footer-mark { font-size: 18px; text-shadow: 0 1px 10px rgba(0,0,0,0.75), 0 0 3px rgba(0,0,0,0.6); }
   .age-badge { width: 24px; height: 24px; font-size: 9px; }
   .footer-pays { width: 100%; gap: 4px 12px; }
@@ -155,8 +158,8 @@ section { position: relative; isolation: isolate; }
 }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* allow vertical scroll to reach the payment strip below the fold */
-  /* hero fills the first screen; brand sits at the very top, payments scroll in below */
-  .s-hero { position: relative; min-height: 100svh; padding: 52px 0 24px; }
+  /* content shifted up; brand sits inline after livestats, payments scroll in below */
+  .s-hero { position: relative; min-height: 100svh; padding: 24px 0 24px; }
   /* anchor the image from the top so the models' heads are never clipped; only a slight
      zoom from the top edge (crops a little sky/feet, never the faces) */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center top; transform: none; }
@@ -181,8 +184,8 @@ section { position: relative; isolation: isolate; }
   .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 16px; max-width: 100%; order: 2; }
   .livestat-sep { display: none; }
   .hero-cta { width: 100%; gap: 10px; margin-top: 18px; order: 1; }
-  .hero-cta .cta--primary { order: 1; }
-  .hero-cta .trust { order: 2; }
+  .hero-cta .trust { order: 1; }
+  .hero-cta .cta--primary { order: 2; }
   .hero-cta .fomo { order: 3; }
   .cta--primary { width: 100%; justify-content: center; padding: 15px 24px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
