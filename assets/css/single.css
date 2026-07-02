@@ -149,7 +149,7 @@ section { position: relative; isolation: isolate; }
   .s-hero { position: relative; min-height: 100vh; padding: 52px 0 40px; }
   /* portrait crop of the scene so the models fill the mobile frame;
      zoom a touch to create vertical headroom, then lift the scene up ~28px */
-  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp'); background-position: center 32%; transform: scale(1.1) translateY(-28px); transform-origin: center top; }
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-position: center 30%; transform: scale(1.05) translateY(-10px); transform-origin: center top; }
   /* lighter scrim — darken only the top (title) and bottom (footer/CTA);
      keep the middle band light so the models stay clearly visible */
   .s-hero::after {
