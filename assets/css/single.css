@@ -64,7 +64,8 @@ section { position: relative; isolation: isolate; }
   text-shadow: 0 2px 30px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.5);
 }
 .hero-title .accent { color: var(--red); text-shadow: 0 0 26px rgba(231,31,67,0.55), 0 2px 16px rgba(0,0,0,0.6); }
-.hero-sub { margin-top: 8px; font-weight: 600; font-size: clamp(13px, 1.6vw, 17px); color: #fff; text-shadow: 0 0 3px rgba(0,0,0,0.85), 0 1px 12px rgba(0,0,0,0.7); }
+.hero-sub { margin-top: 8px; font-weight: 600; font-size: clamp(13px, 1.6vw, 17px); color: #fff; text-shadow: 0 0 4px rgba(0,0,0,0.92), 0 1px 2px rgba(0,0,0,0.95); }
+.hero-sub .hl { color: #FFD24A; text-shadow: 0 0 12px rgba(255,200,60,0.55), 0 1px 2px rgba(0,0,0,0.9); }
 
 /* pillars — emoji icons reduced ~1.5×, full captions */
 .pillars { display: flex; gap: clamp(13px,1.7vw,24px); flex-wrap: wrap; justify-content: center; margin-top: 26px; max-width: 900px; }
@@ -73,7 +74,10 @@ section { position: relative; isolation: isolate; }
 .pillar-ic { width: clamp(42px, 5.3vw, 58px); height: clamp(42px, 5.3vw, 58px); object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.55)); transition: transform .25s ease; animation: bob 3.4s ease-in-out infinite; }
 .pillar:nth-child(2) .pillar-ic { animation-delay: .45s } .pillar:nth-child(3) .pillar-ic { animation-delay: .9s } .pillar:nth-child(4) .pillar-ic { animation-delay: 1.35s }
 .pillar-val { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(17px,2.1vw,24px); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.85), 0 2px 14px rgba(0,0,0,0.65); white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
-.pillar:nth-child(1) .pillar-val, .pillar:nth-child(2) .pillar-val { color: #FFD24A; text-shadow: 0 0 18px rgba(255,200,60,0.45), 0 1px 8px rgba(0,0,0,0.6); }
+/* $-sums + WSOP glow gold; «Все форматы» glows brand-red — colour tells them apart
+   from the plain white words and makes each pillar pop over the photo */
+.pillar:nth-child(1) .pillar-val, .pillar:nth-child(2) .pillar-val, .pillar:nth-child(3) .pillar-val { color: #FFD24A; text-shadow: 0 0 18px rgba(255,200,60,0.5), 0 1px 3px rgba(0,0,0,0.85); }
+.pillar:nth-child(4) .pillar-val { color: #FF4A6A; text-shadow: 0 0 16px rgba(231,31,67,0.65), 0 1px 3px rgba(0,0,0,0.95); }
 .pillar-val--text { font-size: clamp(14px,1.7vw,18px); text-transform: uppercase; letter-spacing: 0.06em; }
 .pillar-cap { font-weight: 600; font-size: 12px; line-height: 1.35; color: #fff; text-align: center; max-width: 24ch; background: rgba(8,8,8,0.42); border-radius: 10px; padding: 7px 11px; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); text-shadow: 0 1px 2px rgba(0,0,0,0.9); }
 .pillar:hover { transform: translateY(-6px); } .pillar:hover .pillar-ic { transform: scale(1.09); }
