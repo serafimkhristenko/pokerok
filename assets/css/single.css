@@ -167,37 +167,37 @@ section { position: relative; isolation: isolate; }
 }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* allow vertical scroll to reach the payment strip below the fold */
-  /* photo header: the top ~165px is pure photo (faces live at y≈20–150), all text
-     starts below the chins */
-  .s-hero { position: relative; min-height: 100svh; padding: 168px 0 20px; }
-  /* width-locked sizing: the image always renders 390×693-ish regardless of the
-     device's svh or content growth, so the faces sit at the SAME css-y on every
-     phone (cover made them drift between devices and slip under the title) */
-  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-size: 100% auto; background-position: center top; transform: none; }
-  /* soft seam at the photo's bottom edge — content below flows onto black */
-  .s-hero::after { background: linear-gradient(to bottom, rgba(8,8,8,0) 563px, var(--black) 693px); }
+  /* poster layout per Figma frame 2118:54: the photo is zoomed ~130% and raised so
+     the models flank the edges; the 4-line title mast sits between their faces */
+  .s-hero { position: relative; min-height: 100svh; padding: 59px 0 100px; }
+  /* width-proportional sizing (vw): the composition scales with screen width only,
+     never with svh — faces stay at the same spot on every phone */
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-size: 129.5vw auto; background-position: -21.2vw -6.7vw; transform: none; }
+  /* soft seam at the photo's bottom edge (photo ends ~223vw) — content flows onto black */
+  .s-hero::after { background: linear-gradient(to bottom, rgba(8,8,8,0) 213vw, var(--black) 223vw); }
   .s-hero__blur { display: none; }
   .wrap { padding: 0 18px; }
   /* bigger, bold hero headline — full-width block so long lines wrap in-bounds on real phones */
-  /* poster mast: three stacked lines (ЖАРКОЕ / ЛЕТО — / ЯРКИЕ БОНУСЫ) */
-  .hero-title { font-size: clamp(27px, 8vw, 44px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 100%; text-wrap: balance; overflow-wrap: break-word; }
+  /* poster mast: four stacked lines (ЖАРКОЕ / ЛЕТО — / ЯРКИЕ / БОНУСЫ) — the narrow
+     63vw column makes «ЯРКИЕ БОНУСЫ» wrap onto two lines between the faces */
+  .hero-title { font-size: clamp(27px, 8vw, 44px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; }
   .hero-title br { display: inline; }
   .hero-title .accent { display: block; }
-  .hero-sub { font-size: 14px; margin-top: 7px; }
+  .hero-sub { font-size: 14px; margin-top: 17px; }
   /* pillars: 2 capped columns, centered — minmax(0,…) stops any cell from bleeding past the edge */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 12px; padding: 0; max-width: 100%; }
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); justify-content: center; gap: 14px 10px; margin-top: 17px; padding: 0; max-width: 100%; }
   .pillar { width: auto; min-width: 0; gap: 6px; }
-  .pillar-ic { width: 42px; height: 42px; }
-  .pillar-val { font-size: 19px; }
+  .pillar-ic { width: 46px; height: 46px; }
+  .pillar-val { font-size: 15px; }
   .pillar-val--text { font-size: 15px; }
   /* caption plates fill the pillar cell on mobile */
   .pillar-cap { font-size: 12px; line-height: 1.35; color: #fff; max-width: 100%; padding: 6px 9px; }
-  .trust-tokens { font-size: 12px; color: rgba(255,255,255,0.9); }
-  /* mobile follows the source (desktop) order: livestats → FOMO → CTA → licence */
-  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 16px; max-width: 100%; }
+  .trust-tokens { font-size: 12.5px; color: rgba(255,255,255,0.9); }
+  /* per frame 2118:54 the livestats plate closes the column BELOW the licence line */
+  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 17px; max-width: 100%; order: 1; }
   .livestat-sep { display: none; }
-  .hero-cta { width: 100%; gap: 10px; margin-top: 16px; }
-  .cta--primary { width: 100%; justify-content: center; padding: 15px 24px; }
+  .hero-cta { width: 100%; gap: 11px; margin-top: 17px; }
+  .cta--primary { width: min(298px, 100%); justify-content: center; padding: 15px 24px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
   .fomo { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; padding: 6px 13px; font-size: 11px; letter-spacing: 0.03em; max-width: 100%; }
   .fomo-label { text-align: center; }
