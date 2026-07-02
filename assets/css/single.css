@@ -99,6 +99,10 @@ section { position: relative; isolation: isolate; }
 .fomo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); animation: ping 1.4s ease-out infinite; }
 .fomo-clock { font-weight: 800; font-size: 18px; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
 .trust-tokens { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85); background: rgba(8,8,8,0.34); border-radius: 10px; padding: 4px 12px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
+/* licence line carries the single 18+ badge (filled) right next to the label */
+.trust { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.age-badge--solid { background: var(--red); color: #fff; border-color: var(--red); }
+.trust .age-badge { width: 22px; height: 22px; font-size: 9px; order: 0; }
 
 /* ══ FOOTER — transparent, overlaid on the photo; one row, left→right:
       ПОКЕРОК+18 brand │ crypto │ cards (2 rows each) ══ */
@@ -153,7 +157,7 @@ section { position: relative; isolation: isolate; }
   /* footer holds only the payment icons; the brand moves inline after livestats */
   .footer-bar { flex-direction: column; align-items: center; gap: 9px; }
   .footer-brand { display: none; }
-  .hero-brand { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 9px; order: 3; margin-top: 16px; }
+  .hero-brand { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 9px; margin-top: 16px; }
   .footer-mark { font-size: 18px; text-shadow: 0 1px 10px rgba(0,0,0,0.75), 0 0 3px rgba(0,0,0,0.6); }
   .age-badge { width: 24px; height: 24px; font-size: 9px; }
   .footer-pays { width: 100%; gap: 4px 12px; }
@@ -185,13 +189,10 @@ section { position: relative; isolation: isolate; }
   /* caption plates fill the pillar cell on mobile */
   .pillar-cap { font-size: 12px; line-height: 1.35; color: #fff; max-width: 100%; padding: 6px 9px; }
   .trust-tokens { font-size: 12px; color: rgba(255,255,255,0.9); }
-  /* mobile order under the pillars: CTA → licence → FOMO → livestats */
-  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 16px; max-width: 100%; order: 2; }
+  /* mobile follows the source (desktop) order: livestats → FOMO → CTA → licence */
+  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 16px; max-width: 100%; }
   .livestat-sep { display: none; }
-  .hero-cta { width: 100%; gap: 10px; margin-top: 10px; order: 1; }
-  .hero-cta .trust { order: 1; }
-  .hero-cta .cta--primary { order: 2; }
-  .hero-cta .fomo { order: 3; }
+  .hero-cta { width: 100%; gap: 10px; margin-top: 16px; }
   .cta--primary { width: 100%; justify-content: center; padding: 15px 24px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
   .fomo { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; padding: 6px 13px; font-size: 11px; letter-spacing: 0.03em; max-width: 100%; }
