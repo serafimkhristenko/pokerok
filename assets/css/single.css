@@ -17,11 +17,13 @@ body {
 .wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 img { max-width: 100%; }
 
-/* logo lockup — classic wordmark (plain «О»), lives in the footer on all viewports */
+/* logo lockup — classic two-tone wordmark: white «ПОКЕР» + brand-red «ОК»,
+   lives in the footer on all viewports */
 .brand-mark, .footer-mark {
   font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--white);
   display: inline-flex; align-items: center; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1; white-space: nowrap;
 }
+.mark-ok { color: var(--red); }
 
 /* ══ BUTTONS ══ */
 .cta {
