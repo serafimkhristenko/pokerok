@@ -5,14 +5,23 @@
   --red: #E71F43; --red-deep: #C01935;
   --muted: rgba(255,255,255,0.62); --faint: rgba(255,255,255,0.30); --line: rgba(255,255,255,0.08);
   --pano-url: url('../scenes/single-hero.webp');
+  /* fluid vertical rhythm: the poster absorbs viewport-height changes in its GAPS
+     (clamped vh) while text/CTA/plates keep fixed, readable sizes */
+  --hero-top: clamp(28px, 6.5vh, 76px);
+  --footer-reserve: clamp(110px, 15vh, 150px);   /* hero bottom pad ≥ real footer height */
+  --vgap: clamp(10px, 2.2vh, 24px);
+  --pillars-pad: clamp(12px, 2.4vh, 22px);
+  --corner-pad: clamp(20px, 3vw, 48px);          /* brand lockup offset from the corner */
 }
 
 html { scroll-behavior: smooth; color-scheme: dark; }
-/* one-screen poster shell: hero fills the full viewport, footer overlays its bottom edge */
+/* one-screen poster shell: hero fills the viewport and the footer overlays its bottom
+   edge on any normal screen; below the 680px hero floor the page simply scrolls
+   (same architecture as mobile) instead of squeezing content under the footer */
 body {
   font-family: 'Raleway', sans-serif; color: var(--white); background: var(--black);
-  -webkit-font-smoothing: antialiased; overflow: hidden;
-  height: 100vh; position: relative;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden; overflow-y: auto;
+  min-height: 100vh; position: relative;
 }
 .wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 img { max-width: 100%; }
@@ -60,7 +69,7 @@ section { position: relative; isolation: isolate; }
    collects ALL spare height into one open photo band right under the sub — the models
    and the money case read as the key visual — while pillars/stats/CTA sit as one
    bottom-anchored info block near the footer (client: top was overloaded, bottom empty) */
-.s-hero { position: absolute; inset: 0; display: flex; align-items: stretch; padding: clamp(36px,7vh,76px) 0 112px; }
+.s-hero { position: relative; min-height: max(100vh, 680px); display: flex; align-items: stretch; padding: var(--hero-top) 0 var(--footer-reserve); }
 .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 960px; }
 .hero-title {
   font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(36px, 5.4vw, 68px);
@@ -71,11 +80,11 @@ section { position: relative; isolation: isolate; }
 /* the ЖАРКОЕ|ЛЕТО break is mobile-only (desktop keeps the two-line banner) */
 .hero-title br { display: none; }
 .hero-title .accent { color: var(--red); text-shadow: 0 0 26px rgba(231,31,67,0.55), 0 2px 16px rgba(0,0,0,0.6); }
-.hero-sub { margin-top: 8px; font-weight: 600; font-size: clamp(13px, 1.6vw, 17px); color: #fff; text-shadow: 0 0 4px rgba(0,0,0,0.92), 0 1px 2px rgba(0,0,0,0.95); }
+.hero-sub { margin-top: clamp(6px, 1.2vh, 10px); font-weight: 600; font-size: clamp(13px, 1.6vw, 17px); color: #fff; text-shadow: 0 0 4px rgba(0,0,0,0.92), 0 1px 2px rgba(0,0,0,0.95); }
 .hero-sub .hl { color: #FFD24A; text-shadow: 0 0 12px rgba(255,200,60,0.55), 0 1px 2px rgba(0,0,0,0.9); }
 
 /* pillars — emoji icons reduced ~1.5×, full captions */
-.pillars { display: flex; gap: clamp(12px,1.5vw,20px); flex-wrap: wrap; justify-content: center; margin-top: auto; padding: 22px 0 18px; max-width: 768px; }
+.pillars { display: flex; gap: clamp(12px,1.5vw,20px); flex-wrap: wrap; justify-content: center; margin-top: auto; padding: var(--pillars-pad) 0; max-width: 768px; }
 .pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 174px; text-decoration: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border-radius: 8px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
 .pillar:focus-visible, .footer-logo:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 6px; }
 .pillar-ic { width: clamp(38px, 4.8vw, 50px); height: clamp(38px, 4.8vw, 50px); object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.55)); transition: transform .25s ease; animation: bob 3.4s ease-in-out infinite; }
@@ -93,7 +102,7 @@ section { position: relative; isolation: isolate; }
 @keyframes bob { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-9px) } }
 
 /* livestats */
-.livestats { display: inline-flex; align-items: center; gap: 14px; margin-top: 24px; flex-wrap: wrap; justify-content: center; background: rgba(8,8,8,0.34); border-radius: 10px; padding: 7px 16px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
+.livestats { display: inline-flex; align-items: center; gap: 14px; margin-top: var(--vgap); flex-wrap: wrap; justify-content: center; background: rgba(8,8,8,0.34); border-radius: 10px; padding: 7px 16px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
 .livestat { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 .livestat b { color: #fff; font-weight: 800; font-variant-numeric: tabular-nums; } .livestat:last-child b { color: #FFD24A; }
 .livestat-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d36b; box-shadow: 0 0 8px rgba(52,211,107,0.8); animation: ping 1.6s ease-out infinite; }
@@ -101,7 +110,7 @@ section { position: relative; isolation: isolate; }
 @keyframes ping { 0%{ box-shadow: 0 0 0 0 rgba(52,211,107,0.5) } 100%{ box-shadow: 0 0 0 9px rgba(52,211,107,0) } }
 
 /* fomo + cta group */
-.hero-cta { display: flex; flex-direction: column; align-items: center; gap: 13px; margin-top: 24px; }
+.hero-cta { display: flex; flex-direction: column; align-items: center; gap: clamp(9px, 1.6vh, 14px); margin-top: var(--vgap); }
 .fomo { display: inline-flex; align-items: center; gap: 10px; padding: 9px 18px; border-radius: 100px; background: rgba(231,31,67,0.14); border: 1px solid rgba(231,31,67,0.55); font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; }
 .fomo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); animation: ping 1.4s ease-out infinite; }
 .fomo-clock { font-weight: 800; font-size: 18px; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
@@ -109,29 +118,31 @@ section { position: relative; isolation: isolate; }
 /* licence line: «18+» lives as plain text inside the tokens pill (original form) */
 .trust { display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-/* ══ FOOTER — dark strip overlaid on the photo's bottom; one row, left→right:
-      [ПОКЕРОК 18+ / tagline] │ crypto + cards icons ══ */
+/* ══ FOOTER — dark strip overlaid on the photo's bottom.
+      Icons are centered on the SCREEN axis (the only in-flow content of the bar);
+      the brand lockup is pinned to the bottom-left corner of the viewport on every
+      breakpoint (absolute inside .site-footer, offset by --corner-pad) ══ */
 .site-footer { background: linear-gradient(to top, rgba(8,8,8,0.68) 0%, rgba(8,8,8,0.4) 45%, rgba(8,8,8,0) 100%); padding: clamp(22px,5vh,50px) clamp(10px,2.2vw,26px) max(16px, env(safe-area-inset-bottom)); position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
-.footer-bar {
-  max-width: 1320px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between; gap: clamp(18px,3vw,40px);
-}
+.footer-bar { display: flex; justify-content: center; }
 
 .footer-pays {
-  flex: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: 5px clamp(18px,2.6vw,34px);
+  flex: 0 1 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 5px clamp(14px,2.6vw,34px);
 }
-.pay-row { list-style: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px clamp(16px,2.2vw,28px); }
+/* fluid icon sizes: both rows shrink with the viewport instead of wrapping, so the
+   footer keeps a predictable height on every width (wrapping is what used to push
+   it up over the licence line) */
+.pay-row { list-style: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px clamp(10px,2.2vw,28px); }
 /* card icons are ~half the height of crypto ones; nudge them up in size so a single
    centered row reads as one balanced group rather than two mismatched strips */
 .pay-row--cards { opacity: 0.9; }
 .pay-row li { display: inline-flex; align-items: center; }
-.pay-i { height: 18px; width: auto; display: block; opacity: 0.8; transition: opacity .2s ease; }
-.pay-i--crypto { height: 30px; }
+.pay-i { height: clamp(11px, 1.35vw, 18px); width: auto; display: block; opacity: 0.8; transition: opacity .2s ease; }
+.pay-i--crypto { height: clamp(16px, 2.2vw, 30px); }
 .pay-row li:hover .pay-i { opacity: 1; }
 
-/* brand lockup in the footer flow: classic wordmark + 18+ on the right, tagline below */
-.footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; flex-shrink: 0; }
+/* brand lockup pinned to the bottom-left corner of the screen on all viewports */
+.footer-brand { position: absolute; left: var(--corner-pad); bottom: max(18px, env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
 .footer-brand-row { display: flex; align-items: center; gap: 10px; }
 .footer-logo { text-decoration: none; }
 .footer-mark { font-size: 24px; }
@@ -148,22 +159,30 @@ section { position: relative; isolation: isolate; }
 .reveal.in { opacity: 1; transform: none; }
 
 /* desktop: tighten the gap right after the CTA button (before the trust line);
-   thin divider between the brand and the icon block (per brand reference) */
+   icon rows never fragment — they shrink via the fluid heights instead */
 @media (min-width: 641px) {
   .hero-cta .trust { margin-top: -6px; }
-  .footer-pays { border-left: 1px solid rgba(255,255,255,0.16); padding-left: clamp(18px,2.6vw,34px); }
+  .pay-row { flex-wrap: nowrap; }
+}
+/* narrow desktop/tablet: screen-centered icons and the corner lockup can't share one
+   line with breathing room — icons ride above the lockup, footer grows, hero
+   reserves more room for it */
+@media (min-width: 641px) and (max-width: 1099px) {
+  :root { --footer-reserve: clamp(160px, 24vh, 200px); }
+  .footer-bar { padding-bottom: 62px; }
 }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
-  /* footer: brand lockup centered above the icon rows; the 18+ badge stays in the
-     licence line inside the hero, so the footer lockup hides its copy */
-  .footer-bar { flex-direction: column; align-items: center; gap: 12px; }
-  .footer-brand { align-items: center; gap: 3px; }
+  /* footer: icon rows centered, the brand lockup keeps its bottom-left corner spot
+     below them (same corner rule as desktop); the 18+ badge stays in the licence
+     line inside the hero, so the footer lockup hides its copy */
+  .footer-bar { padding-bottom: 44px; }
+  .footer-brand { gap: 3px; }
   .footer-brand .age-badge { display: none; }
   .footer-mark { font-size: 18px; }
   .footer-tagline { font-size: 10px; }
-  .footer-pays { width: 100%; gap: 4px 12px; border-left: 0; padding-left: 0; }
+  .footer-pays { width: 100%; gap: 4px 12px; }
   .pay-row { gap: 5px 8px; }   /* 8px keeps all 7 card marks on one line at 390px */
   .pay-i--crypto { height: 15px; }
   .pay-i { height: 10px; }
@@ -182,7 +201,7 @@ section { position: relative; isolation: isolate; }
   /* on iOS builds where Safari lets the page bleed behind the status bar/notch
      (viewport-fit=cover), the photo starts at the physical screen top and the
      content drops below the clock by the safe-area inset; elsewhere inset is 0 */
-  .s-hero { position: relative; min-height: 223.4vw; padding: calc(55px + env(safe-area-inset-top, 0px)) 0 130px; }
+  .s-hero { position: relative; min-height: 223.4vw; padding: calc(55px + env(safe-area-inset-top, 0px)) 0 150px; }   /* 150px: the corner lockup now sits below the icon rows, footer is taller */
   /* width-proportional sizing (vw): the composition scales with screen width only,
      never with svh — faces stay at the same spot on every phone */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-size: 129.5vw auto; background-position: -21.2vw -6.7vw; transform: none; }
