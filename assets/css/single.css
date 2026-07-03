@@ -35,8 +35,8 @@ img { max-width: 100%; }
 .cta:hover { transform: translateY(-3px); background: #f23355; box-shadow: 0 12px 40px rgba(231,31,67,0.45); }
 .cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .cta svg { width: 16px; height: 16px; }
-.cta--primary { padding: 18px 56px; font-size: 18px; border-radius: 8px; box-shadow: 0 12px 38px rgba(231,31,67,0.5); animation: ctapulse 2s ease-in-out infinite; }
-.cta--primary svg { width: 18px; height: 18px; }
+.cta--primary { padding: 22px 72px; font-size: 21px; border-radius: 10px; box-shadow: 0 12px 38px rgba(231,31,67,0.5); animation: ctapulse 2s ease-in-out infinite; }
+.cta--primary svg { width: 21px; height: 21px; }
 @keyframes ctapulse { 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.035) } }
 
 /* ══ HERO (poster) — background = deck slice of the panorama ══ */
@@ -54,13 +54,14 @@ section { position: relative; isolation: isolate; }
 .s-hero__blur { display: none; }
 /* retouch scribble over the bg photo — mobile crop only, hidden on desktop */
 .s-hero__patch { display: none; }
-/* content column stretches the full hero height; auto-margins on .pillars/.livestats
-   split the spare space into two even breathing bands (title top, pillars middle,
-   CTA group in the lower third) — no dense top / empty bottom */
-.s-hero { position: absolute; inset: 0; display: flex; align-items: stretch; padding: clamp(30px,5.5vh,56px) 0 140px; }
+/* content column stretches the full hero height; the single auto-margin on .pillars
+   collects ALL spare height into one open photo band right under the sub — the models
+   and the money case read as the key visual — while pillars/stats/CTA sit as one
+   bottom-anchored info block near the footer (client: top was overloaded, bottom empty) */
+.s-hero { position: absolute; inset: 0; display: flex; align-items: stretch; padding: clamp(36px,7vh,76px) 0 112px; }
 .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 960px; }
 .hero-title {
-  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(40px, 6.2vw, 80px);
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(36px, 5.4vw, 68px);
   line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase; max-width: 16ch;
   text-wrap: balance;
   text-shadow: 0 2px 30px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.5);
@@ -72,17 +73,17 @@ section { position: relative; isolation: isolate; }
 .hero-sub .hl { color: #FFD24A; text-shadow: 0 0 12px rgba(255,200,60,0.55), 0 1px 2px rgba(0,0,0,0.9); }
 
 /* pillars — emoji icons reduced ~1.5×, full captions */
-.pillars { display: flex; gap: clamp(13px,1.7vw,24px); flex-wrap: wrap; justify-content: center; margin-top: auto; padding: 22px 0 20px; max-width: 840px; }
-.pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 186px; text-decoration: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border-radius: 8px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.pillars { display: flex; gap: clamp(12px,1.5vw,20px); flex-wrap: wrap; justify-content: center; margin-top: auto; padding: 22px 0 18px; max-width: 768px; }
+.pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 174px; text-decoration: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border-radius: 8px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
 .pillar:focus-visible, .footer-logo:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 6px; }
-.pillar-ic { width: clamp(42px, 5.3vw, 58px); height: clamp(42px, 5.3vw, 58px); object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.55)); transition: transform .25s ease; animation: bob 3.4s ease-in-out infinite; }
+.pillar-ic { width: clamp(38px, 4.8vw, 50px); height: clamp(38px, 4.8vw, 50px); object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.55)); transition: transform .25s ease; animation: bob 3.4s ease-in-out infinite; }
 .pillar:nth-child(2) .pillar-ic { animation-delay: .45s } .pillar:nth-child(3) .pillar-ic { animation-delay: .9s } .pillar:nth-child(4) .pillar-ic { animation-delay: 1.35s }
-.pillar-val { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(17px,2.1vw,24px); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.85), 0 2px 14px rgba(0,0,0,0.65); white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
+.pillar-val { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(16px,1.9vw,21px); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.85), 0 2px 14px rgba(0,0,0,0.65); white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
 /* $-sums + WSOP glow gold; «Все форматы» glows brand-red — colour tells them apart
    from the plain white words and makes each pillar pop over the photo */
 .pillar:nth-child(1) .pillar-val, .pillar:nth-child(2) .pillar-val, .pillar:nth-child(3) .pillar-val { color: #FFD24A; text-shadow: 0 0 18px rgba(255,200,60,0.5), 0 1px 3px rgba(0,0,0,0.85); }
 .pillar:nth-child(4) .pillar-val { color: #FF4A6A; text-shadow: 0 0 16px rgba(231,31,67,0.65), 0 1px 3px rgba(0,0,0,0.95); }
-.pillar-val--text { font-size: clamp(14px,1.7vw,18px); text-transform: uppercase; letter-spacing: 0.06em; }
+.pillar-val--text { font-size: clamp(13px,1.6vw,17px); text-transform: uppercase; letter-spacing: 0.06em; }
 /* caption plates fill the card and stretch to the tallest one in the row (flex:1 in a
    stretched flex/grid line) — all four pillars read as equal-size cards */
 .pillar-cap { font-weight: 600; font-size: 12px; line-height: 1.35; color: #fff; text-align: center; width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; background: rgba(8,8,8,0.42); border-radius: 10px; padding: 7px 11px; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); text-shadow: 0 1px 2px rgba(0,0,0,0.9); }
@@ -90,7 +91,7 @@ section { position: relative; isolation: isolate; }
 @keyframes bob { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-9px) } }
 
 /* livestats */
-.livestats { display: inline-flex; align-items: center; gap: 14px; margin-top: auto; flex-wrap: wrap; justify-content: center; background: rgba(8,8,8,0.34); border-radius: 10px; padding: 7px 16px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
+.livestats { display: inline-flex; align-items: center; gap: 14px; margin-top: 24px; flex-wrap: wrap; justify-content: center; background: rgba(8,8,8,0.34); border-radius: 10px; padding: 7px 16px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
 .livestat { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 .livestat b { color: #fff; font-weight: 800; font-variant-numeric: tabular-nums; } .livestat:last-child b { color: #FFD24A; }
 .livestat-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d36b; box-shadow: 0 0 8px rgba(52,211,107,0.8); animation: ping 1.6s ease-out infinite; }
@@ -214,7 +215,8 @@ section { position: relative; isolation: isolate; }
   .livestats { display: flex; flex-direction: column; gap: 3px; margin-top: 10px; max-width: 100%; font-size: 11px; padding: 5px 14px; }
   .livestat-sep { display: none; }
   .hero-cta { width: 100%; gap: 8px; margin-top: 10px; }
-  .cta--primary { width: min(298px, 100%); justify-content: center; padding: 13px 24px; }
+  .cta--primary { width: min(298px, 100%); justify-content: center; padding: 13px 24px; font-size: 18px; }
+  .cta--primary svg { width: 18px; height: 18px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
   .fomo { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; padding: 4px 12px; font-size: 11px; letter-spacing: 0.03em; max-width: 100%; }
   .fomo-label { text-align: center; }
