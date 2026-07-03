@@ -35,8 +35,8 @@ img { max-width: 100%; }
 .cta:hover { transform: translateY(-3px); background: #f23355; box-shadow: 0 12px 40px rgba(231,31,67,0.45); }
 .cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .cta svg { width: 16px; height: 16px; }
-.cta--primary { padding: 22px 72px; font-size: 21px; border-radius: 10px; box-shadow: 0 12px 38px rgba(231,31,67,0.5); animation: ctapulse 2s ease-in-out infinite; }
-.cta--primary svg { width: 21px; height: 21px; }
+.cta--primary { padding: 26px 92px; font-size: 24px; border-radius: 12px; box-shadow: 0 14px 44px rgba(231,31,67,0.55); animation: ctapulse 2s ease-in-out infinite; }
+.cta--primary svg { width: 24px; height: 24px; }
 @keyframes ctapulse { 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.035) } }
 
 /* ══ HERO (poster) — background = deck slice of the panorama ══ */
@@ -215,8 +215,8 @@ section { position: relative; isolation: isolate; }
   .livestats { display: flex; flex-direction: column; gap: 3px; margin-top: 10px; max-width: 100%; font-size: 11px; padding: 5px 14px; }
   .livestat-sep { display: none; }
   .hero-cta { width: 100%; gap: 8px; margin-top: 10px; }
-  .cta--primary { width: min(298px, 100%); justify-content: center; padding: 13px 24px; font-size: 18px; }
-  .cta--primary svg { width: 18px; height: 18px; }
+  .cta--primary { width: min(320px, 100%); justify-content: center; padding: 15px 24px; font-size: 19px; }
+  .cta--primary svg { width: 19px; height: 19px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
   .fomo { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 8px; padding: 4px 12px; font-size: 11px; letter-spacing: 0.03em; max-width: 100%; }
   .fomo-label { text-align: center; }
