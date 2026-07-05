@@ -46,8 +46,8 @@ img { max-width: 100%; }
 .cta:hover { transform: translateY(-3px); background: #f23355; box-shadow: 0 12px 40px rgba(231,31,67,0.45); }
 .cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .cta svg { width: 16px; height: 16px; }
-.cta--primary { padding: 26px 92px; font-size: 24px; border-radius: 12px; box-shadow: 0 14px 44px rgba(231,31,67,0.55); animation: ctapulse 2s ease-in-out infinite; }
-.cta--primary svg { width: 24px; height: 24px; }
+.cta--primary { padding: 30px 110px; font-size: 27px; border-radius: 14px; box-shadow: 0 16px 50px rgba(231,31,67,0.55); animation: ctapulse 2s ease-in-out infinite; }
+.cta--primary svg { width: 27px; height: 27px; }
 @keyframes ctapulse { 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.035) } }
 
 /* ══ HERO (poster) — background = deck slice of the panorama ══ */
