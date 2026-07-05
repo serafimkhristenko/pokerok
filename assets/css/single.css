@@ -180,10 +180,13 @@ section { position: relative; isolation: isolate; }
   .footer-bar { align-items: center; justify-content: space-between; gap: 10px; }
   .footer-brand { position: static; gap: 3px; flex-shrink: 0; }
   .footer-brand .age-badge { display: none; }
-  .footer-mark { font-size: 18px; }
-  .footer-tagline { font-size: 9px; }
-  .footer-pays { flex: 1; width: auto; gap: 4px 10px; }
-  .pay-row { gap: 4px 7px; }
+  .footer-mark { font-size: 15px; }
+  .footer-tagline { font-size: 8px; }
+  /* icon rows as a tidy centered stack; the max-width forces each row to break into
+     a balanced 4+3 pyramid instead of a ragged 5+2 */
+  .footer-pays { flex: 1; width: auto; flex-direction: column; align-items: center; gap: 5px; }
+  .pay-row { gap: 4px 7px; max-width: 224px; }
+  .pay-row--crypto { max-width: 170px; }   /* 4+3, same pyramid as the cards row */
   .pay-row--cards { opacity: 1; }
   .pay-i--crypto { height: 16px; }
   .pay-i { height: 11px; opacity: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.7)); }
