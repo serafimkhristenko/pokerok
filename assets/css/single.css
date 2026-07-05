@@ -175,21 +175,22 @@ section { position: relative; isolation: isolate; }
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
   /* footer: one strip — brand lockup IN FLOW on the left, icon rows fill the right;
-     the 18+ badge stays in the licence line inside the hero, so the lockup hides its copy.
+     the 18+ badge stays in the licence line inside the hero, so the lockup hides its copy
+     (and the tagline goes too — the mark alone is enough at this size).
      Icons: full opacity + drop-shadow — they have to read over the busy teak deck */
-  .footer-bar { align-items: center; justify-content: space-between; gap: 10px; }
-  .footer-brand { position: static; gap: 3px; flex-shrink: 0; }
+  .footer-bar { align-items: center; justify-content: space-between; gap: 8px; }
+  .footer-brand { position: static; flex-shrink: 0; }
   .footer-brand .age-badge { display: none; }
-  .footer-mark { font-size: 15px; }
-  .footer-tagline { font-size: 8px; }
-  /* icon rows as a tidy centered stack; the max-width forces each row to break into
-     a balanced 4+3 pyramid instead of a ragged 5+2 */
-  .footer-pays { flex: 1; width: auto; flex-direction: column; align-items: center; gap: 5px; }
-  .pay-row { gap: 4px 7px; max-width: 224px; }
-  .pay-row--crypto { max-width: 170px; }   /* 4+3, same pyramid as the cards row */
+  .footer-tagline { display: none; }
+  .footer-mark { font-size: 14px; }
+  /* exactly two lines — all 7 crypto marks on one, all 7 card marks on the other,
+     a single equal gap between them; vw heights keep the crypto line inside the strip
+     on every phone width, and the card wordmarks are halved to match the crypto scale */
+  .footer-pays { flex: 1; width: auto; flex-direction: column; align-items: center; gap: 6px; }
+  .pay-row { gap: 4px; max-width: none; flex-wrap: nowrap; }
   .pay-row--cards { opacity: 1; }
-  .pay-i--crypto { height: 16px; }
-  .pay-i { height: 11px; opacity: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.7)); }
+  .pay-i--crypto { height: clamp(12px, 4.3vw, 16.5px); }
+  .pay-i { height: clamp(5.5px, 1.6vw, 6.5px); opacity: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.7)); }
 }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* small scroll from the first screen down to the footer on the photo's bottom */
@@ -205,7 +206,7 @@ section { position: relative; isolation: isolate; }
   /* on iOS builds where Safari lets the page bleed behind the status bar/notch
      (viewport-fit=cover), the photo starts at the physical screen top and the
      content drops below the clock by the safe-area inset; elsewhere inset is 0 */
-  .s-hero { position: relative; min-height: 223.4vw; padding: calc(55px + env(safe-area-inset-top, 0px)) 0 130px; }   /* 130px: brand sits beside the icon rows again — single-strip footer */
+  .s-hero { position: relative; min-height: 223.4vw; padding: calc(48px + env(safe-area-inset-top, 0px)) 0 130px; }   /* 130px: brand sits beside the icon rows again — single-strip footer */
   /* width-proportional sizing (vw): the composition scales with screen width only,
      never with svh — faces stay at the same spot on every phone */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-size: 129.5vw auto; background-position: -21.2vw -6.7vw; transform: none; }
@@ -228,20 +229,23 @@ section { position: relative; isolation: isolate; }
   /* firmer dark shadow instead of the soft red halo — «ЯРКИЕ БОНУСЫ» must stay
      readable on the bright sky between the faces */
   .hero-title .accent { display: block; text-shadow: 0 1px 3px rgba(0,0,0,0.85), 0 3px 16px rgba(0,0,0,0.55), 0 0 18px rgba(231,31,67,0.35); }
-  .hero-sub { font-size: 14px; margin-top: 10px; }
+  /* «Сезон крупных выигрышей» — the promo's second voice: big, bold and firmly
+     shadowed, it has to survive the bright sky band just like the title does */
+  .hero-sub { font-size: 22px; line-height: 1.12; font-weight: 700; margin-top: 6px; max-width: 86vw; text-wrap: balance; text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 3px 12px rgba(0,0,0,0.55); }
+  .hero-sub .hl { text-shadow: 0 1px 3px rgba(0,0,0,0.85), 0 3px 12px rgba(0,0,0,0.55), 0 0 14px rgba(255,200,60,0.4); }
   /* pillars: 2 capped columns, centered; two explicit 1fr rows + full-height cells keep
      all four cards the same size (plates equalize via flex:1 in the base rule) */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); grid-template-rows: repeat(2, 1fr); justify-content: center; gap: 8px; margin-top: 10px; padding: 0; max-width: 100%; }
-  .pillar { width: auto; min-width: 0; gap: 5px; height: 100%; }
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 156px)); grid-template-rows: repeat(2, 1fr); justify-content: center; gap: 6px 8px; margin-top: 8px; padding: 0; max-width: 100%; }
+  .pillar { width: auto; min-width: 0; gap: 4px; height: 100%; }
   .pillar-ic { width: 40px; height: 40px; }
   .pillar-val { font-size: 14px; }
   .pillar-val--text { font-size: 14px; }
   .pillar-cap { font-size: 11px; padding: 4px 8px; }
   .trust-tokens { font-size: 11.5px; color: rgba(255,255,255,0.9); }
   /* livestats back between the pillars and the CTA group — inside the first screen */
-  .livestats { display: flex; flex-direction: column; gap: 3px; margin-top: 10px; max-width: 100%; font-size: 11px; padding: 5px 14px; }
+  .livestats { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; max-width: 100%; font-size: 11px; padding: 5px 14px; }
   .livestat-sep { display: none; }
-  .hero-cta { width: 100%; gap: 8px; margin-top: 10px; }
+  .hero-cta { width: 100%; gap: 6px; margin-top: 6px; }
   .cta--primary { width: min(320px, 100%); justify-content: center; padding: 15px 24px; font-size: 19px; }
   .cta--primary svg { width: 19px; height: 19px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
@@ -252,7 +256,7 @@ section { position: relative; isolation: isolate; }
   /* footer keeps the base absolute position — a translucent strip overlaid on the
      photo's bottom edge, right on the models' feet; lighter gradient than desktop
      so the deck and feet stay readable through it */
-  .site-footer { padding: 14px 14px max(20px, env(safe-area-inset-bottom)); background: linear-gradient(to top, rgba(8,8,8,0.5) 0%, rgba(8,8,8,0.25) 55%, rgba(8,8,8,0) 100%); }
+  .site-footer { padding: 14px 10px max(20px, env(safe-area-inset-bottom)); background: linear-gradient(to top, rgba(8,8,8,0.5) 0%, rgba(8,8,8,0.25) 55%, rgba(8,8,8,0) 100%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
