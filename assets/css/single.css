@@ -174,24 +174,25 @@ section { position: relative; isolation: isolate; }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
-  /* footer: icon rows centered, the brand lockup keeps its bottom-left corner spot
-     below them (same corner rule as desktop); the 18+ badge stays in the licence
-     line inside the hero, so the footer lockup hides its copy */
-  .footer-bar { padding-bottom: 44px; }
-  .footer-brand { gap: 3px; }
+  /* footer: one strip — brand lockup IN FLOW on the left, icon rows fill the right;
+     the 18+ badge stays in the licence line inside the hero, so the lockup hides its copy.
+     Icons: full opacity + drop-shadow — they have to read over the busy teak deck */
+  .footer-bar { align-items: center; justify-content: space-between; gap: 10px; }
+  .footer-brand { position: static; gap: 3px; flex-shrink: 0; }
   .footer-brand .age-badge { display: none; }
   .footer-mark { font-size: 18px; }
-  .footer-tagline { font-size: 10px; }
-  .footer-pays { width: 100%; gap: 4px 12px; }
-  .pay-row { gap: 5px 8px; }   /* 8px keeps all 7 card marks on one line at 390px */
-  .pay-i--crypto { height: 15px; }
-  .pay-i { height: 10px; }
+  .footer-tagline { font-size: 9px; }
+  .footer-pays { flex: 1; width: auto; gap: 4px 10px; }
+  .pay-row { gap: 4px 7px; }
+  .pay-row--cards { opacity: 1; }
+  .pay-i--crypto { height: 16px; }
+  .pay-i { height: 11px; opacity: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.7)); }
 }
 @media (max-width: 640px) {
   body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* small scroll from the first screen down to the footer on the photo's bottom */
   /* sky-coloured cover above the document: the top rubber-band overscroll reveals this
      instead of the black canvas, so the photo keeps «continuing» past the notch */
-  body::before { content: ''; position: absolute; top: -100vh; left: 0; width: 100%; height: 100vh; background: #48a3e6; }
+  body::before { content: ''; position: absolute; top: -100vh; left: 0; width: 100%; height: 100vh; background: #47a5ea; }
   /* poster layout per Figma frame 2118:54: the photo is zoomed ~130% and raised so
      the models flank the edges; the 4-line title mast sits between their faces.
      Hero height = rendered photo height (129.5vw · 2048/1152 − 6.7vw raise ≈ 223.4vw):
@@ -201,7 +202,7 @@ section { position: relative; isolation: isolate; }
   /* on iOS builds where Safari lets the page bleed behind the status bar/notch
      (viewport-fit=cover), the photo starts at the physical screen top and the
      content drops below the clock by the safe-area inset; elsewhere inset is 0 */
-  .s-hero { position: relative; min-height: 223.4vw; padding: calc(55px + env(safe-area-inset-top, 0px)) 0 150px; }   /* 150px: the corner lockup now sits below the icon rows, footer is taller */
+  .s-hero { position: relative; min-height: 223.4vw; padding: calc(55px + env(safe-area-inset-top, 0px)) 0 130px; }   /* 130px: brand sits beside the icon rows again — single-strip footer */
   /* width-proportional sizing (vw): the composition scales with screen width only,
      never with svh — faces stay at the same spot on every phone */
   .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260702b'); background-size: 129.5vw auto; background-position: -21.2vw -6.7vw; transform: none; }
@@ -219,9 +220,11 @@ section { position: relative; isolation: isolate; }
   .wrap { padding: 0 18px; }
   /* poster mast: four stacked lines (ЖАРКОЕ / ЛЕТО — / ЯРКИЕ / БОНУСЫ) — the narrow
      63vw column makes «ЯРКИЕ БОНУСЫ» wrap onto two lines between the faces */
-  .hero-title { font-size: clamp(26px, 7.7vw, 42px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; }
+  .hero-title { font-size: clamp(26px, 7.7vw, 42px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; text-shadow: 0 1px 3px rgba(0,0,0,0.75), 0 3px 14px rgba(0,0,0,0.5); }
   .hero-title br { display: inline; }
-  .hero-title .accent { display: block; }
+  /* firmer dark shadow instead of the soft red halo — «ЯРКИЕ БОНУСЫ» must stay
+     readable on the bright sky between the faces */
+  .hero-title .accent { display: block; text-shadow: 0 1px 3px rgba(0,0,0,0.85), 0 3px 16px rgba(0,0,0,0.55), 0 0 18px rgba(231,31,67,0.35); }
   .hero-sub { font-size: 14px; margin-top: 10px; }
   /* pillars: 2 capped columns, centered; two explicit 1fr rows + full-height cells keep
      all four cards the same size (plates equalize via flex:1 in the base rule) */
