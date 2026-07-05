@@ -80,8 +80,10 @@ section { position: relative; isolation: isolate; }
 /* the ЖАРКОЕ|ЛЕТО break is mobile-only (desktop keeps the two-line banner) */
 .hero-title br { display: none; }
 .hero-title .accent { color: var(--red); text-shadow: 0 0 26px rgba(231,31,67,0.55), 0 2px 16px rgba(0,0,0,0.6); }
-.hero-sub { margin-top: clamp(6px, 1.2vh, 10px); font-weight: 600; font-size: clamp(13px, 1.6vw, 17px); color: #fff; text-shadow: 0 0 4px rgba(0,0,0,0.92), 0 1px 2px rgba(0,0,0,0.95); }
-.hero-sub .hl { color: #FFD24A; text-shadow: 0 0 12px rgba(255,200,60,0.55), 0 1px 2px rgba(0,0,0,0.9); }
+/* the promo's second voice: sized against the title (~68px max) and firmly dark-shadowed —
+   it sits on the bright sky band and has to read there at every width */
+.hero-sub { margin-top: clamp(8px, 1.4vh, 14px); font-weight: 700; font-size: clamp(18px, 2.1vw, 30px); color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 3px 12px rgba(0,0,0,0.55); }
+.hero-sub .hl { color: #FFD24A; text-shadow: 0 1px 3px rgba(0,0,0,0.85), 0 3px 12px rgba(0,0,0,0.55), 0 0 14px rgba(255,200,60,0.4); }
 
 /* pillars — emoji icons reduced ~1.5×, full captions */
 .pillars { display: flex; gap: clamp(12px,1.5vw,20px); flex-wrap: wrap; justify-content: center; margin-top: auto; padding: var(--pillars-pad) 0; max-width: 768px; }
