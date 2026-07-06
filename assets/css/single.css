@@ -180,18 +180,20 @@ section { position: relative; isolation: isolate; }
      the 18+ badge stays in the licence line inside the hero, so the lockup hides its copy
      (and the tagline goes too — the mark alone is enough at this size).
      Icons: full opacity + drop-shadow — they have to read over the busy teak deck */
-  /* the whole strip — brand + both icon rows — centers on the screen axis as one group */
-  .footer-bar { align-items: center; justify-content: center; gap: 10px; }
-  .footer-brand { position: static; flex-shrink: 0; }
+  /* footer composition: a single centered column of three lines —
+     crypto row / cards row / brand mark — every line self-centered on the page
+     axis with one uniform 6px interval throughout */
+  .footer-bar { flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .footer-brand { position: static; order: 1; align-items: center; }   /* brand drops below the icon rows */
   .footer-brand .age-badge { display: none; }
   .footer-tagline { display: none; }
-  .footer-mark { font-size: 14px; }
+  .footer-mark { font-size: 15px; }
   /* exactly two lines — all 7 crypto marks on one, all 7 card marks on the other,
      a single equal gap between them; vw heights keep the crypto line inside the strip
      on every phone width, and the card wordmarks are halved to match the crypto scale */
   .footer-pays { flex: 0 1 auto; width: auto; flex-direction: column; align-items: center; gap: 6px; }
   .pay-row { gap: 4px; max-width: none; flex-wrap: nowrap; }
-  .pay-row--crypto { gap: 2px; }   /* tighter tracking buys the extra icon height */
+  .pay-row--crypto { gap: 3px; }   /* full width is ours now — a touch more air between marks */
   .pay-row--cards { opacity: 1; }
   /* .pay-i first, --crypto after: same specificity, so source order IS the cascade here —
      crypto marks must win their taller height (they are the size reference of the strip) */
