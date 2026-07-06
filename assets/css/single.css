@@ -173,6 +173,11 @@ section { position: relative; isolation: isolate; }
   :root { --footer-reserve: clamp(160px, 24vh, 200px); }
   .footer-bar { padding-bottom: 62px; }
 }
+/* tablet band: four 190px pillars can't share one line — cap the row at two cards
+   so they wrap into a clean 2×2 instead of a lopsided 3+1 */
+@media (min-width: 641px) and (max-width: 899px) {
+  .pillars { max-width: 424px; }
+}
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 640px) {
