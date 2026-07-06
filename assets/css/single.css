@@ -163,7 +163,7 @@ section { position: relative; isolation: isolate; }
 /* desktop: tighten the gap right after the CTA button (before the trust line);
    icon rows never fragment — they shrink via the fluid heights instead */
 @media (min-width: 641px) {
-  .hero-cta .trust { margin-top: -6px; }
+  .hero-cta .trust { margin-top: 0; }   /* licence line breathes below the CTA (the column gap alone, 9-14px) */
   .pay-row { flex-wrap: nowrap; }
 }
 /* narrow desktop/tablet: screen-centered icons and the corner lockup can't share one
@@ -262,6 +262,7 @@ section { position: relative; isolation: isolate; }
   .livestats { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; max-width: 100%; font-size: 11px; padding: 5px 14px; }
   .livestat-sep { display: none; }
   .hero-cta { width: 100%; gap: 6px; margin-top: 6px; }
+  .hero-cta .trust { margin-top: 4px; }   /* a touch more air between the CTA and the licence line */
   .cta--primary { width: min(320px, 100%); justify-content: center; padding: 15px 24px; font-size: 19px; }
   .cta--primary svg { width: 19px; height: 19px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
