@@ -184,10 +184,10 @@ section { position: relative; isolation: isolate; }
      crypto row / cards row / brand mark — every line self-centered on the page
      axis with one uniform 6px interval throughout */
   .footer-bar { flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
-  /* brand drops below the icon rows; the tagline rides the same line, off the mark's
+  /* brand line leads the strip, icon rows follow; the tagline rides the mark's
      baseline. Both scale with the viewport to fill the line — sized so the pair never
      wraps to a second line even at 320px */
-  .footer-brand { position: static; order: 1; flex-direction: row; align-items: baseline; gap: 8px; }
+  .footer-brand { position: static; flex-direction: row; align-items: baseline; gap: 8px; }
   .footer-brand .age-badge { display: none; }
   .footer-tagline { font-size: clamp(9.5px, 3.3vw, 13px); text-shadow: 0 1px 2px rgba(0,0,0,0.7); }
   .footer-mark { font-size: clamp(16px, 5.5vw, 22px); }
