@@ -180,7 +180,8 @@ section { position: relative; isolation: isolate; }
      the 18+ badge stays in the licence line inside the hero, so the lockup hides its copy
      (and the tagline goes too — the mark alone is enough at this size).
      Icons: full opacity + drop-shadow — they have to read over the busy teak deck */
-  .footer-bar { align-items: center; justify-content: space-between; gap: 6px; }
+  /* the whole strip — brand + both icon rows — centers on the screen axis as one group */
+  .footer-bar { align-items: center; justify-content: center; gap: 10px; }
   .footer-brand { position: static; flex-shrink: 0; }
   .footer-brand .age-badge { display: none; }
   .footer-tagline { display: none; }
@@ -188,7 +189,7 @@ section { position: relative; isolation: isolate; }
   /* exactly two lines — all 7 crypto marks on one, all 7 card marks on the other,
      a single equal gap between them; vw heights keep the crypto line inside the strip
      on every phone width, and the card wordmarks are halved to match the crypto scale */
-  .footer-pays { flex: 1; width: auto; flex-direction: column; align-items: center; gap: 6px; }
+  .footer-pays { flex: 0 1 auto; width: auto; flex-direction: column; align-items: center; gap: 6px; }
   .pay-row { gap: 4px; max-width: none; flex-wrap: nowrap; }
   .pay-row--crypto { gap: 2px; }   /* tighter tracking buys the extra icon height */
   .pay-row--cards { opacity: 1; }
