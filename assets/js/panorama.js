@@ -64,7 +64,7 @@
   // ════════ reduced-motion: stacked fallback, no scroll-jack ════════
   if (reduce.matches || !window.gsap || !window.ScrollTrigger) {
     counters.forEach((el) => countUp(el));
-    window.addEventListener('scroll', () => {
+    if (header) window.addEventListener('scroll', () => {
       header.classList.toggle('solid', window.scrollY > 40);
     }, { passive: true });
     return;
@@ -121,7 +121,7 @@
     passPanel.style.opacity = clamp((n - 0.12) / 0.88, 0, 1);
     deckPanel.style.opacity = clamp(1 - t * 2.4, 0, 1);
     hint.style.opacity = clamp(1 - t * 5, 0, 1);
-    header.classList.toggle('solid', t > 0.02);
+    if (header) header.classList.toggle('solid', t > 0.02);
   }
 
   window.ScrollTrigger.create({

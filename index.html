@@ -27,7 +27,7 @@
 <!-- preload only the first (deck) background; cabin is loaded lazily via JS -->
 <link rel="preload" as="image" href="assets/scenes/panorama.webp">
 
-<link rel="stylesheet" href="assets/css/styles.css?v=20260707b">
+<link rel="stylesheet" href="assets/css/styles.css?v=20260707c">
 </head>
 <body>
 
@@ -43,16 +43,9 @@
   </defs>
 </svg>
 
-<!-- ══ STICKY HEADER ══ -->
-<header id="site-header">
-  <a class="brand" href="#top" aria-label="ПОКЕРОК — на главную">
-    <span class="brand-mark">ПОКЕР<img class="brand-o" src="assets/mascots/mascot-hush.webp" alt="" aria-hidden="true">К</span>
-  </a>
-  <a href="./" class="cta cta--sm">Забрать $600 <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
-</header>
-
+<!-- header removed: the page opens on clean photo and the deck CTA is the only
+     call to action on the first screen — nothing competes with it -->
 <div id="scroller">
-  <span id="top"></span>
   <div id="stage">
     <div id="canvas">
 
@@ -217,16 +210,10 @@
 
 </div><!-- /scroller -->
 
-<!-- липкая мобильная CTA-плашка (видна только на узких экранах) -->
-<a href="./" class="mobile-cta" aria-label="Забери свои $600">
-  <span class="mobile-cta-main">Забери свои $600</span>
-  <span class="mobile-cta-sub">бонус новичку · жми</span>
-</a>
-
 <script src="assets/js/vendor/lenis.umd.js"></script>
 <script src="assets/js/vendor/gsap.min.js"></script>
 <script src="assets/js/vendor/ScrollTrigger.min.js"></script>
-<script src="assets/js/panorama.js"></script>
+<script src="assets/js/panorama.js?v=20260707c"></script>
 <script src="assets/js/blackjack.js?v=20260707a"></script>
 </body>
 </html>

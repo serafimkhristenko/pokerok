@@ -24,27 +24,12 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ══ STICKY HEADER ══ */
-#site-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px clamp(16px, 4vw, 40px);
-  background: linear-gradient(180deg, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0) 100%);
-  transition: background .25s ease, box-shadow .25s ease;
-}
-#site-header.solid {
-  background: rgba(8,8,8,0.92);
-  box-shadow: 0 1px 0 var(--line);
-  backdrop-filter: blur(8px);
-}
-.brand { text-decoration: none; }
-/* logo lockup — wordmark stays MONO (brand rule); mascot replaces the «О» */
-.brand-mark, .footer-mark, .neon-sign {
+/* logo lockup — wordmark stays MONO (brand rule); the mascot «О» lives in the neon sign */
+.footer-mark, .neon-sign {
   font-family: 'Montserrat', sans-serif; font-weight: 800;
   color: var(--white); display: inline-flex; align-items: center;
   letter-spacing: 0.02em; text-transform: uppercase; line-height: 1; white-space: nowrap;
 }
-.brand-mark { font-size: 22px; }
 .brand-o {
   height: 1.05em; width: auto; display: inline-block;
   margin: 0 -0.04em; vertical-align: middle;
@@ -131,14 +116,13 @@ html, body {
 .cta:hover { transform: translateY(-3px); background: #f23355; box-shadow: 0 12px 40px rgba(231,31,67,0.45); }
 .cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .cta svg { width: 16px; height: 16px; }
-.cta--sm { padding: 10px 22px; font-size: 13px; }
-/* primary CTA — THE most prominent interactive element on the screen
-   (sized to match single.html: the button is the loudest voice of the page) */
+/* primary CTA — THE most prominent interactive element on the screen; with the
+   header gone it is the only call to action in the frame, so it speaks even louder */
 .cta--primary {
-  padding: 30px 110px; font-size: 27px; border-radius: 14px;
+  padding: 34px 130px; font-size: 30px; border-radius: 16px;
   box-shadow: 0 16px 50px rgba(231,31,67,0.55);
 }
-.cta--primary svg { width: 27px; height: 27px; }
+.cta--primary svg { width: 30px; height: 30px; }
 
 /* ── INTERACTIVE PILLAR ICONS (deck) — clickable & animated, but lighter than the CTA ── */
 .pillars { display: flex; gap: clamp(6px,0.9vw,12px); flex-wrap: wrap; justify-content: center; margin-top: 28px; max-width: 900px; pointer-events: auto; }
@@ -218,20 +202,8 @@ html, body {
 .trust { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 4px; }
 .trust-tokens { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.85); background: rgba(8,8,8,0.34); border-radius: 10px; padding: 4px 12px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
 
-/* ── STICKY MOBILE CTA BAR ── */
-.mobile-cta { display: none; }
-@media (max-width: 640px) {
-  .mobile-cta {
-    display: flex; flex-direction: column; align-items: center; gap: 1px;
-    position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 70;
-    padding: 12px 20px; border-radius: 12px; text-decoration: none;
-    background: var(--red); color: #fff; box-shadow: 0 10px 30px rgba(231,31,67,0.5);
-    animation: mcta 2s ease-in-out infinite;
-  }
-  .mobile-cta-main { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px; text-transform: uppercase; letter-spacing: 0.03em; }
-  .mobile-cta-sub { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
-  @keyframes mcta { 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.02) } }
-}
+/* sticky mobile CTA bar removed (proven dead end: it competed with the content and
+   covered the footer) — the in-flow primary CTA carries the action on mobile too */
 
 /* ── ACT 2 — PASSAGE / NEON TEASER ── */
 .neon-sign {
@@ -342,8 +314,8 @@ html, body {
   .pillars { margin-top: 16px; }
   .livestats { margin-top: 12px; }
   .hero-cta { margin-top: 14px; gap: 12px; }
-  .cta--primary { padding: 24px 90px; font-size: 24px; }
-  .cta--primary svg { width: 24px; height: 24px; }
+  .cta--primary { padding: 26px 100px; font-size: 26px; }
+  .cta--primary svg { width: 26px; height: 26px; }
 }
 
 /* ══ FOOTER — single.html composition: two fluid rows of brand SVG marks,
@@ -383,21 +355,30 @@ footer { padding: 44px 24px 30px; }
 .footer-copy { font-family: 'Raleway', sans-serif; font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; text-align: center; line-height: 1.5; }
 
 @media (max-width: 640px) {
-  .pillars { gap: 14px 10px; margin-top: 22px; max-width: 350px; }
-  .pillar { width: 162px; }
-  .cta--primary { width: min(320px, 100%); justify-content: center; padding: 15px 24px; font-size: 19px; }
-  .cta--primary svg { width: 19px; height: 19px; }
+  /* mobile deck must fit one 100vh act under the scroll-jack (~660px on phones):
+     the wedge keeps every tier but each one is a step tighter */
+  .hero-title { font-size: clamp(28px, 8.5vw, 34px); }
+  .hero-sub { margin-top: 8px; font-size: 15px; }
+  .pillars { gap: 10px 8px; margin-top: 14px; max-width: 350px; }
+  .pillar { width: 162px; gap: 7px; }
+  .pillar-ic { width: 44px; height: 44px; }
+  .pillar-val { font-size: 17px; }
+  .pillar-val--text { font-size: 13px; }
+  .pillar-cap { font-size: 12px; line-height: 1.3; padding: 4px 8px; }
+  .cta--primary { width: min(340px, 100%); justify-content: center; padding: 17px 24px; font-size: 20px; }
+  .cta--primary svg { width: 20px; height: 20px; }
+  /* single-row FOMO pill (single.css recipe) — label + clock stay on one line */
+  .fomo { font-size: 11px; letter-spacing: 0.03em; gap: 4px 8px; padding: 5px 12px; flex-wrap: wrap; justify-content: center; max-width: 100%; }
+  .fomo-clock { font-size: 14px; padding: 1px 7px; border-radius: 5px; }
+  .fomo-dot { width: 7px; height: 7px; }
   .bj { padding: 16px 12px 18px; gap: 12px; }
   .bj-cards { gap: 6px; min-height: 76px; }
   .bj-card { width: 54px; height: 76px; }
   .bj-card-suit { font-size: 28px; }
   .bj-btn { padding: 12px 20px; font-size: 12px; }
-  .hero-cta { margin-top: 16px; }
+  .hero-cta { margin-top: 12px; gap: 10px; }
   /* counters under the logo: keep, but smaller so the header stays tidy on mobile */
-  .livestats { font-size: 11px; gap: 10px; margin-top: 14px; }
-  .cta--sm { padding: 9px 16px; font-size: 12px; }
-  /* leave room so the sticky CTA never covers the footer copy */
-  #footer-wrap { padding-bottom: 84px; }
+  .livestats { font-size: 11px; gap: 10px; margin-top: 12px; padding: 6px 12px; }
 }
 
 /* ══════════════════════════════════════════
@@ -428,7 +409,7 @@ footer { padding: 44px 24px 30px; }
   .hero-scrim { display: none; }
   .pillars, .bj { pointer-events: all; }
   /* no looping animations in reduced-motion (bj-deal is one-shot but goes too) */
-  .pillar-ic, .fomo-dot, .livestat-dot, .mobile-cta, .bj-card { animation: none !important; }
+  .pillar-ic, .fomo-dot, .livestat-dot, .bj-card { animation: none !important; }
   /* force reveal targets visible — no scroll-driven animation here */
   .bj, .pillars .pillar { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
