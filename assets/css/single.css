@@ -58,8 +58,9 @@ section { position: relative; isolation: isolate; }
 }
 .s-hero::after {
   content: ''; position: absolute; inset: 0; z-index: -1;
-  /* no overall backdrop darkening — legibility comes from local plates behind the text */
-  background: none;
+  /* central-band scrim: the daytime photo is bright behind the text column, so the
+     middle darkens softly while the models at both edges stay open */
+  background: linear-gradient(90deg, rgba(8,8,8,0) 10%, rgba(8,8,8,0.34) 34%, rgba(8,8,8,0.34) 66%, rgba(8,8,8,0) 90%);
 }
 /* full-frame blur removed — targeted frosting now lives in the per-text plates */
 .s-hero__blur { display: none; }
