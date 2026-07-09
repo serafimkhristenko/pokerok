@@ -228,9 +228,10 @@ section { position: relative; isolation: isolate; }
   /* width-proportional sizing (vw): the composition scales with screen width only,
      never with svh — faces stay at the same spot on every phone */
   /* the girls span ~2.7%..98% of the frame, so the window is nearly the full width
-     (105vw); the file carries a baked 234px fade-to-black bottom extension (under the
-     footer overlay) so the photo still fills the 208vw canvas: 105vw * (2282/1152) */
-  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260709f'); background-size: 105vw auto; background-position: -2.8vw 0; transform: none; }
+     (105vw); the file carries a baked 100px sky extension on top (air above the heads,
+     clears the status bar) and a 234px fade-to-black bottom (under the footer overlay),
+     so the photo fills the 208vw canvas: 105vw * (2382/1152) ≈ 217vw, bottom crop hidden */
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260709g'); background-size: 105vw auto; background-position: -2.8vw 0; transform: none; }
   /* retouch patches removed — the new daytime frame is clean at the top-right */
   /* translucent scrim: the faces band up top stays clear, depth grows toward the footer;
      the radial layer darkens the centre of the composition (bright deck/sea behind the
