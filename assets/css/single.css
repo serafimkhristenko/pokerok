@@ -7,10 +7,10 @@
   --pano-url: url('../scenes/single-hero.webp?v=20260709a');
   /* fluid vertical rhythm: the poster absorbs viewport-height changes in its GAPS
      (clamped vh) while text/CTA/plates keep fixed, readable sizes */
-  --hero-top: clamp(28px, 6.5vh, 76px);
+  --hero-top: clamp(32px, 7.2vh, 88px);
   --footer-reserve: clamp(110px, 15vh, 150px);   /* hero bottom pad ≥ real footer height */
-  --vgap: clamp(10px, 2.2vh, 24px);
-  --pillars-pad: clamp(12px, 2.4vh, 22px);
+  --vgap: clamp(13px, 2.8vh, 32px);
+  --pillars-pad: clamp(16px, 3vh, 28px);
   --corner-pad: clamp(20px, 3vw, 48px);          /* brand lockup offset from the corner */
 }
 
@@ -223,7 +223,7 @@ section { position: relative; isolation: isolate; }
   /* on iOS builds where Safari lets the page bleed behind the status bar/notch
      (viewport-fit=cover), the photo starts at the physical screen top and the
      content drops below the clock by the safe-area inset; elsewhere inset is 0 */
-  .s-hero { position: relative; min-height: 208vw; padding: calc(40px + env(safe-area-inset-top, 0px)) 0 150px; }   /* 40px top + tightened rhythm below keep the licence row inside the 663px first screen; the photo's baked
+  .s-hero { position: relative; min-height: 208vw; padding: calc(42px + env(safe-area-inset-top, 0px)) 0 150px; }   /* 40px top + tightened rhythm below keep the licence row inside the 663px first screen; the photo's baked
      fade-to-black hides the canvas overflow under the footer overlay */
   /* width-proportional sizing (vw): the composition scales with screen width only,
      never with svh — faces stay at the same spot on every phone */
@@ -242,29 +242,29 @@ section { position: relative; isolation: isolate; }
   .wrap { padding: 0 18px; }
   /* poster mast: four stacked lines (ЖАРКОЕ / ЛЕТО — / ЯРКИЕ / БОНУСЫ) — the narrow
      63vw column makes «ЯРКИЕ БОНУСЫ» wrap onto two lines between the faces */
-  .hero-title { font-size: clamp(23px, 6.8vw, 37px); line-height: 0.96; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; text-shadow: 0 1px 3px rgba(0,0,0,0.75), 0 3px 14px rgba(0,0,0,0.5); }
+  .hero-title { font-size: clamp(20px, 6vw, 32px); line-height: 1.02; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; text-shadow: 0 1px 3px rgba(0,0,0,0.75), 0 3px 14px rgba(0,0,0,0.5); }
   .hero-title br { display: inline; }
   /* firmer dark shadow instead of the soft red halo — «ЯРКИЕ БОНУСЫ» must stay
      readable on the bright sky between the faces */
   .hero-title .accent { display: block; text-shadow: 0 1px 3px rgba(0,0,0,0.85), 0 3px 16px rgba(0,0,0,0.55), 0 0 18px rgba(231,31,67,0.35); }
   /* «Сезон крупных выигрышей» — the promo's second voice: big, bold and firmly
      shadowed, it has to survive the bright sky band just like the title does */
-  .hero-sub { font-size: 22px; line-height: 1.12; font-weight: 700; margin-top: 5px; max-width: 86vw; text-wrap: balance; text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 3px 12px rgba(0,0,0,0.55); }
+  .hero-sub { font-size: 22px; line-height: 1.12; font-weight: 700; margin-top: 8px; max-width: 86vw; text-wrap: balance; text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 3px 12px rgba(0,0,0,0.55); }
   .hero-sub .hl { text-shadow: 0 1px 3px rgba(0,0,0,0.85), 0 3px 12px rgba(0,0,0,0.55), 0 0 14px rgba(255,200,60,0.4); }
   /* pillars: 2 capped columns, centered; two explicit 1fr rows + full-height cells keep
      all four cards the same size (plates equalize via flex:1 in the base rule) */
-  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 170px)); grid-template-rows: repeat(2, 1fr); justify-content: center; gap: 5px 8px; margin-top: 5px; padding: 0; max-width: 100%; }
-  .pillar { width: auto; min-width: 0; gap: 3px; height: 100%; }
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 170px)); grid-template-rows: repeat(2, 1fr); justify-content: center; gap: 8px 10px; margin-top: 9px; padding: 0; max-width: 100%; }
+  .pillar { width: auto; min-width: 0; gap: 5px; height: 100%; }
   .pillar-ic { width: 36px; height: 36px; }
   .pillar-val { font-size: 16px; }
   .pillar-val--text { font-size: 16px; }
-  .pillar-cap { font-size: 13px; line-height: 1.3; padding: 4px 8px; }
+  .pillar-cap { font-size: 13px; line-height: 1.3; padding: 6px 9px; }
   .trust-tokens { font-size: 11.5px; color: rgba(255,255,255,0.9); }
   /* livestats back between the pillars and the CTA group — inside the first screen */
-  .livestats { display: flex; flex-direction: column; gap: 3px; margin-top: 5px; max-width: 100%; font-size: 11px; padding: 3px 14px; }
+  .livestats { display: flex; flex-direction: column; gap: 5px; margin-top: 9px; max-width: 100%; font-size: 11px; padding: 5px 14px; }
   .livestat-sep { display: none; }
-  .hero-cta { width: 100%; gap: 5px; margin-top: 5px; }
-  .hero-cta .trust { margin-top: 4px; }   /* a touch more air between the CTA and the licence line */
+  .hero-cta { width: 100%; gap: 8px; margin-top: 9px; }
+  .hero-cta .trust { margin-top: 7px; }   /* a touch more air between the CTA and the licence line */
   .cta--primary { width: min(320px, 100%); justify-content: center; padding: 13px 24px; font-size: 19px; }
   .cta--primary svg { width: 19px; height: 19px; }
   /* compact single-row FOMO pill — label + clock stay inline (no forced line break) */
