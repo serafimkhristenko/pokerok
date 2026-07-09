@@ -242,7 +242,7 @@ section { position: relative; isolation: isolate; }
   .wrap { padding: 0 18px; }
   /* poster mast: four stacked lines (ЖАРКОЕ / ЛЕТО — / ЯРКИЕ / БОНУСЫ) — the narrow
      63vw column makes «ЯРКИЕ БОНУСЫ» wrap onto two lines between the faces */
-  .hero-title { font-size: clamp(26px, 7.7vw, 42px); line-height: 0.94; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; text-shadow: 0 1px 3px rgba(0,0,0,0.75), 0 3px 14px rgba(0,0,0,0.5); }
+  .hero-title { font-size: clamp(23px, 6.8vw, 37px); line-height: 0.96; letter-spacing: -0.02em; width: 100%; max-width: 63vw; text-wrap: balance; overflow-wrap: break-word; text-shadow: 0 1px 3px rgba(0,0,0,0.75), 0 3px 14px rgba(0,0,0,0.5); }
   .hero-title br { display: inline; }
   /* firmer dark shadow instead of the soft red halo — «ЯРКИЕ БОНУСЫ» must stay
      readable on the bright sky between the faces */
