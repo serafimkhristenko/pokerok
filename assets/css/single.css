@@ -223,17 +223,19 @@ section { position: relative; isolation: isolate; }
   /* on iOS builds where Safari lets the page bleed behind the status bar/notch
      (viewport-fit=cover), the photo starts at the physical screen top and the
      content drops below the clock by the safe-area inset; elsewhere inset is 0 */
-  .s-hero { position: relative; min-height: 223.4vw; padding: calc(44px + env(safe-area-inset-top, 0px)) 0 130px; }   /* 130px: brand sits beside the icon rows again — single-strip footer */
+  .s-hero { position: relative; min-height: 209.8vw; padding: calc(44px + env(safe-area-inset-top, 0px)) 0 130px; }   /* 130px: brand sits beside the icon rows again — single-strip footer */
   /* width-proportional sizing (vw): the composition scales with screen width only,
      never with svh — faces stay at the same spot on every phone */
-  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260709c'); background-size: 129.5vw auto; background-position: -21.2vw -6.7vw; transform: none; }
+  /* zoomed out (129.5vw -> 118vw) and re-centred: both models fit to the waist;
+     canvas height follows the photo: 118vw * (2048/1152) = 209.8vw */
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260709c'); background-size: 118vw auto; background-position: -9vw 0; transform: none; }
   /* retouch patches removed — the new daytime frame is clean at the top-right */
   /* translucent scrim: the faces band up top stays clear, depth grows toward the footer;
      the radial layer darkens the centre of the composition (bright deck/sea behind the
      text column) while the models along both edges stay open */
   .s-hero::after { background:
-    radial-gradient(ellipse 46vw 75vw at 50vw 105vw, rgba(8,8,8,0.34), rgba(8,8,8,0) 72%),
-    linear-gradient(to bottom, rgba(8,8,8,0) 30vw, rgba(8,8,8,0.28) 90vw, rgba(8,8,8,0.36) 155vw, rgba(8,8,8,0.42) 223.4vw); }
+    radial-gradient(ellipse 46vw 72vw at 50vw 98vw, rgba(8,8,8,0.34), rgba(8,8,8,0) 72%),
+    linear-gradient(to bottom, rgba(8,8,8,0) 28vw, rgba(8,8,8,0.28) 84vw, rgba(8,8,8,0.36) 146vw, rgba(8,8,8,0.42) 209.8vw); }
   .s-hero__blur { display: none; }
   .wrap { padding: 0 18px; }
   /* poster mast: four stacked lines (ЖАРКОЕ / ЛЕТО — / ЯРКИЕ / БОНУСЫ) — the narrow
