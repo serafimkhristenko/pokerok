@@ -213,7 +213,7 @@ section { position: relative; isolation: isolate; }
   body { display: block; height: auto; overflow-x: hidden; overflow-y: auto; }   /* small scroll from the first screen down to the footer on the photo's bottom */
   /* sky-coloured cover above the document: the top rubber-band overscroll reveals this
      instead of the black canvas, so the photo keeps «continuing» past the notch */
-  body::before { content: ''; position: absolute; top: -100vh; left: 0; width: 100%; height: 100vh; background: #458bc6; }
+  body::before { content: ''; position: absolute; top: -100vh; left: 0; width: 100%; height: 100vh; background: #498cc4; }
   /* poster layout per Figma frame 2118:54: the photo is zoomed ~130% and raised so
      the models flank the edges; the 4-line title mast sits between their faces.
      Hero height = rendered photo height (129.5vw · 2048/1152 − 6.7vw raise ≈ 223.4vw):
@@ -230,13 +230,13 @@ section { position: relative; isolation: isolate; }
   /* the girls span ~2.7%..98% of the frame, so the window is nearly the full width
      (105vw); the file carries a baked 234px fade-to-black bottom extension (under the
      footer overlay) so the photo still fills the 208vw canvas: 105vw * (2282/1152) */
-  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260709e'); background-size: 105vw auto; background-position: -2.8vw 0; transform: none; }
+  .s-hero__bg { background-image: url('../scenes/single-hero-mobile.webp?v=20260709f'); background-size: 105vw auto; background-position: -2.8vw 0; transform: none; }
   /* retouch patches removed — the new daytime frame is clean at the top-right */
   /* translucent scrim: the faces band up top stays clear, depth grows toward the footer;
      the radial layer darkens the centre of the composition (bright deck/sea behind the
      text column) while the models along both edges stay open */
   .s-hero::after { background:
-    radial-gradient(ellipse 46vw 72vw at 50vw 97vw, rgba(8,8,8,0.34), rgba(8,8,8,0) 72%),
+    radial-gradient(ellipse 48vw 80vw at 50vw 95vw, rgba(8,8,8,0.44), rgba(8,8,8,0) 74%),
     linear-gradient(to bottom, rgba(8,8,8,0) 28vw, rgba(8,8,8,0.28) 84vw, rgba(8,8,8,0.36) 145vw, rgba(8,8,8,0.42) 208vw); }
   .s-hero__blur { display: none; }
   .wrap { padding: 0 18px; }
