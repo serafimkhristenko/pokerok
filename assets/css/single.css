@@ -26,13 +26,12 @@ body {
 .wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 img { max-width: 100%; }
 
-/* logo lockup — classic brand version: white «ПОКЕР» + white «ОК» on the red
-   rounded plate (no smiley-«О» variants), lives in the footer on all viewports */
+/* logo lockup — single-colour wordmark «ПОКЕРОК» (no red plate, no smiley-«О»
+   variants), lives in the footer on all viewports */
 .brand-mark, .footer-mark {
   font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--white);
   display: inline-flex; align-items: center; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1; white-space: nowrap;
 }
-.mark-ok { color: var(--white); background: var(--red); padding: 0.14em 0.24em 0.12em; border-radius: 0.2em; margin-left: 0.18em; }
 
 /* ══ BUTTONS ══ */
 .cta {
@@ -88,7 +87,8 @@ section { position: relative; isolation: isolate; }
 .pillars { display: flex; gap: clamp(12px,1.5vw,20px); flex-wrap: wrap; justify-content: center; margin-top: auto; padding: var(--pillars-pad) 0; max-width: 820px; }
 .pillar { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 190px; text-decoration: none; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; border-radius: 8px; transition: transform .25s cubic-bezier(.2,.7,.2,1); }
 .pillar:focus-visible, .footer-logo:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 6px; }
-.pillar-ic { width: clamp(38px, 4.8vw, 50px); height: clamp(38px, 4.8vw, 50px); object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.55)); transition: transform .25s ease; animation: bob 3.4s ease-in-out infinite; }
+.pillar-ic { width: clamp(38px, 4.8vw, 50px); height: clamp(38px, 4.8vw, 50px); color: #FFD24A; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6)) drop-shadow(0 0 9px rgba(255,200,60,0.35)); transition: transform .25s ease; animation: bob 3.4s ease-in-out infinite; }
+.pillar:nth-child(4) .pillar-ic { color: #FF4A6A; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6)) drop-shadow(0 0 9px rgba(231,31,67,0.4)); }
 .pillar:nth-child(2) .pillar-ic { animation-delay: .45s } .pillar:nth-child(3) .pillar-ic { animation-delay: .9s } .pillar:nth-child(4) .pillar-ic { animation-delay: 1.35s }
 .pillar-val { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(18px,2.1vw,23px); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.85), 0 2px 14px rgba(0,0,0,0.65); white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
 /* $-sums + WSOP glow gold; «Все форматы» glows brand-red — colour tells them apart
@@ -120,6 +120,11 @@ section { position: relative; isolation: isolate; }
 .trust-tokens { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85); background: rgba(8,8,8,0.34); border-radius: 10px; padding: 4px 12px; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); text-shadow: 0 0 3px rgba(0,0,0,0.7); }
 /* licence line: «18+» lives as plain text inside the tokens pill (original form) */
 .trust { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.trust-ic { width: 12px; height: 12px; vertical-align: -1.5px; margin-right: 4px; color: rgba(255,255,255,0.9); }
+.trust-ic--lock { animation: trustglow 3.2s ease-in-out infinite; }
+.trust-ic--bolt { animation: boltflick 2.4s ease-in-out infinite; }
+@keyframes trustglow { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; filter: drop-shadow(0 0 3px rgba(255,255,255,0.55)); } }
+@keyframes boltflick { 0%, 100% { opacity: 0.75; } 42% { opacity: 1; filter: drop-shadow(0 0 3px rgba(255,210,74,0.7)); } 50% { opacity: 0.85; } 58% { opacity: 1; filter: drop-shadow(0 0 3px rgba(255,210,74,0.7)); } }
 
 /* ══ FOOTER — dark strip overlaid on the photo's bottom.
       Icons are centered on the SCREEN axis (the only in-flow content of the bar);
@@ -280,6 +285,6 @@ section { position: relative; isolation: isolate; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .cta--primary, .pillar-ic, .livestat-dot, .fomo-dot { animation: none !important; }
+  .cta--primary, .pillar-ic, .livestat-dot, .fomo-dot, .trust-ic { animation: none !important; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
